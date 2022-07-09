@@ -15,6 +15,11 @@
 		D86187942878DC4900553E5D /* ChampionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187932878DC4900553E5D /* ChampionUITests.swift */; };
 		D86187962878DC4900553E5D /* ChampionUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187952878DC4900553E5D /* ChampionUITestsLaunchTests.swift */; };
 		D86187A62878DDFC00553E5D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187A52878DDFC00553E5D /* Model.swift */; };
+		D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187A72878E98900553E5D /* MockTournamentRepository.swift */; };
+		D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187A92878E9A400553E5D /* TournamentRepository.swift */; };
+		D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187AC2878ED6600553E5D /* IdUtils.swift */; };
+		D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187AE2879B59C00553E5D /* DateUtils.swift */; };
+		D86187B12879B81C00553E5D /* ChampionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187B02879B81C00553E5D /* ChampionError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +51,11 @@
 		D86187932878DC4900553E5D /* ChampionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionUITests.swift; sourceTree = "<group>"; };
 		D86187952878DC4900553E5D /* ChampionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D86187A52878DDFC00553E5D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		D86187A72878E98900553E5D /* MockTournamentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTournamentRepository.swift; sourceTree = "<group>"; };
+		D86187A92878E9A400553E5D /* TournamentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentRepository.swift; sourceTree = "<group>"; };
+		D86187AC2878ED6600553E5D /* IdUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdUtils.swift; sourceTree = "<group>"; };
+		D86187AE2879B59C00553E5D /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		D86187B02879B81C00553E5D /* ChampionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 			children = (
 				D86187A42878DDC800553E5D /* Models */,
 				D86187A32878DD4700553E5D /* Repositories */,
+				D86187AB2878ED4E00553E5D /* Services */,
 				D86187A22878DD4000553E5D /* Views */,
 				D86187782878DC4800553E5D /* ChampionApp.swift */,
 				D861877A2878DC4800553E5D /* ContentView.swift */,
@@ -142,6 +153,8 @@
 		D86187A32878DD4700553E5D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				D86187A72878E98900553E5D /* MockTournamentRepository.swift */,
+				D86187A92878E9A400553E5D /* TournamentRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -150,8 +163,18 @@
 			isa = PBXGroup;
 			children = (
 				D86187A52878DDFC00553E5D /* Model.swift */,
+				D86187B02879B81C00553E5D /* ChampionError.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D86187AB2878ED4E00553E5D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D86187AC2878ED6600553E5D /* IdUtils.swift */,
+				D86187AE2879B59C00553E5D /* DateUtils.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,8 +308,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
+				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
+				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
+				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
+				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
+				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
