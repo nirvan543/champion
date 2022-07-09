@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ChampionApp: App {
+    @StateObject private var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(environmentValues)
         }
     }
 }

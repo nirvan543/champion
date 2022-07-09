@@ -13,6 +13,14 @@ struct DateUtils {
                                                           month: month.rawValue,
                                                           day: day))
     }
+    
+    static func displayString(for date: Date, dateStyle: DateFormatter.Style = .full, timeStyle: DateFormatter.Style = .none) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = dateStyle
+        formatter.timeStyle = timeStyle
+        
+        return formatter.string(from: date)
+    }
 }
 
 enum Month: Int {

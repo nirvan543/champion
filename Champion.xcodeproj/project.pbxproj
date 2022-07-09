@@ -20,6 +20,10 @@
 		D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187AC2878ED6600553E5D /* IdUtils.swift */; };
 		D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187AE2879B59C00553E5D /* DateUtils.swift */; };
 		D86187B12879B81C00553E5D /* ChampionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187B02879B81C00553E5D /* ChampionError.swift */; };
+		D86187B32879BF9500553E5D /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187B22879BF9500553E5D /* EnvironmentValues.swift */; };
+		D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BA2879C7AF00553E5D /* TournamentsListView.swift */; };
+		D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BC2879CC5800553E5D /* TournamentDetailView.swift */; };
+		D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BE2879DB7000553E5D /* DesignValues.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,10 @@
 		D86187AC2878ED6600553E5D /* IdUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdUtils.swift; sourceTree = "<group>"; };
 		D86187AE2879B59C00553E5D /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		D86187B02879B81C00553E5D /* ChampionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionError.swift; sourceTree = "<group>"; };
+		D86187B22879BF9500553E5D /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
+		D86187BA2879C7AF00553E5D /* TournamentsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentsListView.swift; sourceTree = "<group>"; };
+		D86187BC2879CC5800553E5D /* TournamentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDetailView.swift; sourceTree = "<group>"; };
+		D86187BE2879DB7000553E5D /* DesignValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignValues.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +154,8 @@
 		D86187A22878DD4000553E5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D86187BA2879C7AF00553E5D /* TournamentsListView.swift */,
+				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +174,7 @@
 			children = (
 				D86187A52878DDFC00553E5D /* Model.swift */,
 				D86187B02879B81C00553E5D /* ChampionError.swift */,
+				D86187B22879BF9500553E5D /* EnvironmentValues.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -173,6 +184,7 @@
 			children = (
 				D86187AC2878ED6600553E5D /* IdUtils.swift */,
 				D86187AE2879B59C00553E5D /* DateUtils.swift */,
+				D86187BE2879DB7000553E5D /* DesignValues.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -310,10 +322,14 @@
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
+				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
+				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,
+				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
+				D86187B32879BF9500553E5D /* EnvironmentValues.swift in Sources */,
 				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,11 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct Tournament {
+struct Tournament: Identifiable {
     let id: String
     let name: String
     let date: Date
-    let sport: String
     let type: TournamentType
     let gameConfig: GameConfig
     let participants: [Participant]
@@ -20,7 +19,7 @@ struct Tournament {
     let knockoutStage: KnockoutStage
 }
 
-struct Participant {
+struct Participant: Identifiable {
     let id: String
     let playerName: String
     let teamName: String
@@ -48,8 +47,8 @@ struct KnockoutStage {
     let rounds: [Round]
 }
 
-enum TournamentType {
-    case roundRobinAndKnockout
+enum TournamentType: String {
+    case roundRobinAndKnockout = "Round Robin + Knockout"
 }
 
 struct GameConfig {
