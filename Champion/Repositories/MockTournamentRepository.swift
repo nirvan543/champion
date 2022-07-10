@@ -37,6 +37,12 @@ class MockTournamentRepository: TournamentRepository {
     func saveTournaments(tournaments: [Tournament]) {
         self.tournaments = tournaments
     }
+    
+    func retrieveTournamentFormats() -> [TournamentFormat] {
+        [
+            .roundRobinAndKnockout
+        ]
+    }
 }
 
 struct TestData {
@@ -48,15 +54,7 @@ struct TestData {
                    gameConfig: GameConfig(leagueStageConfig: LeagueStageGameConfig(matchesPerOpponent: 1, legsPerMatch: 1),
                                           knockoutStageConfig: KnockoutStageGameConfig(playoffSpotCount: 4, legsPerMatch: 2)),
                    participants: TestData.participants,
-                   roundRobinStage: RoundRobinStage(rounds: [
-                    Round(id: IdUtils.newUuid, matches: [
-                        Match(id: IdUtils.newUuid,
-                              participant1: TestData.participants[0],
-                              participant2: TestData.participants[1],
-                              participant1Score: 0,
-                              participant2Score: 0)
-                    ])
-                   ]),
+                   roundRobinStage: roundRobinStage,
                    knockoutStage: KnockoutStage(rounds: [])),
         Tournament(id: IdUtils.newUuid,
                    name: "FIFA 22 Atlanta Cup II",
@@ -66,7 +64,7 @@ struct TestData {
                                           knockoutStageConfig: KnockoutStageGameConfig(playoffSpotCount: 4, legsPerMatch: 2)),
                    participants: TestData.participants,
                    roundRobinStage: RoundRobinStage(rounds: [
-                    Round(id: IdUtils.newUuid, matches: [
+                    Round(id: IdUtils.newUuid, fixtures: [
                         Match(id: IdUtils.newUuid,
                               participant1: TestData.participants[0],
                               participant2: TestData.participants[1],
@@ -83,7 +81,7 @@ struct TestData {
                                           knockoutStageConfig: KnockoutStageGameConfig(playoffSpotCount: 4, legsPerMatch: 2)),
                    participants: TestData.participants,
                    roundRobinStage: RoundRobinStage(rounds: [
-                    Round(id: IdUtils.newUuid, matches: [
+                    Round(id: IdUtils.newUuid, fixtures: [
                         Match(id: IdUtils.newUuid,
                               participant1: TestData.participants[0],
                               participant2: TestData.participants[1],
@@ -94,45 +92,104 @@ struct TestData {
                    knockoutStage: KnockoutStage(rounds: []))
     ]
     
+    static let roundRobinStage = RoundRobinStage(rounds: [
+        Round(id: IdUtils.newUuid,
+              fixtures: [
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[0],
+                      participant2: TestData.participants[1],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[2],
+                      participant2: TestData.participants[3],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[4],
+                      participant2: TestData.participants[5],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[6],
+                      participant2: TestData.participants[7],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[8],
+                      participant2: TestData.participants[9],
+                      participant1Score: 0,
+                      participant2Score: 0)
+              ]),
+        Round(id: IdUtils.newUuid,
+              fixtures: [
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[0],
+                      participant2: TestData.participants[2],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[1],
+                      participant2: TestData.participants[3],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[4],
+                      participant2: TestData.participants[6],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[9],
+                      participant2: TestData.participants[5],
+                      participant1Score: 0,
+                      participant2Score: 0),
+                Match(id: IdUtils.newUuid,
+                      participant1: TestData.participants[7],
+                      participant2: TestData.participants[8],
+                      participant1Score: 0,
+                      participant2Score: 0)
+              ])
+    ])
+    
     static let participants = [
         Participant(id: IdUtils.newUuid,
-                    playerName: "Neeraj Jangid",
+                    playerName: "Neeraj",
                     teamName: "Manchester City",
                     image: Image("man_city_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Saurav Jangir",
+                    playerName: "Saurav",
                     teamName: "FC Barcelona",
                     image: Image("fc_barcelona_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Muris Fific",
+                    playerName: "Mookie",
                     teamName: "Liverpool F.C.",
                     image: Image("liverpool_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Nirvan Nagar",
+                    playerName: "Antriksh",
                     teamName: "Paris Saint-Germain",
                     image: Image("psg_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Ovidiu Balaj",
+                    playerName: "Ovi",
                     teamName: "FC Barcelona",
                     image: Image("fc_barcelona_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Mahendra Parmar",
+                    playerName: "Mahendra",
                     teamName: "Real Madrid",
                     image: Image("real_madrid_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Pranshu Srivastav",
+                    playerName: "Pranshu",
                     teamName: "Atletico Madrid",
                     image: Image("atletico_madrid_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Siddhant Acharya",
+                    playerName: "Siddhant",
                     teamName: "FC Bayern Munchen",
                     image: Image("fc_bayern_munchen_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Keerthi Vardhan",
+                    playerName: "Keerthi",
                     teamName: "Paris Saint-Germain",
                     image: Image("psg_logo")),
         Participant(id: IdUtils.newUuid,
-                    playerName: "Aditya Beura",
+                    playerName: "Aditya",
                     teamName: "Liverpool F.C.",
                     image: Image("liverpool_logo")),
     ]

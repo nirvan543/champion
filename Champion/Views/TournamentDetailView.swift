@@ -10,9 +10,6 @@ import SwiftUI
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    private let backgroundColor = Color(uiColor: .secondarySystemBackground)
-    private let themeColor = Color(uiColor: UIColor(red: 112/225.0, green: 112/225.0, blue: 112/225.0, alpha: 1.0))
-    
     let tournament: Tournament
     
     var body: some View {
@@ -27,59 +24,59 @@ struct TournamentDetailView: View {
                 finalActionSection
                     .padding(.top, 27)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
         }
-        .background(backgroundColor.ignoresSafeArea())
+        .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
     }
     
     private var finalActionSection: some View {
-        VStack(spacing: 14) {
+        PageSection {
+            VStack(spacing: 14) {
+                Button {
+                    // TODO
+                } label: {
+                    Text("Edit Tournament")
+                        .font(.title2)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 18)
+                }
+                .background()
+                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                
+                Button {
+                    // TODO
+                } label: {
+                    Text("Start Tournament")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 18)
+                }
+                .background(DesignValues.themeColor)
+                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+            }
+        }
+    }
+    
+    private var viewMatchesButton: some View {
+        PageSection {
             Button {
                 // TODO
             } label: {
-                Text("Edit Tournament")
+                Text("View Matches")
                     .font(.title2)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
             }
             .background()
-            .overlay(Rectangle().strokeBorder(themeColor, lineWidth: 5))
-            
-            Button {
-                // TODO
-            } label: {
-                Text("Start Tournament")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-            }
-            .background(themeColor)
-            .overlay(Rectangle().strokeBorder(themeColor, lineWidth: 5))
+            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
         }
-    }
-    
-    private var viewMatchesButton: some View {
-        Button {
-            // TODO
-        } label: {
-            Text("View Matches")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-        }
-        .background()
-        .overlay(Rectangle().strokeBorder(themeColor, lineWidth: 5))
     }
     
     private var participantsSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HeaderLabelView(text: "Participants")
-            
+        PageSection(headerText: "Participants") {
             VStack(alignment: .leading) {
                 ForEach(tournament.participants) { participant in
                     HStack(spacing: 14) {
@@ -104,9 +101,7 @@ struct TournamentDetailView: View {
     }
     
     private var knockoutStageConfigSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HeaderLabelView(text: "Knockout Stage Config")
-            
+        PageSection(headerText: "Knockout Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
                 ReadOnlyConfigLineItemView(labelText: "Playoff Spots",
                                            value: "\(tournament.gameConfig.knockoutStageConfig.playoffSpotCount)")
@@ -118,9 +113,7 @@ struct TournamentDetailView: View {
     }
     
     private var leagueStageConfigSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HeaderLabelView(text: "League Stage Config")
-            
+        PageSection(headerText: "League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
                 ReadOnlyConfigLineItemView(labelText: "Matches per Opponent",
                                            value: "\(tournament.gameConfig.leagueStageConfig.matchesPerOpponent)")
@@ -132,9 +125,7 @@ struct TournamentDetailView: View {
     }
     
     private var tournamentDateSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HeaderLabelView(text: "Tournament Date")
-            
+        PageSection(headerText: "Tournament Date") {
             HStack {
                 Text(DateUtils.displayString(for: tournament.date))
                     .font(.title2)
@@ -147,9 +138,7 @@ struct TournamentDetailView: View {
     }
     
     private var tournamentTypeSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HeaderLabelView(text: "Tournament Type")
-            
+        PageSection(headerText: "Tournament Format") {
             HStack {
                 Text(tournament.type.rawValue)
                     .font(.title2)

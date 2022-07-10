@@ -13,4 +13,6 @@ protocol TournamentRepository {
     func addTournament(tournament: Tournament)
     
     func saveTournaments(tournaments: [Tournament])
+    
+    func retrieveTournamentFormats() -> [TournamentFormat]
 }

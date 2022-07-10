@@ -31,7 +31,7 @@ struct TournamentsListView: View {
         .navigationTitle("Tournaments")
         .toolbar {
             NavigationLink {
-                Text("New Tournament View")
+                AddEditTournamentView()
             } label: {
                 Image(systemName: "plus")
             }

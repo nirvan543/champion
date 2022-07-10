@@ -12,21 +12,29 @@ struct Tournament: Identifiable {
     let id: String
     let name: String
     let date: Date
-    let type: TournamentType
+    let type: TournamentFormat
     let gameConfig: GameConfig
     let participants: [Participant]
     let roundRobinStage: RoundRobinStage
     let knockoutStage: KnockoutStage
 }
 
-struct Participant: Identifiable {
+struct Participant: Identifiable, Hashable {
     let id: String
     let playerName: String
     let teamName: String
     let image: Image
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: Participant, rhs: Participant) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
-struct Match {
+struct Match: Identifiable, Hashable {
     let id: String
     let participant1: Participant
     let participant2: Participant
@@ -34,9 +42,9 @@ struct Match {
     let participant2Score: Int
 }
 
-struct Round {
+struct Round: Identifiable, Hashable {
     let id: String
-    let matches: [Match]
+    let fixtures: [Match]
 }
 
 struct RoundRobinStage {
@@ -47,7 +55,9 @@ struct KnockoutStage {
     let rounds: [Round]
 }
 
-enum TournamentType: String {
+enum TournamentFormat: String {
+    case roundRobin = "Round Robin"
+    case knockout = "Knockout"
     case roundRobinAndKnockout = "Round Robin + Knockout"
 }
 

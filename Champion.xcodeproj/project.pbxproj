@@ -24,6 +24,9 @@
 		D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BA2879C7AF00553E5D /* TournamentsListView.swift */; };
 		D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BC2879CC5800553E5D /* TournamentDetailView.swift */; };
 		D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BE2879DB7000553E5D /* DesignValues.swift */; };
+		D86187C1287A21E900553E5D /* MatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C0287A21E900553E5D /* MatchesView.swift */; };
+		D86187C4287A222700553E5D /* PageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C3287A222700553E5D /* PageSection.swift */; };
+		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,9 @@
 		D86187BA2879C7AF00553E5D /* TournamentsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentsListView.swift; sourceTree = "<group>"; };
 		D86187BC2879CC5800553E5D /* TournamentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDetailView.swift; sourceTree = "<group>"; };
 		D86187BE2879DB7000553E5D /* DesignValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignValues.swift; sourceTree = "<group>"; };
+		D86187C0287A21E900553E5D /* MatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesView.swift; sourceTree = "<group>"; };
+		D86187C3287A222700553E5D /* PageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSection.swift; sourceTree = "<group>"; };
+		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,8 +160,11 @@
 		D86187A22878DD4000553E5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D86187C2287A221B00553E5D /* Components */,
 				D86187BA2879C7AF00553E5D /* TournamentsListView.swift */,
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
+				D86187C0287A21E900553E5D /* MatchesView.swift */,
+				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -187,6 +196,14 @@
 				D86187BE2879DB7000553E5D /* DesignValues.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D86187C2287A221B00553E5D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D86187C3287A222700553E5D /* PageSection.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,8 +336,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */,
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
+				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
@@ -330,6 +349,7 @@
 				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
 				D86187B32879BF9500553E5D /* EnvironmentValues.swift in Sources */,
+				D86187C4287A222700553E5D /* PageSection.swift in Sources */,
 				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
