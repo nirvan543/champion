@@ -15,4 +15,6 @@ protocol TournamentRepository {
     func saveTournaments(tournaments: [Tournament])
     
     func retrieveTournamentFormats() -> [TournamentFormat]
+    
+    func retrieveImageOptions() -> [String]
 }

@@ -27,6 +27,8 @@
 		D86187C1287A21E900553E5D /* MatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C0287A21E900553E5D /* MatchesView.swift */; };
 		D86187C4287A222700553E5D /* PageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C3287A222700553E5D /* PageSection.swift */; };
 		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
+		D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C7287B245A00553E5D /* AddParticipantView.swift */; };
+		D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		D86187C0287A21E900553E5D /* MatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesView.swift; sourceTree = "<group>"; };
 		D86187C3287A222700553E5D /* PageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSection.swift; sourceTree = "<group>"; };
 		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
+		D86187C7287B245A00553E5D /* AddParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantView.swift; sourceTree = "<group>"; };
+		D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditMatchesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,8 @@
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
 				D86187C0287A21E900553E5D /* MatchesView.swift */,
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
+				D86187C7287B245A00553E5D /* AddParticipantView.swift */,
+				D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,11 +348,13 @@
 				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
+				D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
 				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,
 				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
+				D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
 				D86187B32879BF9500553E5D /* EnvironmentValues.swift in Sources */,
 				D86187C4287A222700553E5D /* PageSection.swift in Sources */,

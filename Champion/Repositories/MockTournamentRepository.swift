@@ -43,6 +43,19 @@ class MockTournamentRepository: TournamentRepository {
             .roundRobinAndKnockout
         ]
     }
+    
+    func retrieveImageOptions() -> [String] {
+        [
+            "atletico_madrid_logo",
+            "fc_barcelona_logo",
+            "fc_bayern_munchen_logo",
+            "liverpool_logo",
+            "man_city_logo",
+            "psg_logo",
+            "real_madrid_logo",
+            "fifa_logo"
+        ]
+    }
 }
 
 struct TestData {

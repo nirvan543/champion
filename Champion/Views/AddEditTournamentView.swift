@@ -15,6 +15,7 @@ struct AddEditTournamentView: View {
     @State private var knockoutStagePlayoffSpotCount = 4
     @State private var knockoutLegsPerMatch = 2
     @State private var participants = [Participant]()
+    @State private var presentAddParticipantView = false
     
     let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
     private let matchCellShape = Rectangle()
@@ -35,6 +36,11 @@ struct AddEditTournamentView: View {
         .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle("New Tournament")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $presentAddParticipantView) {
+            NavigationView {
+                AddParticipantView(particiapnts: $participants)
+            }
+        }
     }
     
     private var tournamentNameSection: some View {
@@ -105,8 +111,8 @@ struct AddEditTournamentView: View {
                     .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
                 }
                 
-                NavigationLink {
-                    Text("Add Player")
+                Button {
+                    presentAddParticipantView.toggle()
                 } label: {
                     Text("Add Participant")
                         .font(.title2)
