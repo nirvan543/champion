@@ -47,7 +47,7 @@ struct AddParticipantView: View {
                 particiapnts.append(Participant(id: IdUtils.newUuid,
                                                 playerName: playerName,
                                                 teamName: teamName,
-                                                image: Image(imageSelection)))
+                                                imageName: imageSelection))
                 
                 presentationMode.wrappedValue.dismiss()
             } label: {

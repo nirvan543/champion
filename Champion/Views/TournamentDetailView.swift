@@ -80,7 +80,7 @@ struct TournamentDetailView: View {
             VStack(alignment: .leading) {
                 ForEach(tournament.participants) { participant in
                     HStack(spacing: 14) {
-                        participant.image
+                        Image(participant.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 50, height: 50)
@@ -104,10 +104,10 @@ struct TournamentDetailView: View {
         PageSection(headerText: "Knockout Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
                 ReadOnlyConfigLineItemView(labelText: "Playoff Spots",
-                                           value: "\(tournament.gameConfig.knockoutStageConfig.playoffSpotCount)")
+                                           value: "\(tournament.knockoutStage.playoffSpots)")
                 
                 ReadOnlyConfigLineItemView(labelText: "Legs per Match",
-                                           value: "\(tournament.gameConfig.knockoutStageConfig.legsPerMatch)")
+                                           value: "\(tournament.knockoutStage.legsPerMatch)")
             }
         }
     }
@@ -116,10 +116,10 @@ struct TournamentDetailView: View {
         PageSection(headerText: "League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
                 ReadOnlyConfigLineItemView(labelText: "Matches per Opponent",
-                                           value: "\(tournament.gameConfig.leagueStageConfig.matchesPerOpponent)")
+                                           value: "\(tournament.roundRobinStage.matchesPerOpponent)")
                 
                 ReadOnlyConfigLineItemView(labelText: "Legs per Match",
-                                           value: "\(tournament.gameConfig.leagueStageConfig.legsPerMatch)")
+                                           value: "\(tournament.roundRobinStage.legsPerMatch)")
             }
         }
     }

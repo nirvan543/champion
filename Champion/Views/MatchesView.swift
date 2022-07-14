@@ -10,8 +10,6 @@ import SwiftUI
 struct MatchesView: View {
     let roundRobinStage: RoundRobinStage
     
-    private let matchCellShape = Rectangle()
-    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 42) {
@@ -19,21 +17,8 @@ struct MatchesView: View {
                     PageSection(headerText: "Round \(index + 1)") {
                         VStack {
                             ForEach(round.fixtures) { fixture in
-                                HStack {
-                                    Text(fixture.participant1.playerName)
-                                        .font(.title3)
-                                    Spacer()
-                                    Text("vs")
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                    Spacer()
-                                    Text(fixture.participant2.playerName)
-                                        .font(.title3)
-                                        .frame(alignment: .trailing)
-                                }
-                                .padding()
-                                .background()
-                                .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+                                MatchCellView(player1Name: fixture.participant1.playerName,
+                                              player2Name: fixture.participant2.playerName)
                             }
                         }
                     }

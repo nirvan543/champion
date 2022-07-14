@@ -29,6 +29,8 @@
 		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
 		D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C7287B245A00553E5D /* AddParticipantView.swift */; };
 		D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */; };
+		D8BD21B7287E5ADD0018F7D2 /* MatchCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */; };
+		D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
 		D86187C7287B245A00553E5D /* AddParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantView.swift; sourceTree = "<group>"; };
 		D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditMatchesView.swift; sourceTree = "<group>"; };
+		D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCellView.swift; sourceTree = "<group>"; };
+		D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,7 @@
 				D86187AC2878ED6600553E5D /* IdUtils.swift */,
 				D86187AE2879B59C00553E5D /* DateUtils.swift */,
 				D86187BE2879DB7000553E5D /* DesignValues.swift */,
+				D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				D86187C3287A222700553E5D /* PageSection.swift */,
+				D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */,
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
+				D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */,
 				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
@@ -358,6 +365,7 @@
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
 				D86187B32879BF9500553E5D /* EnvironmentValues.swift in Sources */,
 				D86187C4287A222700553E5D /* PageSection.swift in Sources */,
+				D8BD21B7287E5ADD0018F7D2 /* MatchCellView.swift in Sources */,
 				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

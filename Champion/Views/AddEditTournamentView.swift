@@ -14,10 +14,11 @@ struct AddEditTournamentView: View {
     @State private var leagueLegsPerMatch = 1
     @State private var knockoutStagePlayoffSpotCount = 4
     @State private var knockoutLegsPerMatch = 2
-    @State private var participants = [Participant]()
+    @State private var participants = [TestData.participants[0], TestData.participants[1], TestData.participants[2], TestData.participants[3]]
     @State private var presentAddParticipantView = false
+    @State private var leagueStageRounds = [Round]()
     
-    let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
+    private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
     private let matchCellShape = Rectangle()
     
     var body: some View {
@@ -94,7 +95,7 @@ struct AddEditTournamentView: View {
             VStack(alignment: .leading) {
                 ForEach(participants) { participant in
                     HStack(spacing: 14) {
-                        participant.image
+                        Image(participant.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 50, height: 50)
@@ -129,7 +130,10 @@ struct AddEditTournamentView: View {
     private var createFixuresSection: some View {
         PageSection {
             NavigationLink {
-                Text("Create Fixtures")
+                CreateEditMatchesView(participants: participants,
+                                      matchesPerOpponent: leagueStageMatchesPerOpponent,
+                                      legsPerMatch: leagueLegsPerMatch,
+                                      roundsBinding: $leagueStageRounds)
             } label: {
                 Text("Create Fixtures")
                     .font(.title2)
