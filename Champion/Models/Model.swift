@@ -95,17 +95,19 @@ struct Round: Identifiable, Hashable, Equatable {
     }
 }
 
-struct Match: Identifiable, Hashable, Equatable, Codable {
+struct Match: Identifiable, Hashable, Equatable {
     let id: String
     let participant1: Participant
     let participant2: Participant
     var legs: [MatchLeg]
+    let displayName: String
     
     init(participant1: Participant, participant2: Participant, legsPerMatch: Int) {
         id = IdUtils.newUuid
         self.participant1 = participant1
         self.participant2 = participant2
         legs = []
+        displayName = "\(participant1.playerName) v \(participant2.playerName)"
         
         for i in 0 ..< legsPerMatch {
             if i % 2 == 0 {
@@ -123,6 +125,7 @@ struct Match: Identifiable, Hashable, Equatable, Codable {
         self.participant1 = participant1
         self.participant2 = participant2
         self.legs = legs
+        displayName = "\(participant1.playerName) v \(participant2.playerName)"
     }
     
     func containsParticipants(participant1: Participant, participant2: Participant) -> Bool {

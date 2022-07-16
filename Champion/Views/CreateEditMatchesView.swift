@@ -54,7 +54,7 @@ struct CreateEditMatchesView: View {
         PageSection {
             VStack {
                 Button {
-                    rounds = FixtureService.shared.createFixtures(for: participants,
+                    rounds = FixtureService.shared.createFixtures(participants: participants,
                                                                   matchesPerOpponent: matchesPerOpponent,
                                                                   legsPerMatch: legsPerMatch)
                 } label: {

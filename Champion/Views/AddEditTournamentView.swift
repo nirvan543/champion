@@ -14,7 +14,7 @@ struct AddEditTournamentView: View {
     @State private var leagueLegsPerMatch = 1
     @State private var knockoutStagePlayoffSpotCount = 4
     @State private var knockoutLegsPerMatch = 2
-    @State private var participants = [TestData.participants[0], TestData.participants[1], TestData.participants[2], TestData.participants[3]]
+    @State private var participants = TestData.participants
     @State private var presentAddParticipantView = false
     @State private var leagueStageRounds = [Round]()
     
