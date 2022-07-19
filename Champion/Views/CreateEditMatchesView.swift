@@ -100,8 +100,7 @@ struct CreateEditMatchesView: View {
             PageSection(headerText: "Round \(index + 1)") {
                 VStack {
                     ForEach(round.fixtures) { fixture in
-                        MatchCellView(player1Name: fixture.participant1.playerName,
-                                      player2Name: fixture.participant2.playerName)
+                        MatchCellView(match: fixture)
                     }
                 }
             }
@@ -110,8 +109,8 @@ struct CreateEditMatchesView: View {
 }
 
 struct CreateEditMatchesView_Previews: PreviewProvider {
-    private static let participants = TestData.participants
-    @State private static var rounds = TestData.roundRobinStage.rounds
+    private static let participants = MockData.participants
+    @State private static var rounds = MockData.roundRobinStage.rounds
     @State private static var emptyRounds = [Round]()
     
     static var previews: some View {

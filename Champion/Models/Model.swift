@@ -10,11 +10,12 @@ import SwiftUI
 
 struct Tournament: Identifiable, Hashable, Equatable {
     let id: String
+    var state: TournamentState
     let name: String
     let date: Date
     let type: TournamentFormat
     let participants: [Participant]
-    let roundRobinStage: RoundRobinStage
+    var roundRobinStage: RoundRobinStage
     let knockoutStage: KnockoutStage
     
     func hash(into hasher: inout Hasher) {
@@ -41,7 +42,7 @@ struct Participant: Identifiable, Hashable, Equatable, Codable {
     }
 }
 
-struct RoundRobinStage {
+struct RoundRobinStage: Hashable, Equatable {
     let matchesPerOpponent: Int
     let legsPerMatch: Int
     var rounds: [Round]
@@ -101,6 +102,7 @@ struct Match: Identifiable, Hashable, Equatable {
     let participant2: Participant
     var legs: [MatchLeg]
     let displayName: String
+    var outcome: Outcome
     
     init(participant1: Participant, participant2: Participant, legsPerMatch: Int) {
         id = IdUtils.newUuid
@@ -108,6 +110,7 @@ struct Match: Identifiable, Hashable, Equatable {
         self.participant2 = participant2
         legs = []
         displayName = "\(participant1.playerName) v \(participant2.playerName)"
+        outcome = .undecided
         
         for i in 0 ..< legsPerMatch {
             if i % 2 == 0 {
@@ -120,12 +123,13 @@ struct Match: Identifiable, Hashable, Equatable {
         }
     }
     
-    init(id: String, participant1: Participant, participant2: Participant, legs: [MatchLeg]) {
+    init(id: String, participant1: Participant, participant2: Participant, legs: [MatchLeg], outcome: Outcome) {
         self.id = id
         self.participant1 = participant1
         self.participant2 = participant2
         self.legs = legs
         displayName = "\(participant1.playerName) v \(participant2.playerName)"
+        self.outcome = outcome
     }
     
     func containsParticipants(participant1: Participant, participant2: Participant) -> Bool {
@@ -133,7 +137,7 @@ struct Match: Identifiable, Hashable, Equatable {
         (participant2 == self.participant1 || participant2 == self.participant2)
     }
     
-    var winner: Participant {
+    var winner: Participant? {
         let participant1AggregateScore = legs.reduce(0) { partialResult, leg in
             partialResult + leg.score(for: participant1)
         }
@@ -144,8 +148,28 @@ struct Match: Identifiable, Hashable, Equatable {
         
         if (participant1AggregateScore > participant2AggregateScore) {
             return participant1
-        } else {
+        } else if participant1AggregateScore < participant2AggregateScore {
             return participant2
+        } else {
+            return nil
+        }
+    }
+    
+    mutating func completeMatch() {
+        let participant1AggregateScore = legs.reduce(0) { partialResult, leg in
+            partialResult + leg.score(for: participant1)
+        }
+        
+        let participant2AggregateScore = legs.reduce(0) { partialResult, leg in
+            partialResult + leg.score(for: participant2)
+        }
+        
+        if (participant1AggregateScore > participant2AggregateScore) {
+            outcome = .win
+        } else if participant1AggregateScore < participant2AggregateScore {
+            outcome = .win
+        } else {
+            outcome = .tie
         }
     }
     
@@ -162,23 +186,58 @@ struct MatchLeg: Identifiable, Hashable, Equatable, Codable {
     let id: String
     let homeParticipant: Participant
     let awayParticipant: Participant
-    let homeScore: Int
-    let awayScore: Int
+    var goals: [Goal]
+    var legState: GameState
     
     init(homeParticipant: Participant, awayParticipant: Participant) {
-        id = IdUtils.newUuid
-        self.homeParticipant = homeParticipant
-        self.awayParticipant = awayParticipant
-        homeScore = 0
-        awayScore = 0
+        self.init(id: IdUtils.newUuid,
+                  homeParticipant: homeParticipant,
+                  awayParticipant: awayParticipant,
+                  goals: [],
+                  legState: .notStarted)
     }
     
-    var winner: Participant {
+    init(id: String,
+         homeParticipant: Participant,
+         awayParticipant: Participant,
+         goals: [Goal],
+         legState: GameState) {
+        
+        self.id = id
+        self.homeParticipant = homeParticipant
+        self.awayParticipant = awayParticipant
+        self.goals = goals
+        self.legState = legState
+    }
+    
+    var homeScore: Int {
+        goals.filter({ $0.scorer == homeParticipant }).count
+    }
+    
+    var awayScore: Int {
+        goals.filter({ $0.scorer == awayParticipant }).count
+    }
+    
+    var winner: Participant? {
+        guard legState == .completed else {
+            return nil
+        }
+        
         if homeScore > awayScore {
             return homeParticipant
-        } else {
+        } else if homeScore < awayScore {
             return awayParticipant
+        } else {
+            return nil
         }
+    }
+    
+    var endedInATie: Bool {
+        legState == .completed && (homeScore == awayScore)
+    }
+    
+    var endedWithAWinner: Bool {
+        legState == .completed && (homeScore > awayScore || awayScore > homeScore)
     }
     
     func score(for participant: Participant) -> Int {
@@ -187,6 +246,18 @@ struct MatchLeg: Identifiable, Hashable, Equatable, Codable {
         } else {
             return awayScore
         }
+    }
+    
+    mutating func startLeg() {
+        legState = .inProgress
+    }
+    
+    mutating func completeLeg() {
+        legState = .completed
+    }
+    
+    mutating func reactivateLeg() {
+        legState = .inProgress
     }
     
     func hash(into hasher: inout Hasher) {
@@ -198,8 +269,36 @@ struct MatchLeg: Identifiable, Hashable, Equatable, Codable {
     }
 }
 
+struct Goal: Identifiable, Hashable, Equatable, Codable {
+    let id: String
+    let scorer: Participant
+    let against: Participant
+    let minute: Int
+    let second: Int
+    let distance: Int
+}
+
 enum TournamentFormat: String {
     case roundRobin = "Round Robin"
     case knockout = "Knockout"
     case roundRobinAndKnockout = "Round Robin + Knockout"
+}
+
+enum TournamentState {
+    case created
+    case roundRobin
+    case knockout
+    case completed
+}
+
+enum Outcome: Codable {
+    case undecided
+    case win
+    case tie
+}
+
+enum GameState: Codable {
+    case notStarted
+    case inProgress
+    case completed
 }

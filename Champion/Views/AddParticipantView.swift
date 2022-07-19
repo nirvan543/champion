@@ -97,7 +97,7 @@ struct AddParticipantView: View {
 }
 
 struct AddParticipantView_Previews: PreviewProvider {
-    @State private static var participants = TestData.participants
+    @State private static var participants = MockData.participants
     
     static var previews: some View {
         NavigationView {

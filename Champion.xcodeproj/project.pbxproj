@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D82E7D7C28826C5C006750A3 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82E7D7B28826C5C006750A3 /* MockData.swift */; };
+		D82E7D7E288276C0006750A3 /* TournamentProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */; };
 		D86187792878DC4800553E5D /* ChampionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187782878DC4800553E5D /* ChampionApp.swift */; };
 		D861877B2878DC4800553E5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861877A2878DC4800553E5D /* ContentView.swift */; };
 		D861877D2878DC4900553E5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D861877C2878DC4900553E5D /* Assets.xcassets */; };
@@ -28,6 +30,11 @@
 		D86187C4287A222700553E5D /* PageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C3287A222700553E5D /* PageSection.swift */; };
 		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
 		D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C7287B245A00553E5D /* AddParticipantView.swift */; };
+		D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE202882903A0061BC74 /* MatchProgressView.swift */; };
+		D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE222882913B0061BC74 /* LegsCellView.swift */; };
+		D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE24288296870061BC74 /* MatchLegProgressView.swift */; };
+		D8B84B3D2882990B00B06BA3 /* ScoreCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B84B3C2882990B00B06BA3 /* ScoreCellView.swift */; };
+		D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */; };
 		D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */; };
 		D8BD21B7287E5ADD0018F7D2 /* MatchCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */; };
 		D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */; };
@@ -51,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D82E7D7B28826C5C006750A3 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentProgressView.swift; sourceTree = "<group>"; };
 		D86187752878DC4800553E5D /* Champion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Champion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86187782878DC4800553E5D /* ChampionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionApp.swift; sourceTree = "<group>"; };
 		D861877A2878DC4800553E5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +84,11 @@
 		D86187C3287A222700553E5D /* PageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSection.swift; sourceTree = "<group>"; };
 		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
 		D86187C7287B245A00553E5D /* AddParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantView.swift; sourceTree = "<group>"; };
+		D88CFE202882903A0061BC74 /* MatchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProgressView.swift; sourceTree = "<group>"; };
+		D88CFE222882913B0061BC74 /* LegsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegsCellView.swift; sourceTree = "<group>"; };
+		D88CFE24288296870061BC74 /* MatchLegProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchLegProgressView.swift; sourceTree = "<group>"; };
+		D8B84B3C2882990B00B06BA3 /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
+		D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCellView.swift; sourceTree = "<group>"; };
 		D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditMatchesView.swift; sourceTree = "<group>"; };
 		D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCellView.swift; sourceTree = "<group>"; };
 		D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureService.swift; sourceTree = "<group>"; };
@@ -105,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D82E7D7A28826C37006750A3 /* TestStuff */ = {
+			isa = PBXGroup;
+			children = (
+				D82E7D7B28826C5C006750A3 /* MockData.swift */,
+			);
+			path = TestStuff;
+			sourceTree = "<group>";
+		};
 		D861876C2878DC4800553E5D = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +150,7 @@
 		D86187772878DC4800553E5D /* Champion */ = {
 			isa = PBXGroup;
 			children = (
+				D82E7D7A28826C37006750A3 /* TestStuff */,
 				D86187A42878DDC800553E5D /* Models */,
 				D86187A32878DD4700553E5D /* Repositories */,
 				D86187AB2878ED4E00553E5D /* Services */,
@@ -175,6 +198,9 @@
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
 				D86187C7287B245A00553E5D /* AddParticipantView.swift */,
 				D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */,
+				D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */,
+				D88CFE202882903A0061BC74 /* MatchProgressView.swift */,
+				D88CFE24288296870061BC74 /* MatchLegProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +240,9 @@
 			children = (
 				D86187C3287A222700553E5D /* PageSection.swift */,
 				D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */,
+				D88CFE222882913B0061BC74 /* LegsCellView.swift */,
+				D8B84B3C2882990B00B06BA3 /* ScoreCellView.swift */,
+				D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -348,15 +377,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8B84B3D2882990B00B06BA3 /* ScoreCellView.swift in Sources */,
 				D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */,
+				D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */,
+				D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */,
+				D82E7D7E288276C0006750A3 /* TournamentProgressView.swift in Sources */,
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
 				D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */,
 				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
+				D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */,
 				D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
+				D82E7D7C28826C5C006750A3 /* MockData.swift in Sources */,
+				D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
 				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,

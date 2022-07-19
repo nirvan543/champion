@@ -17,8 +17,7 @@ struct MatchesView: View {
                     PageSection(headerText: "Round \(index + 1)") {
                         VStack {
                             ForEach(round.fixtures) { fixture in
-                                MatchCellView(player1Name: fixture.participant1.playerName,
-                                              player2Name: fixture.participant2.playerName)
+                                MatchCellView(match: fixture)
                             }
                         }
                     }
@@ -33,7 +32,7 @@ struct MatchesView: View {
 }
 
 struct MatchesView_Previews: PreviewProvider {
-    static let roundRobinStage = TestData.roundRobinStage
+    static let roundRobinStage = MockData.roundRobinStage
     
     static var previews: some View {
         Group {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var environmentValues: EnvironmentValues
     
     let tournament: Tournament
     
@@ -32,6 +33,7 @@ struct TournamentDetailView: View {
     private var finalActionSection: some View {
         PageSection {
             VStack(spacing: 14) {
+                /*
                 Button {
                     // TODO
                 } label: {
@@ -43,26 +45,41 @@ struct TournamentDetailView: View {
                 }
                 .background()
                 .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                */
                 
-                Button {
-                    // TODO
+                NavigationLink {
+                    TournamentProgressView(tournament: $environmentValues.tournaments.first(where: { $0.wrappedValue == tournament })!)
                 } label: {
-                    Text("Start Tournament")
+                    Text(primaryActionText)
                         .font(.title2)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 18)
                 }
+                .buttonStyle(.plain)
                 .background(DesignValues.themeColor)
                 .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
             }
         }
     }
     
+    private var primaryActionText: String {
+        switch tournament.state {
+        case .created:
+            return "Start Tournament"
+        case .roundRobin:
+            return "Continue Tournament"
+        case .knockout:
+            return "Continue Tournament"
+        case .completed:
+            return "View Results"
+        }
+    }
+    
     private var viewMatchesButton: some View {
         PageSection {
-            Button {
-                // TODO
+            NavigationLink {
+                MatchesView(roundRobinStage: tournament.roundRobinStage)
             } label: {
                 Text("View Matches")
                     .font(.title2)
@@ -185,7 +202,9 @@ struct ReadOnlyConfigLineItemView: View {
 }
 
 struct TournamentDetailView_Previews: PreviewProvider {
-    private static let tournament = TestData.tournaments[0]
+    @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    private static let tournament = MockData.atlantaCup3
+    
     static var previews: some View {
         Group {
             NavigationView {
@@ -196,5 +215,6 @@ struct TournamentDetailView_Previews: PreviewProvider {
             }
             .preferredColorScheme(.dark)
         }
+        .environmentObject(environmentValues)
     }
 }
