@@ -98,11 +98,10 @@ struct Round: Identifiable, Hashable, Equatable {
 
 struct Match: Identifiable, Hashable, Equatable {
     let id: String
+    let displayName: String
     let participant1: Participant
     let participant2: Participant
     var legs: [MatchLeg]
-    let displayName: String
-    var outcome: Outcome
     
     init(participant1: Participant, participant2: Participant, legsPerMatch: Int) {
         id = IdUtils.newUuid
@@ -110,7 +109,6 @@ struct Match: Identifiable, Hashable, Equatable {
         self.participant2 = participant2
         legs = []
         displayName = "\(participant1.playerName) v \(participant2.playerName)"
-        outcome = .undecided
         
         for i in 0 ..< legsPerMatch {
             if i % 2 == 0 {
@@ -123,13 +121,12 @@ struct Match: Identifiable, Hashable, Equatable {
         }
     }
     
-    init(id: String, participant1: Participant, participant2: Participant, legs: [MatchLeg], outcome: Outcome) {
+    init(id: String, participant1: Participant, participant2: Participant, legs: [MatchLeg]) {
         self.id = id
         self.participant1 = participant1
         self.participant2 = participant2
         self.legs = legs
         displayName = "\(participant1.playerName) v \(participant2.playerName)"
-        self.outcome = outcome
     }
     
     func containsParticipants(participant1: Participant, participant2: Participant) -> Bool {
@@ -138,6 +135,10 @@ struct Match: Identifiable, Hashable, Equatable {
     }
     
     var winner: Participant? {
+        guard matchState == .completed else {
+            return nil
+        }
+        
         let participant1AggregateScore = legs.reduce(0) { partialResult, leg in
             partialResult + leg.score(for: participant1)
         }
@@ -155,22 +156,32 @@ struct Match: Identifiable, Hashable, Equatable {
         }
     }
     
-    mutating func completeMatch() {
-        let participant1AggregateScore = legs.reduce(0) { partialResult, leg in
+    var endedInATie: Bool {
+        guard matchState == .completed else {
+            return false
+        }
+        
+        let participant1Score = legs.reduce(0) { partialResult, leg in
             partialResult + leg.score(for: participant1)
         }
         
-        let participant2AggregateScore = legs.reduce(0) { partialResult, leg in
+        let participant2Score = legs.reduce(0) { partialResult, leg in
             partialResult + leg.score(for: participant2)
         }
         
-        if (participant1AggregateScore > participant2AggregateScore) {
-            outcome = .win
-        } else if participant1AggregateScore < participant2AggregateScore {
-            outcome = .win
-        } else {
-            outcome = .tie
+        return participant1Score == participant2Score
+    }
+    
+    var matchState: GameState {
+        if legs.allSatisfy({ $0.legState == .notStarted }) {
+            return .notStarted
         }
+        
+        if legs.allSatisfy({ $0.legState == .completed }) {
+            return .completed
+        }
+        
+        return .inProgress
     }
     
     func hash(into hasher: inout Hasher) {
@@ -289,12 +300,6 @@ enum TournamentState {
     case roundRobin
     case knockout
     case completed
-}
-
-enum Outcome: Codable {
-    case undecided
-    case win
-    case tie
 }
 
 enum GameState: Codable {

@@ -38,7 +38,7 @@ struct MatchCellView: View {
     }
     
     private var backgroundColor: Color {
-        if match.outcome == .win || match.outcome == .tie {
+        if match.matchState == .completed {
             return .green.opacity(0.30)
         } else {
             return colorScheme == .light ? .white : .black
@@ -49,7 +49,7 @@ struct MatchCellView: View {
     private func leadingImage(for participant: Participant) -> some View {
         if match.winner == participant {
             Image(systemName: "star.fill")
-        } else if match.outcome == .tie {
+        } else if match.endedInATie {
             Image(systemName: "circle.fill")
         } else {
             EmptyView()
@@ -61,8 +61,7 @@ struct MatchCellView_Previews: PreviewProvider {
     static let oneLegMatch = Match(id: IdUtils.newUuid,
                                    participant1: MockData.antriksh,
                                    participant2: MockData.neeraj,
-                                   legs: [leg],
-                                   outcome: .win)
+                                   legs: [leg])
     
     static let leg = MatchLeg(id: IdUtils.newUuid,
                               homeParticipant: MockData.antriksh,

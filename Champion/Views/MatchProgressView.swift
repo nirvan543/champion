@@ -39,8 +39,7 @@ struct MatchProgressView_Previews: PreviewProvider {
     @State static var match = Match(id: IdUtils.newUuid,
                                     participant1: MockData.antriksh,
                                     participant2: MockData.neeraj,
-                                    legs: [leg1, leg2],
-                                    outcome: .undecided)
+                                    legs: [leg1, leg2])
     
     static let leg1 = MatchLeg(id: IdUtils.newUuid,
                                homeParticipant: MockData.antriksh,
