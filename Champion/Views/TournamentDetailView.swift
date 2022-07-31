@@ -9,9 +9,8 @@ import SwiftUI
 
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var environmentValues: EnvironmentValues
     
-    let tournament: Tournament
+    @Binding var tournament: Tournament
     
     var body: some View {
         ScrollView {
@@ -33,22 +32,8 @@ struct TournamentDetailView: View {
     private var finalActionSection: some View {
         PageSection {
             VStack(spacing: 14) {
-                /*
-                Button {
-                    // TODO
-                } label: {
-                    Text("Edit Tournament")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .background()
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
-                */
-                
                 NavigationLink {
-                    TournamentProgressView(tournament: $environmentValues.tournaments.first(where: { $0.wrappedValue == tournament })!)
+                    TournamentProgressView(tournament: $tournament)
                 } label: {
                     Text(primaryActionText)
                         .font(.title2)
@@ -203,15 +188,15 @@ struct ReadOnlyConfigLineItemView: View {
 
 struct TournamentDetailView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
-    private static let tournament = MockData.atlantaCup3
+    @State private static var tournament = MockData.atlantaCup3
     
     static var previews: some View {
         Group {
             NavigationView {
-                TournamentDetailView(tournament: tournament)
+                TournamentDetailView(tournament: $tournament)
             }
             NavigationView {
-                TournamentDetailView(tournament: tournament)
+                TournamentDetailView(tournament: $tournament)
             }
             .preferredColorScheme(.dark)
         }

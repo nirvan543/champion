@@ -9,8 +9,9 @@ import Foundation
 
 class EnvironmentValues: ObservableObject {
     @Published var tournaments: [Tournament]
+    @Published var selectedTournamentId: String? = nil
     
     init(tournaments: [Tournament]) {
-        self.tournaments = tournaments
+        self.tournaments = tournaments.sorted(by: { $0.date < $1.date })
     }
 }
