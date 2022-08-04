@@ -11,13 +11,17 @@ struct LegsCellView: View {
     @Environment(\.colorScheme) var colorScheme
     private let matchCellShape = Rectangle()
     
-    let leg: MatchLeg
+    let homeParticipant: Participant
+    let awayParticipant: Participant
+    let legState: GameState
+    let winner: Participant?
+    let endedInATie: Bool
     
     var body: some View {
         HStack {
             HStack {
-                leadingImage(for: leg.homeParticipant)
-                Text(leg.homeParticipant.playerName)
+                leadingImage(for: homeParticipant)
+                Text(homeParticipant.playerName)
                     .font(.title3)
             }
             Spacer()
@@ -26,8 +30,8 @@ struct LegsCellView: View {
                 .fontWeight(.bold)
             Spacer()
             HStack {
-                leadingImage(for: leg.awayParticipant)
-                Text(leg.awayParticipant.playerName)
+                leadingImage(for: awayParticipant)
+                Text(awayParticipant.playerName)
                     .font(.title3)
                     .frame(alignment: .trailing)
             }
@@ -38,7 +42,7 @@ struct LegsCellView: View {
     }
     
     private var backgroundColor: Color {
-        if leg.legState == .completed {
+        if legState == .completed {
             return .green.opacity(0.30)
         } else {
             return colorScheme == .light ? .white : .black
@@ -47,9 +51,9 @@ struct LegsCellView: View {
     
     @ViewBuilder
     private func leadingImage(for participant: Participant) -> some View {
-        if leg.winner == participant {
+        if winner == participant {
             Image(systemName: "star.fill")
-        } else if leg.endedInATie {
+        } else if endedInATie {
             Image(systemName: "circle.fill")
         } else {
             EmptyView()
@@ -61,6 +65,10 @@ struct LegsCellView_Previews: PreviewProvider {
     private static let leg = MatchLeg(homeParticipant: MockData.antriksh, awayParticipant: MockData.neeraj)
     
     static var previews: some View {
-        LegsCellView(leg: leg)
+        LegsCellView(homeParticipant: leg.homeParticipant,
+                     awayParticipant: leg.awayParticipant,
+                     legState: leg.legState,
+                     winner: leg.winner,
+                     endedInATie: leg.endedInATie)
     }
 }

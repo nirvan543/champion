@@ -35,7 +35,11 @@ struct MatchLegProgressView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 42) {
-                LegsCellView(leg: matchLeg)
+                LegsCellView(homeParticipant: matchLeg.homeParticipant,
+                             awayParticipant: matchLeg.awayParticipant,
+                             legState: matchLeg.legState,
+                             winner: matchLeg.winner,
+                             endedInATie: matchLeg.endedInATie)
                 
                 PageSection(headerText: "Score Card") {
                     ScoreCellView(participant1Score: matchLeg.homeScore, participant2Score: matchLeg.awayScore)
