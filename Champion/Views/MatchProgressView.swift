@@ -20,7 +20,11 @@ struct MatchProgressView: View {
                         NavigationLink {
                             MatchLegProgressView(matchLeg: leg, legNumber: match.legs.firstIndex(where: { $0 == leg.wrappedValue })! + 1)
                         } label: {
-                            LegsCellView(leg: leg.wrappedValue)
+                            LegsCellView(homeParticipant: leg.wrappedValue.homeParticipant,
+                                         awayParticipant: leg.wrappedValue.awayParticipant,
+                                         legState: leg.wrappedValue.legState,
+                                         winner: leg.wrappedValue.winner,
+                                         endedInATie: leg.wrappedValue.endedInATie)
                         }
                         .buttonStyle(.plain)
                     }
