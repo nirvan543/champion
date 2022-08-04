@@ -100,7 +100,11 @@ struct CreateEditMatchesView: View {
             PageSection(headerText: "Round \(index + 1)") {
                 VStack {
                     ForEach(round.fixtures) { fixture in
-                        MatchCellView(match: fixture)
+                        MatchCellView(participant1: fixture.participant1,
+                                      participant2: fixture.participant2,
+                                      matchState: fixture.matchState,
+                                      winner: fixture.winner,
+                                      endedInATie: fixture.endedInATie)
                     }
                 }
             }

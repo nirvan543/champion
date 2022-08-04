@@ -13,7 +13,11 @@ struct MatchProgressView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 42) {
-                MatchCellView(match: match)
+                MatchCellView(participant1: match.participant1,
+                              participant2: match.participant2,
+                              matchState: match.matchState,
+                              winner: match.winner,
+                              endedInATie: match.endedInATie)
                 
                 PageSection(headerText: "Legs") {
                     ForEach($match.legs) { leg in

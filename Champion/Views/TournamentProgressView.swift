@@ -35,7 +35,11 @@ struct TournamentProgressView: View {
                         NavigationLink {
                             MatchProgressView(match: fixture)
                         } label: {
-                            MatchCellView(match: fixture.wrappedValue)
+                            MatchCellView(participant1: fixture.wrappedValue.participant1,
+                                          participant2: fixture.wrappedValue.participant2,
+                                          matchState: fixture.wrappedValue.matchState,
+                                          winner: fixture.wrappedValue.winner,
+                                          endedInATie: fixture.wrappedValue.endedInATie)
                         }
                         .buttonStyle(.plain)
                     }

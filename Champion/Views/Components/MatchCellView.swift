@@ -11,13 +11,17 @@ struct MatchCellView: View {
     @Environment(\.colorScheme) var colorScheme
     private let matchCellShape = Rectangle()
     
-    let match: Match
+    let participant1: Participant
+    let participant2: Participant
+    let matchState: GameState
+    let winner: Participant?
+    let endedInATie: Bool
     
     var body: some View {
         HStack {
             HStack {
-                leadingImage(for: match.participant1)
-                Text(match.participant1.playerName)
+                leadingImage(for: participant1)
+                Text(participant1.playerName)
                     .font(.title3)
             }
             Spacer()
@@ -26,8 +30,8 @@ struct MatchCellView: View {
                 .fontWeight(.bold)
             Spacer()
             HStack {
-                leadingImage(for: match.participant2)
-                Text(match.participant2.playerName)
+                leadingImage(for: participant2)
+                Text(participant2.playerName)
                     .font(.title3)
                     .frame(alignment: .trailing)
             }
@@ -38,7 +42,7 @@ struct MatchCellView: View {
     }
     
     private var backgroundColor: Color {
-        if match.matchState == .completed {
+        if matchState == .completed {
             return .green.opacity(0.30)
         } else {
             return colorScheme == .light ? .white : .black
@@ -47,9 +51,9 @@ struct MatchCellView: View {
     
     @ViewBuilder
     private func leadingImage(for participant: Participant) -> some View {
-        if match.winner == participant {
+        if winner == participant {
             Image(systemName: "star.fill")
-        } else if match.endedInATie {
+        } else if endedInATie {
             Image(systemName: "circle.fill")
         } else {
             EmptyView()
@@ -92,11 +96,16 @@ struct MatchCellView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            MatchCellView(match: oneLegMatch)
-            MatchCellView(match: oneLegMatch)
-                .preferredColorScheme(.dark)
-            MatchCellView(match: oneLegMatch)
-            MatchCellView(match: oneLegMatch)
+            MatchCellView(participant1: oneLegMatch.participant1,
+                          participant2: oneLegMatch.participant2,
+                          matchState: oneLegMatch.matchState,
+                          winner: oneLegMatch.winner,
+                          endedInATie: oneLegMatch.endedInATie)
+            MatchCellView(participant1: oneLegMatch.participant1,
+                          participant2: oneLegMatch.participant2,
+                          matchState: oneLegMatch.matchState,
+                          winner: oneLegMatch.winner,
+                          endedInATie: oneLegMatch.endedInATie)
                 .preferredColorScheme(.dark)
         }
     }
