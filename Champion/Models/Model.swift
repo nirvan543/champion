@@ -285,8 +285,6 @@ struct Goal: Identifiable, Hashable, Equatable, Codable {
     let scorer: Participant
     let against: Participant
     let minute: Int
-    let second: Int
-    let distance: Int
 }
 
 enum TournamentFormat: String {

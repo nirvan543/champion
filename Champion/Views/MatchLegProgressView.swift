@@ -19,8 +19,6 @@ struct MatchLegProgressView: View {
     private let legNumber: Int
     
     @State private var minute: String = ""
-    @State private var seconds: String = ""
-    @State private var distance: String = ""
     @State private var scorer: Participant
     @State private var showDeleteGoalAlert = false
     @State private var goalToDelete: Goal? = nil
@@ -132,16 +130,7 @@ struct MatchLegProgressView: View {
                     .keyboardType(.numberPad)
                     .textFieldStyle(.roundedBorder)
                     .focused($focusField, equals: .minute)
-                TextField("Seconds", text: $seconds)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($focusField, equals: .seconds)
-                TextField("Distance", text: $distance)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($focusField, equals: .distance)
-            }
-            HStack {
+                
                 Picker("Scorer", selection: $scorer) {
                     Text(matchLeg.homeParticipant.playerName)
                         .tag(matchLeg.homeParticipant)
@@ -194,27 +183,21 @@ struct MatchLegProgressView: View {
     }
     
     private func saveGoal() {
-        guard let minute = Int(minute),
-              let seconds = Int(seconds),
-              let distance = Int(distance) else {
+        guard let minute = Int(minute) else {
             return
         }
         
         let goal = Goal(id: IdUtils.newUuid,
                         scorer: scorer,
                         against: scorer == matchLeg.homeParticipant ? matchLeg.awayParticipant : matchLeg.homeParticipant,
-                        minute: minute,
-                        second: seconds,
-                        distance: distance)
+                        minute: minute)
         
         matchLeg.goals.append(goal)
         matchLeg.goals.sort { goal1, goal2 in
-            (goal1.minute, goal1.second) < (goal2.minute, goal2.second)
+            goal1.minute < goal2.minute
         }
         
         self.minute = ""
-        self.seconds = ""
-        self.distance = ""
         
         focusField = nil
     }
@@ -234,9 +217,7 @@ struct MatchLegProgressView_Previews: PreviewProvider {
                                                         Goal(id: IdUtils.newUuid,
                                                              scorer: MockData.mookie,
                                                              against: MockData.keerti,
-                                                             minute: 14,
-                                                             second: 21,
-                                                             distance: 21)
+                                                             minute: 14)
                                                      ],
                                                      legState: .inProgress)
     
@@ -247,21 +228,15 @@ struct MatchLegProgressView_Previews: PreviewProvider {
                                                         Goal(id: IdUtils.newUuid,
                                                              scorer: MockData.antriksh,
                                                              against: MockData.neeraj,
-                                                             minute: 14,
-                                                             second: 21,
-                                                             distance: 21),
+                                                             minute: 14),
                                                         Goal(id: IdUtils.newUuid,
                                                              scorer: MockData.antriksh,
                                                              against: MockData.neeraj,
-                                                             minute: 42,
-                                                             second: 21,
-                                                             distance: 14),
+                                                             minute: 42),
                                                         Goal(id: IdUtils.newUuid,
                                                              scorer: MockData.neeraj,
                                                              against: MockData.antriksh,
-                                                             minute: 81,
-                                                             second: 22,
-                                                             distance: 44)
+                                                             minute: 81)
                                                      ],
                                                      legState: .completed)
     
