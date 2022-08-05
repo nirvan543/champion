@@ -18,23 +18,25 @@ struct MatchCellView: View {
     let endedInATie: Bool
     
     var body: some View {
-        HStack {
+        ZStack {
             HStack {
-                leadingImage(for: participant1)
-                Text(participant1.playerName)
-                    .font(.title3)
+                HStack {
+                    leadingImage(for: participant1)
+                    Text(participant1.playerName)
+                        .font(.title3)
+                }
+                Spacer()
+                HStack {
+                    leadingImage(for: participant2)
+                    Text(participant2.playerName)
+                        .font(.title3)
+                        .frame(alignment: .trailing)
+                }
             }
-            Spacer()
+            
             Text("vs")
                 .font(.title3)
                 .fontWeight(.bold)
-            Spacer()
-            HStack {
-                leadingImage(for: participant2)
-                Text(participant2.playerName)
-                    .font(.title3)
-                    .frame(alignment: .trailing)
-            }
         }
         .padding()
         .background(backgroundColor)

@@ -29,7 +29,7 @@ struct TournamentProgressView: View {
     
     private var matchesSection: some View {
         ForEach($tournament.roundRobinStage.rounds) { round in
-            PageSection(headerText: "Round \(indexForRound(round: round.wrappedValue) + 1)") {
+            PageSection(headerText: "Round \(number(for: round.wrappedValue))") {
                 VStack {
                     ForEach(round.fixtures) { fixture in
                         NavigationLink {
@@ -48,8 +48,12 @@ struct TournamentProgressView: View {
         }
     }
     
-    func indexForRound(round: Round) -> Int {
-        tournament.roundRobinStage.rounds.firstIndex(where: { $0 == round })!
+    func number(for round: Round) -> Int {
+        if let index = tournament.roundRobinStage.rounds.firstIndex(where: { $0 == round }) {
+            return index + 1
+        } else {
+            fatalError("Expected to find the index for the round \(round) within the Round Robin stage.")
+        }
     }
 }
 
