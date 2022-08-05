@@ -15,15 +15,15 @@ struct MatchLegProgressView: View {
         case distance
     }
     
-    @Binding var matchLeg: MatchLeg
-    private let legNumber: Int
+    @FocusState private var focusField: FocusField?
     
     @State private var minute: String = ""
-    @State private var scorer: Participant
     @State private var showDeleteGoalAlert = false
     @State private var goalToDelete: Goal? = nil
+    @State private var scorer: Participant
     
-    @FocusState private var focusField: FocusField?
+    @Binding var matchLeg: MatchLeg
+    private let legNumber: Int
     
     init(matchLeg: Binding<MatchLeg>, legNumber: Int) {
         _matchLeg = matchLeg
@@ -159,6 +159,26 @@ struct MatchLegProgressView: View {
         }
     }
     
+    private func saveGoal() {
+        guard let minute = Int(minute) else {
+            return
+        }
+        
+        let goal = Goal(id: IdUtils.newUuid,
+                        scorer: scorer,
+                        against: scorer == matchLeg.homeParticipant ? matchLeg.awayParticipant : matchLeg.homeParticipant,
+                        minute: minute)
+        
+        matchLeg.goals.append(goal)
+        matchLeg.goals.sort { goal1, goal2 in
+            goal1.minute < goal2.minute
+        }
+        
+        self.minute = ""
+        
+        focusField = nil
+    }
+    
     @ViewBuilder
     private var actionSection: some View {
         PageSection {
@@ -184,26 +204,6 @@ struct MatchLegProgressView: View {
                 EmptyView()
             }
         }
-    }
-    
-    private func saveGoal() {
-        guard let minute = Int(minute) else {
-            return
-        }
-        
-        let goal = Goal(id: IdUtils.newUuid,
-                        scorer: scorer,
-                        against: scorer == matchLeg.homeParticipant ? matchLeg.awayParticipant : matchLeg.homeParticipant,
-                        minute: minute)
-        
-        matchLeg.goals.append(goal)
-        matchLeg.goals.sort { goal1, goal2 in
-            goal1.minute < goal2.minute
-        }
-        
-        self.minute = ""
-        
-        focusField = nil
     }
 }
 

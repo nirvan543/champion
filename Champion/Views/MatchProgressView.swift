@@ -22,7 +22,7 @@ struct MatchProgressView: View {
                 PageSection(headerText: "Legs") {
                     ForEach($match.legs) { leg in
                         NavigationLink {
-                            MatchLegProgressView(matchLeg: leg, legNumber: match.legs.firstIndex(where: { $0 == leg.wrappedValue })! + 1)
+                            MatchLegProgressView(matchLeg: leg, legNumber: number(for: leg.wrappedValue))
                         } label: {
                             LegsCellView(homeParticipant: leg.wrappedValue.homeParticipant,
                                          awayParticipant: leg.wrappedValue.awayParticipant,
@@ -40,6 +40,14 @@ struct MatchProgressView: View {
         .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle("Match")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func number(for leg: MatchLeg) -> Int {
+        if let index = match.legs.firstIndex(where: { $0 == leg }) {
+            return index + 1
+        } else {
+            fatalError("Expected to find the index for leg: \(leg)")
+        }
     }
 }
 
