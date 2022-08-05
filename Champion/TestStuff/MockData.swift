@@ -90,7 +90,7 @@ struct MockData {
     
     
     // MARK: Rounds
-    static let round1 = Round(fixtures: [
+    static let round1 = Round(matches: [
         Match(participant1: saurav, participant2: pranshu, legsPerMatch: 1),
         Match(participant1: mookie, participant2: siddhant, legsPerMatch: 1),
         Match(participant1: aditya, participant2: antriksh, legsPerMatch: 1),
@@ -98,7 +98,7 @@ struct MockData {
         Match(participant1: mahendra, participant2: keerti, legsPerMatch: 1)
     ])
     
-    static let round2 = Round(fixtures: [
+    static let round2 = Round(matches: [
         Match(participant1: pranshu, participant2: ovi, legsPerMatch: 1),
         Match(participant1: mookie, participant2: saurav, legsPerMatch: 1),
         Match(participant1: keerti, participant2: antriksh, legsPerMatch: 1),
@@ -107,7 +107,7 @@ struct MockData {
         
     ])
     
-    static let round3 = Round(fixtures: [
+    static let round3 = Round(matches: [
         Match(participant1: aditya, participant2: ovi, legsPerMatch: 1),
         Match(participant1: pranshu, participant2: mookie, legsPerMatch: 1),
         Match(participant1: mahendra, participant2: saurav, legsPerMatch: 1),
@@ -115,7 +115,7 @@ struct MockData {
         Match(participant1: antriksh, participant2: siddhant, legsPerMatch: 1),
     ])
     
-    static let round4 = Round(fixtures: [
+    static let round4 = Round(matches: [
         Match(participant1: aditya, participant2: pranshu, legsPerMatch: 1),
         Match(participant1: siddhant, participant2: neeraj, legsPerMatch: 1),
         Match(participant1: saurav, participant2: antriksh, legsPerMatch: 1),
@@ -123,7 +123,7 @@ struct MockData {
         Match(participant1: mookie, participant2: mahendra, legsPerMatch: 1)
     ])
     
-    static let round5 = Round(fixtures: [
+    static let round5 = Round(matches: [
         Match(participant1: mahendra, participant2: pranshu, legsPerMatch: 1),
         Match(participant1: siddhant, participant2: ovi, legsPerMatch: 1),
         Match(participant1: keerti, participant2: aditya, legsPerMatch: 1),
@@ -131,7 +131,7 @@ struct MockData {
         Match(participant1: neeraj, participant2: saurav, legsPerMatch: 1)
     ])
     
-    static let round6 = Round(fixtures: [
+    static let round6 = Round(matches: [
         Match(participant1: saurav, participant2: ovi, legsPerMatch: 1),
         Match(participant1: aditya, participant2: siddhant, legsPerMatch: 1),
         Match(participant1: mookie, participant2: neeraj, legsPerMatch: 1),
@@ -139,7 +139,7 @@ struct MockData {
         Match(participant1: pranshu, participant2: keerti, legsPerMatch: 1),
     ])
     
-    static let round7 = Round(fixtures: [
+    static let round7 = Round(matches: [
         Match(participant1: ovi, participant2: mookie, legsPerMatch: 1),
         Match(participant1: saurav, participant2: aditya, legsPerMatch: 1),
         Match(participant1: neeraj, participant2: mahendra, legsPerMatch: 1),
@@ -147,7 +147,7 @@ struct MockData {
         Match(participant1: pranshu, participant2: antriksh, legsPerMatch: 1)
     ])
     
-    static let round8 = Round(fixtures: [
+    static let round8 = Round(matches: [
         Match(participant1: siddhant, participant2: pranshu, legsPerMatch: 1),
         Match(participant1: antriksh, participant2: neeraj, legsPerMatch: 1),
         Match(participant1: keerti, participant2: saurav, legsPerMatch: 1),
@@ -155,7 +155,7 @@ struct MockData {
         Match(participant1: mookie, participant2: aditya, legsPerMatch: 1)
     ])
     
-    static let round9 = Round(fixtures: [
+    static let round9 = Round(matches: [
         Match(participant1: neeraj, participant2: pranshu, legsPerMatch: 1),
         Match(participant1: aditya, participant2: mahendra, legsPerMatch: 1),
         Match(participant1: mookie, participant2: keerti, legsPerMatch: 1),

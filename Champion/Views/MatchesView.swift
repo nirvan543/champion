@@ -16,12 +16,12 @@ struct MatchesView: View {
                 ForEach(Array(roundRobinStage.rounds.enumerated()), id: \.element) { index, round in
                     PageSection(headerText: "Round \(index + 1)") {
                         VStack {
-                            ForEach(round.fixtures) { fixture in
-                                MatchCellView(participant1: fixture.participant1,
-                                              participant2: fixture.participant2,
-                                              matchState: fixture.matchState,
-                                              winner: fixture.winner,
-                                              endedInATie: fixture.endedInATie)
+                            ForEach(round.matches) { match in
+                                MatchCellView(participant1: match.participant1,
+                                              participant2: match.participant2,
+                                              matchState: match.matchState,
+                                              winner: match.winner,
+                                              endedInATie: match.endedInATie)
                             }
                         }
                     }

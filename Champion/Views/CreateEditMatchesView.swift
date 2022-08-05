@@ -39,7 +39,7 @@ struct CreateEditMatchesView: View {
         }
         .frame(maxWidth: .infinity)
         .background(DesignValues.pageColor.ignoresSafeArea())
-        .navigationTitle("Create Fixtures")
+        .navigationTitle("Create Matches")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button {
@@ -54,7 +54,7 @@ struct CreateEditMatchesView: View {
         PageSection {
             VStack {
                 Button {
-                    rounds = FixtureService.shared.createFixtures(participants: participants,
+                    rounds = MatchesService.shared.createMatches(participants: participants,
                                                                   matchesPerOpponent: matchesPerOpponent,
                                                                   legsPerMatch: legsPerMatch)
                 } label: {
@@ -99,12 +99,12 @@ struct CreateEditMatchesView: View {
         ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
             PageSection(headerText: "Round \(index + 1)") {
                 VStack {
-                    ForEach(round.fixtures) { fixture in
-                        MatchCellView(participant1: fixture.participant1,
-                                      participant2: fixture.participant2,
-                                      matchState: fixture.matchState,
-                                      winner: fixture.winner,
-                                      endedInATie: fixture.endedInATie)
+                    ForEach(round.matches) { match in
+                        MatchCellView(participant1: match.participant1,
+                                      participant2: match.participant2,
+                                      matchState: match.matchState,
+                                      winner: match.winner,
+                                      endedInATie: match.endedInATie)
                     }
                 }
             }

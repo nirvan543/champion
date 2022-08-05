@@ -135,7 +135,7 @@ struct AddEditTournamentView: View {
                                       legsPerMatch: leagueLegsPerMatch,
                                       roundsBinding: $leagueStageRounds)
             } label: {
-                Text("Create Fixtures")
+                Text("Create Matches")
                     .font(.title2)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)

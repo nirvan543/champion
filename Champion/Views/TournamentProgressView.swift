@@ -31,15 +31,15 @@ struct TournamentProgressView: View {
         ForEach($tournament.roundRobinStage.rounds) { round in
             PageSection(headerText: "Round \(number(for: round.wrappedValue))") {
                 VStack {
-                    ForEach(round.fixtures) { fixture in
+                    ForEach(round.matches) { match in
                         NavigationLink {
-                            MatchProgressView(match: fixture)
+                            MatchProgressView(match: match)
                         } label: {
-                            MatchCellView(participant1: fixture.wrappedValue.participant1,
-                                          participant2: fixture.wrappedValue.participant2,
-                                          matchState: fixture.wrappedValue.matchState,
-                                          winner: fixture.wrappedValue.winner,
-                                          endedInATie: fixture.wrappedValue.endedInATie)
+                            MatchCellView(participant1: match.wrappedValue.participant1,
+                                          participant2: match.wrappedValue.participant2,
+                                          matchState: match.wrappedValue.matchState,
+                                          winner: match.wrappedValue.winner,
+                                          endedInATie: match.wrappedValue.endedInATie)
                         }
                         .buttonStyle(.plain)
                     }

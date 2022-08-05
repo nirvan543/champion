@@ -1,5 +1,5 @@
 //
-//  FixtureService.swift
+//  MatchesService.swift
 //  Champion
 //
 //  Created by Nirvan Nagar on 7/12/22.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct FixtureService {
-    static let shared = FixtureService()
+struct MatchesService {
+    static let shared = MatchesService()
     
-    func createFixtures(participants: [Participant], matchesPerOpponent: Int, legsPerMatch: Int) -> [Round] {
+    func createMatches(participants: [Participant], matchesPerOpponent: Int, legsPerMatch: Int) -> [Round] {
         if participants.count % 2 == 0 {
             return evenNumberParticipants(participants: participants, legsPerMatch: legsPerMatch)
         } else {

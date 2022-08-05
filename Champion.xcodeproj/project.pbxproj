@@ -37,7 +37,7 @@
 		D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */; };
 		D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */; };
 		D8BD21B7287E5ADD0018F7D2 /* MatchCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */; };
-		D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */; };
+		D8BD21B9287E5C3C0018F7D2 /* MatchesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B8287E5C3C0018F7D2 /* MatchesService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +91,7 @@
 		D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCellView.swift; sourceTree = "<group>"; };
 		D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditMatchesView.swift; sourceTree = "<group>"; };
 		D8BD21B6287E5ADD0018F7D2 /* MatchCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCellView.swift; sourceTree = "<group>"; };
-		D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureService.swift; sourceTree = "<group>"; };
+		D8BD21B8287E5C3C0018F7D2 /* MatchesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,7 +230,7 @@
 				D86187AC2878ED6600553E5D /* IdUtils.swift */,
 				D86187AE2879B59C00553E5D /* DateUtils.swift */,
 				D86187BE2879DB7000553E5D /* DesignValues.swift */,
-				D8BD21B8287E5C3C0018F7D2 /* FixtureService.swift */,
+				D8BD21B8287E5C3C0018F7D2 /* MatchesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 				D82E7D7E288276C0006750A3 /* TournamentProgressView.swift in Sources */,
 				D86187A62878DDFC00553E5D /* Model.swift in Sources */,
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
-				D8BD21B9287E5C3C0018F7D2 /* FixtureService.swift in Sources */,
+				D8BD21B9287E5C3C0018F7D2 /* MatchesService.swift in Sources */,
 				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,

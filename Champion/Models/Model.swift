@@ -63,26 +63,26 @@ struct KnockoutStage {
 
 struct Round: Identifiable, Hashable, Equatable {
     let id: String
-    var fixtures: [Match]
+    var matches: [Match]
     
-    init(fixtures: [Match] = []) {
+    init(matches: [Match] = []) {
         id = IdUtils.newUuid
-        self.fixtures = fixtures
+        self.matches = matches
     }
     
     func isFull(when participantCount: Int) -> Bool {
-        fixtures.count == (participantCount / 2)
+        matches.count == (participantCount / 2)
     }
     
     func containsConflictingMatch(potentialMatch: Match) -> Bool {
-        fixtures.contains { match in
+        matches.contains { match in
             match.containsParticipants(participant1: potentialMatch.participant1,
                                        participant2: potentialMatch.participant2)
         }
     }
     
     func containsMatch(with participant: Participant) -> Bool {
-        fixtures.contains { match in
+        matches.contains { match in
             participant == match.participant1 || participant == match.participant2
         }
     }
