@@ -20,60 +20,36 @@ struct TournamentDetailView: View {
                 participantsSection
                 leagueStageConfigSection
                 knockoutStageConfigSection
-                viewMatchesButton
                 finalActionSection
-                    .padding(.top, 27)
             }
         }
         .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
     }
     
-    private var finalActionSection: some View {
-        PageSection {
-            VStack(spacing: 14) {
-                NavigationLink {
-                    TournamentProgressView(tournament: $tournament)
-                } label: {
-                    Text(primaryActionText)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .buttonStyle(.plain)
-                .background(DesignValues.themeColor)
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
-            }
-        }
-    }
-    
-    private var primaryActionText: String {
-        switch tournament.state {
-        case .created:
-            return "Start Tournament"
-        case .roundRobin:
-            return "Continue Tournament"
-        case .knockout:
-            return "Continue Tournament"
-        case .completed:
-            return "View Results"
-        }
-    }
-    
-    private var viewMatchesButton: some View {
-        PageSection {
-            NavigationLink {
-                MatchesView(roundRobinStage: tournament.roundRobinStage)
-            } label: {
-                Text("View Matches")
+    private var tournamentTypeSection: some View {
+        PageSection(headerText: "Tournament Format") {
+            HStack {
+                Text(tournament.type.rawValue)
                     .font(.title2)
-                    .foregroundColor(.primary)
+                    .padding(.vertical)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
             }
             .background()
-            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+        }
+    }
+    
+    private var tournamentDateSection: some View {
+        PageSection(headerText: "Tournament Date") {
+            HStack {
+                Text(DateUtils.displayString(for: tournament.date))
+                    .font(.title2)
+                    .padding(.vertical)
+                    .frame(maxWidth: .infinity)
+            }
+            .background()
+            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
@@ -102,18 +78,6 @@ struct TournamentDetailView: View {
         }
     }
     
-    private var knockoutStageConfigSection: some View {
-        PageSection(headerText: "Knockout Stage Config") {
-            VStack(alignment: .leading, spacing: 8) {
-                ReadOnlyConfigLineItemView(labelText: "Playoff Spots",
-                                           value: "\(tournament.knockoutStage.playoffSpots)")
-                
-                ReadOnlyConfigLineItemView(labelText: "Legs per Match",
-                                           value: "\(tournament.knockoutStage.legsPerMatch)")
-            }
-        }
-    }
-    
     private var leagueStageConfigSection: some View {
         PageSection(headerText: "League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
@@ -126,29 +90,66 @@ struct TournamentDetailView: View {
         }
     }
     
-    private var tournamentDateSection: some View {
-        PageSection(headerText: "Tournament Date") {
-            HStack {
-                Text(DateUtils.displayString(for: tournament.date))
-                    .font(.title2)
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
+    private var knockoutStageConfigSection: some View {
+        PageSection(headerText: "Knockout Stage Config") {
+            VStack(alignment: .leading, spacing: 8) {
+                ReadOnlyConfigLineItemView(labelText: "Playoff Spots",
+                                           value: "\(tournament.knockoutStage.playoffSpots)")
+                
+                ReadOnlyConfigLineItemView(labelText: "Legs per Match",
+                                           value: "\(tournament.knockoutStage.legsPerMatch)")
             }
-            .background()
-            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
-    private var tournamentTypeSection: some View {
-        PageSection(headerText: "Tournament Format") {
-            HStack {
-                Text(tournament.type.rawValue)
-                    .font(.title2)
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
+    private var finalActionSection: some View {
+        PageSection {
+            VStack(spacing: 14) {
+                viewMatchesButton
+                startTournamentButton
             }
-            .background()
-            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+        }
+    }
+    
+    private var viewMatchesButton: some View {
+        NavigationLink {
+            MatchesView(roundRobinStage: tournament.roundRobinStage)
+        } label: {
+            Text("View Matches")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background()
+        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    }
+    
+    private var startTournamentButton: some View {
+        NavigationLink {
+            TournamentProgressView(tournament: $tournament)
+        } label: {
+            Text(primaryActionText)
+                .font(.title2)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .buttonStyle(.plain)
+        .background(DesignValues.themeColor)
+        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    }
+    
+    private var primaryActionText: String {
+        switch tournament.state {
+        case .created:
+            return "Start Tournament"
+        case .roundRobin:
+            return "Continue Tournament"
+        case .knockout:
+            return "Continue Tournament"
+        case .completed:
+            return "View Results"
         }
     }
 }

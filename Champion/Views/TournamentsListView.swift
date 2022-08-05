@@ -16,7 +16,7 @@ struct TournamentsListView: View {
                 NavigationLink(tag: tournament.id, selection: $environmentValues.selectedTournamentId) {
                     TournamentDetailView(tournament: tournament)
                 } label: {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text(tournament.wrappedValue.name)
                             .font(.title3)
                         Text(DateUtils.displayString(for: tournament.wrappedValue.date, dateStyle: .medium))
