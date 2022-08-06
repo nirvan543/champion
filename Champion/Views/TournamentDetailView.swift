@@ -53,7 +53,7 @@ struct TournamentDetailView: View {
         }
     }
     
-    private var participantsSection: some View {
+    private var participantsSectionOld: some View {
         PageSection(headerText: "Participants") {
             VStack(alignment: .leading) {
                 ForEach(tournament.participants) { participant in
@@ -71,6 +71,32 @@ struct TournamentDetailView: View {
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 8)
+                    .background()
+                    .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+                }
+            }
+        }
+    }
+    
+    private var participantsSection: some View {
+        PageSection(headerText: "Participants") {
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 150))
+            ]) {
+                ForEach(tournament.participants) { participant in
+                    VStack {
+                        Image(participant.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 75, height: 75)
+                            .padding(.vertical, 7)
+                        
+                        Text(participant.playerName)
+                            .font(.title3)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 12)
                     .background()
                     .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
                 }
