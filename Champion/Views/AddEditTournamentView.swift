@@ -30,18 +30,14 @@ struct AddEditTournamentView: View {
     private let matchCellShape = Rectangle()
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                tournamentNameSection
-                tournamentFormatSection
-                leageStageConfigSection
-                knockoutStageConfigSection
-                participantsSection
-                actionSection
-            }
+        PageView {
+            tournamentNameSection
+            tournamentFormatSection
+            leageStageConfigSection
+            knockoutStageConfigSection
+            participantsSection
+            actionSection
         }
-        .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle("New Tournament")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -66,7 +62,6 @@ struct AddEditTournamentView: View {
                 Text("There are some form errors")
             }
         }
-
     }
     
     private var tournamentNameSection: some View {
@@ -277,33 +272,6 @@ struct AddEditTournamentView: View {
         }
         
         return true
-    }
-}
-
-struct EditableConfigLineItemView: View {
-    let labelText: String
-    @Binding var value: Int
-    
-    private let shape = Capsule()
-    
-    var body: some View {
-        HStack {
-            Text(labelText)
-                .font(.title3)
-            Spacer()
-            TextField("",
-                      value: $value,
-                      formatter: NumberFormatter())
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .font(.title3)
-            .padding(.horizontal)
-            .padding(.vertical, 2)
-            .background()
-            .frame(maxWidth: 75)
-            .clipShape(shape)
-            .overlay(shape.strokeBorder(.quaternary, lineWidth: 1))
-        }
     }
 }
 
