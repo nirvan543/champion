@@ -70,27 +70,6 @@ struct Round: Identifiable, Hashable, Equatable {
         self.matches = matches
     }
     
-    func isFull(when participantCount: Int) -> Bool {
-        matches.count == (participantCount / 2)
-    }
-    
-    func containsConflictingMatch(potentialMatch: Match) -> Bool {
-        matches.contains { match in
-            guard let participant2 = potentialMatch.participant2 else {
-                return false
-            }
-            
-            return match.containsParticipants(participant1: potentialMatch.participant1,
-                                              participant2: participant2)
-        }
-    }
-    
-    func containsMatch(with participant: Participant) -> Bool {
-        matches.contains { match in
-            participant == match.participant1 || participant == match.participant2
-        }
-    }
-    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -132,11 +111,6 @@ struct Match: Identifiable, Hashable, Equatable {
         self.participant1 = participant1
         self.participant2 = participant2
         self.legs = legs
-    }
-    
-    func containsParticipants(participant1: Participant, participant2: Participant) -> Bool {
-        (participant1 == self.participant1 || participant1 == self.participant2) ||
-        (participant2 == self.participant1 || participant2 == self.participant2)
     }
     
     var winner: Participant? {
