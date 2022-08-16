@@ -118,24 +118,18 @@ struct AddEditTournamentView: View {
     
     private var participantsSection: some View {
         PageSection(headerText: "Participants") {
-            VStack(alignment: .leading) {
-                ForEach(participants) { participant in
-                    HStack(spacing: 14) {
-                        Image(participant.imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .padding(.vertical, 7)
-                        
-                        Text(participant.playerName)
-                            .font(.title3)
-                        
-                        Spacer()
+            VStack {
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: 150))
+                ]) {
+                    ForEach(participants) { participant in
+                        ZStack {
+                            participantGridItem(imageName: participant.imageName,
+                                                playerName: participant.playerName)
+                            deleteParticipantButton(participant: participant)
+                                .offset(x: 10, y: -10)
+                        }
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                    .background()
-                    .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
                 }
                 
                 Button {
@@ -149,6 +143,41 @@ struct AddEditTournamentView: View {
                 }
                 .background()
                 .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+            }
+        }
+    }
+    
+    private func participantGridItem(imageName: String, playerName: String) -> some View {
+        VStack {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 75, height: 75)
+                .padding(.vertical, 7)
+            
+            Text(playerName)
+                .font(.title3)
+                .frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 12)
+        .background()
+        .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+    }
+    
+    private func deleteParticipantButton(participant: Participant) -> some View {
+        HStack {
+            Spacer()
+            VStack {
+                Button {
+                    participants.removeAll(where: { $0 == participant })
+                } label: {
+                    Image(systemName: "x.circle.fill")
+                        .resizable()
+                        .foregroundColor(.red)
+                        .frame(width: 22, height: 20)
+                }
+                Spacer()
             }
         }
     }

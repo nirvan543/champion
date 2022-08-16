@@ -53,31 +53,6 @@ struct TournamentDetailView: View {
         }
     }
     
-    private var participantsSectionOld: some View {
-        PageSection(headerText: "Participants") {
-            VStack(alignment: .leading) {
-                ForEach(tournament.participants) { participant in
-                    HStack(spacing: 14) {
-                        Image(participant.imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .padding(.vertical, 7)
-                        
-                        Text(participant.playerName)
-                            .font(.title3)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                    .background()
-                    .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
-                }
-            }
-        }
-    }
-    
     private var participantsSection: some View {
         PageSection(headerText: "Participants") {
             LazyVGrid(columns: [
