@@ -55,8 +55,8 @@ struct CreateEditMatchesView: View {
             VStack {
                 Button {
                     rounds = MatchesService.shared.createMatches(participants: participants,
-                                                                  matchesPerOpponent: matchesPerOpponent,
-                                                                  legsPerMatch: legsPerMatch)
+                                                                 matchesPerOpponent: matchesPerOpponent,
+                                                                 legsPerMatch: legsPerMatch)
                 } label: {
                     Text("Auto-Generate")
                         .font(.title2)

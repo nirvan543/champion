@@ -14,4 +14,9 @@ class EnvironmentValues: ObservableObject {
     init(tournaments: [Tournament]) {
         self.tournaments = tournaments.sorted(by: { $0.date < $1.date })
     }
+    
+    func addTournament(tournament: Tournament) {
+        tournaments.append(tournament)
+        tournaments.sort(by: { $0.date < $1.date })
+    }
 }

@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct AddEditTournamentView: View {
+    @Environment(\.presentationMode) private var presentationMode
+    
+    @EnvironmentObject private var environmentValues: EnvironmentValues
+    
     @State private var tournamentName = ""
     @State private var tournamentFormat = TournamentFormat.roundRobinAndKnockout
     @State private var leagueStageMatchesPerOpponent = 1
@@ -17,6 +21,10 @@ struct AddEditTournamentView: View {
     @State private var participants = [Participant]()
     @State private var presentAddParticipantView = false
     @State private var leagueStageRounds = [Round]()
+    @State private var presentFormErrorAlert = false
+    @State private var formError: ChampionError? = nil
+    
+    @FocusState private var focusField: Bool
     
     private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
     private let matchCellShape = Rectangle()
@@ -29,25 +37,43 @@ struct AddEditTournamentView: View {
                 leageStageConfigSection
                 knockoutStageConfigSection
                 participantsSection
-                createFixuresSection
-                startTournamentSection
+                actionSection
             }
         }
         .frame(maxWidth: .infinity)
         .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle("New Tournament")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    focusField = false
+                }
+            }
+        }
         .sheet(isPresented: $presentAddParticipantView) {
             NavigationView {
                 AddParticipantView(particiapnts: $participants)
             }
         }
+        .alert("There are some errors", isPresented: $presentFormErrorAlert) {
+            Button("Dismiss", role: .cancel, action: {})
+        } message: {
+            if let formError = formError {
+                Text(formError.errorMessage)
+            } else {
+                Text("There are some form errors")
+            }
+        }
+
     }
     
     private var tournamentNameSection: some View {
         PageSection {
             TextField("Tournament Name", text: $tournamentName)
                 .textFieldStyle(.roundedBorder)
+                .focused($focusField)
         }
     }
     
@@ -127,39 +153,101 @@ struct AddEditTournamentView: View {
         }
     }
     
-    private var createFixuresSection: some View {
+    private var actionSection: some View {
         PageSection {
-            NavigationLink {
-                CreateEditMatchesView(participants: participants,
-                                      matchesPerOpponent: leagueStageMatchesPerOpponent,
-                                      legsPerMatch: leagueLegsPerMatch,
-                                      roundsBinding: $leagueStageRounds)
-            } label: {
-                Text("Create Matches")
-                    .font(.title2)
-                    .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-            }
-            .background()
-            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+            createFixuresLink
+            saveTournamentButton
         }
     }
     
-    private var startTournamentSection: some View {
-        PageSection {
-            NavigationLink {
-                Text("Start Tournament")
-            } label: {
-                Text("Start Tournament")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-            }
-            .background(DesignValues.themeColor)
-            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    private var createFixuresLink: some View {
+        NavigationLink {
+            CreateEditMatchesView(participants: participants,
+                                  matchesPerOpponent: leagueStageMatchesPerOpponent,
+                                  legsPerMatch: leagueLegsPerMatch,
+                                  roundsBinding: $leagueStageRounds)
+        } label: {
+            Text(leagueStageRounds.isEmpty ? "Create Matches" : "View Matches")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
         }
+        .background()
+        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    }
+    
+    private var saveTournamentButton: some View {
+        Button {
+            guard formIsValid() else {
+                presentFormErrorAlert = true
+                return
+            }
+            
+            let newTournament = Tournament(id: IdUtils.newUuid,
+                                           state: .created,
+                                           name: tournamentName,
+                                           date: Date(), // TODO: Make this dynamic
+                                           type: tournamentFormat,
+                                           participants: participants,
+                                           roundRobinStage: RoundRobinStage(matchesPerOpponent: leagueStageMatchesPerOpponent,
+                                                                            legsPerMatch: leagueLegsPerMatch),
+                                           knockoutStage: KnockoutStage(playoffSpots: knockoutStagePlayoffSpotCount,
+                                                                        legsPerMatch: knockoutLegsPerMatch,
+                                                                        finalLegsPerMatch: 1, // TODO: Make this dynamic
+                                                                        rounds: []))
+            
+            environmentValues.addTournament(tournament: newTournament)
+            
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("Save")
+                .font(.title2)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background(DesignValues.themeColor)
+        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    }
+    
+    private func formIsValid() -> Bool {
+        if tournamentName.isEmpty {
+            formError = ChampionError(errorMessage: "Tournament name is required.")
+            return false
+        }
+        
+        if leagueStageMatchesPerOpponent < 1 {
+            formError = ChampionError(errorMessage: "League stage 'Matches per Opponent' must be at least '1'.")
+            return false
+        }
+        
+        if leagueLegsPerMatch < 1 {
+            formError = ChampionError(errorMessage: "League stage 'Legs per Match' must be at least '1'.")
+            return false
+        }
+        
+        if knockoutStagePlayoffSpotCount < 2 {
+            formError = ChampionError(errorMessage: "Knockout stage 'Playoff Spots' must be at least '2'.")
+            return false
+        }
+        
+        if knockoutLegsPerMatch < 1 {
+            formError = ChampionError(errorMessage: "Knockout stage 'Legs per Match' must be at least '1'.")
+            return false
+        }
+        
+        if participants.count < 2 {
+            formError = ChampionError(errorMessage: "Minimum of 2 participants required.")
+            return false
+        }
+        
+        if leagueStageRounds.isEmpty {
+            formError = ChampionError(errorMessage: "Matches must be created before creating the tournament.")
+            return false
+        }
+        
+        return true
     }
 }
 
@@ -191,9 +279,12 @@ struct EditableConfigLineItemView: View {
 }
 
 struct AddEditTournamentView_Previews: PreviewProvider {
+    @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    
     static var previews: some View {
         NavigationView {
             AddEditTournamentView()
+                .environmentObject(environmentValues)
         }
     }
 }

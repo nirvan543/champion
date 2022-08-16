@@ -12,7 +12,7 @@ struct MatchCellView: View {
     private let matchCellShape = Rectangle()
     
     let participant1: Participant
-    let participant2: Participant
+    let participant2: Participant?
     let matchState: GameState
     let winner: Participant?
     let endedInATie: Bool
@@ -26,12 +26,19 @@ struct MatchCellView: View {
                         .font(.title3)
                 }
                 Spacer()
-                HStack {
-                    leadingImage(for: participant2)
-                    Text(participant2.playerName)
+                if let participant2 = participant2 {
+                    HStack {
+                        leadingImage(for: participant2)
+                        Text(participant2.playerName)
+                            .font(.title3)
+                            .frame(alignment: .trailing)
+                    }
+                } else {
+                    Text("-")
                         .font(.title3)
                         .frame(alignment: .trailing)
                 }
+                
             }
             
             Text("vs")
@@ -44,7 +51,9 @@ struct MatchCellView: View {
     }
     
     private var backgroundColor: Color {
-        if matchState == .completed {
+        if participant2 == nil {
+            return .gray.opacity(0.30)
+        } else if matchState == .completed {
             return .green.opacity(0.30)
         } else {
             return colorScheme == .light ? .white : .black
@@ -109,6 +118,11 @@ struct MatchCellView_Previews: PreviewProvider {
                           winner: oneLegMatch.winner,
                           endedInATie: oneLegMatch.endedInATie)
                 .preferredColorScheme(.dark)
+            MatchCellView(participant1: oneLegMatch.participant1,
+                          participant2: nil,
+                          matchState: oneLegMatch.matchState,
+                          winner: oneLegMatch.winner,
+                          endedInATie: oneLegMatch.endedInATie)
         }
     }
 }

@@ -76,8 +76,12 @@ struct Round: Identifiable, Hashable, Equatable {
     
     func containsConflictingMatch(potentialMatch: Match) -> Bool {
         matches.contains { match in
-            match.containsParticipants(participant1: potentialMatch.participant1,
-                                       participant2: potentialMatch.participant2)
+            guard let participant2 = potentialMatch.participant2 else {
+                return false
+            }
+            
+            return match.containsParticipants(participant1: potentialMatch.participant1,
+                                              participant2: participant2)
         }
     }
     
@@ -98,17 +102,19 @@ struct Round: Identifiable, Hashable, Equatable {
 
 struct Match: Identifiable, Hashable, Equatable {
     let id: String
-    let displayName: String
     let participant1: Participant
-    let participant2: Participant
+    let participant2: Participant?
     var legs: [MatchLeg]
     
-    init(participant1: Participant, participant2: Participant, legsPerMatch: Int) {
+    init(participant1: Participant, participant2: Participant?, legsPerMatch: Int) {
         id = IdUtils.newUuid
         self.participant1 = participant1
         self.participant2 = participant2
         legs = []
-        displayName = "\(participant1.playerName) v \(participant2.playerName)"
+        
+        guard let participant2 = participant2 else {
+            return
+        }
         
         for i in 0 ..< legsPerMatch {
             if i % 2 == 0 {
@@ -126,7 +132,6 @@ struct Match: Identifiable, Hashable, Equatable {
         self.participant1 = participant1
         self.participant2 = participant2
         self.legs = legs
-        displayName = "\(participant1.playerName) v \(participant2.playerName)"
     }
     
     func containsParticipants(participant1: Participant, participant2: Participant) -> Bool {
@@ -135,7 +140,7 @@ struct Match: Identifiable, Hashable, Equatable {
     }
     
     var winner: Participant? {
-        guard matchState == .completed else {
+        guard matchState == .completed, let participant2 = participant2 else {
             return nil
         }
         
@@ -157,7 +162,7 @@ struct Match: Identifiable, Hashable, Equatable {
     }
     
     var endedInATie: Bool {
-        guard matchState == .completed else {
+        guard matchState == .completed, let participant2 = participant2 else {
             return false
         }
         
@@ -172,7 +177,15 @@ struct Match: Identifiable, Hashable, Equatable {
         return participant1Score == participant2Score
     }
     
+    var isByeGame: Bool {
+        participant2 == nil
+    }
+    
     var matchState: GameState {
+        if isByeGame {
+            return .completed
+        }
+        
         if legs.allSatisfy({ $0.legState == .notStarted }) {
             return .notStarted
         }
