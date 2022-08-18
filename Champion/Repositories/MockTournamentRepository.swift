@@ -40,7 +40,7 @@ class MockTournamentRepository: TournamentRepository {
     
     func retrieveTournamentFormats() -> [TournamentFormat] {
         [
-            .roundRobinAndKnockout
+            .roundRobin
         ]
     }
     

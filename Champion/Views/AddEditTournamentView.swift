@@ -13,11 +13,9 @@ struct AddEditTournamentView: View {
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
     @State private var tournamentName = ""
-    @State private var tournamentFormat = TournamentFormat.roundRobinAndKnockout
+    @State private var tournamentFormat: TournamentFormat = .roundRobin
     @State private var leagueStageMatchesPerOpponent = 1
     @State private var leagueLegsPerMatch = 1
-    @State private var knockoutStagePlayoffSpotCount = 4
-    @State private var knockoutLegsPerMatch = 2
     @State private var participants = [Participant]()
     @State private var presentAddParticipantView = false
     @State private var leagueStageRounds = [Round]()
@@ -34,7 +32,6 @@ struct AddEditTournamentView: View {
             tournamentNameSection
             tournamentFormatSection
             leageStageConfigSection
-            knockoutStageConfigSection
             participantsSection
             actionSection
         }
@@ -98,16 +95,6 @@ struct AddEditTournamentView: View {
                 EditableConfigLineItemView(labelText: "Legs per Match",
                                            value: $leagueLegsPerMatch)
             }
-        }
-    }
-    
-    private var knockoutStageConfigSection: some View {
-        PageSection(headerText: "Knockout Stage Config") {
-            EditableConfigLineItemView(labelText: "Playoff Spots",
-                                       value: $knockoutStagePlayoffSpotCount)
-            
-            EditableConfigLineItemView(labelText: "Legs per Match",
-                                       value: $knockoutLegsPerMatch)
         }
     }
     
@@ -215,11 +202,7 @@ struct AddEditTournamentView: View {
                                            type: tournamentFormat,
                                            participants: participants,
                                            roundRobinStage: RoundRobinStage(matchesPerOpponent: leagueStageMatchesPerOpponent,
-                                                                            legsPerMatch: leagueLegsPerMatch),
-                                           knockoutStage: KnockoutStage(playoffSpots: knockoutStagePlayoffSpotCount,
-                                                                        legsPerMatch: knockoutLegsPerMatch,
-                                                                        finalLegsPerMatch: 1, // TODO: Make this dynamic
-                                                                        rounds: []))
+                                                                            legsPerMatch: leagueLegsPerMatch))
             
             environmentValues.addTournament(tournament: newTournament)
             
@@ -248,16 +231,6 @@ struct AddEditTournamentView: View {
         
         if leagueLegsPerMatch < 1 {
             formError = ChampionError(errorMessage: "League stage 'Legs per Match' must be at least '1'.")
-            return false
-        }
-        
-        if knockoutStagePlayoffSpotCount < 2 {
-            formError = ChampionError(errorMessage: "Knockout stage 'Playoff Spots' must be at least '2'.")
-            return false
-        }
-        
-        if knockoutLegsPerMatch < 1 {
-            formError = ChampionError(errorMessage: "Knockout stage 'Legs per Match' must be at least '1'.")
             return false
         }
         

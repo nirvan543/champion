@@ -19,7 +19,6 @@ struct TournamentDetailView: View {
                 tournamentDateSection
                 participantsSection
                 leagueStageConfigSection
-                knockoutStageConfigSection
                 finalActionSection
             }
         }
@@ -87,18 +86,6 @@ struct TournamentDetailView: View {
                 
                 ReadOnlyConfigLineItemView(labelText: "Legs per Match",
                                            value: "\(tournament.roundRobinStage.legsPerMatch)")
-            }
-        }
-    }
-    
-    private var knockoutStageConfigSection: some View {
-        PageSection(headerText: "Knockout Stage Config") {
-            VStack(alignment: .leading, spacing: 8) {
-                ReadOnlyConfigLineItemView(labelText: "Playoff Spots",
-                                           value: "\(tournament.knockoutStage.playoffSpots)")
-                
-                ReadOnlyConfigLineItemView(labelText: "Legs per Match",
-                                           value: "\(tournament.knockoutStage.legsPerMatch)")
             }
         }
     }

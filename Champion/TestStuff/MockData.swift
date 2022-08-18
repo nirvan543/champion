@@ -13,10 +13,9 @@ struct MockData {
                                         state: .created,
                                         name: "FIFA 22 Atlanta Cup III",
                                         date: DateUtils.date(year: 2022, month: .july, day: 16)!,
-                                        type: .roundRobinAndKnockout,
+                                        type: .roundRobin,
                                         participants: participants,
-                                        roundRobinStage: roundRobinStage,
-                                        knockoutStage: knockoutStage)
+                                        roundRobinStage: roundRobinStage)
     
     static let tournaments = [
         atlantaCup3
@@ -178,5 +177,4 @@ struct MockData {
     
     // MARK: Stages
     static let roundRobinStage = RoundRobinStage(matchesPerOpponent: 1, legsPerMatch: 1, rounds: rounds)
-    static let knockoutStage = KnockoutStage(playoffSpots: 4, legsPerMatch: 2, finalLegsPerMatch: 1, rounds: [])
 }

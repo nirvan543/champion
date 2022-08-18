@@ -16,7 +16,6 @@ struct Tournament: Identifiable, Hashable, Equatable {
     let type: TournamentFormat
     let participants: [Participant]
     var roundRobinStage: RoundRobinStage
-    let knockoutStage: KnockoutStage
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -52,13 +51,6 @@ struct RoundRobinStage: Hashable, Equatable {
         self.legsPerMatch = legsPerMatch
         self.rounds = rounds
     }
-}
-
-struct KnockoutStage {
-    let playoffSpots: Int
-    let legsPerMatch: Int
-    let finalLegsPerMatch: Int
-    let rounds: [Round]
 }
 
 struct Round: Identifiable, Hashable, Equatable {
@@ -276,8 +268,6 @@ struct Goal: Identifiable, Hashable, Equatable, Codable {
 
 enum TournamentFormat: String {
     case roundRobin = "Round Robin"
-    case knockout = "Knockout"
-    case roundRobinAndKnockout = "Round Robin + Knockout"
 }
 
 enum TournamentState {
