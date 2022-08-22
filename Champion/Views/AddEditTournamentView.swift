@@ -10,24 +10,30 @@ import SwiftUI
 struct AddEditTournamentView: View {
     static let defaultTournamentFormat: TournamentFormat = .roundRobin
     
+    private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
+    private let matchCellShape = Rectangle()
+    
     @Environment(\.presentationMode) private var presentationMode
     
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
+    private var editingTournament: Binding<Tournament>? = nil
     @State private var tournamentName = ""
     @State private var tournamentDate = Date()
     @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
     @State private var participants = [Participant]()
-    @State private var presentAddParticipantView = false
     @State private var tournamentRounds = [Round]()
+    @State private var tournamentFormatManager = TournamentFormatFactory.tournamentFormatManager(for: defaultTournamentFormat)
+    
+    @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
     @State private var formError: ChampionError? = nil
-    @State private var tournamentFormatManager = TournamentFormatFactory.tournamentFormatManager(for: defaultTournamentFormat)
     
     @FocusState private var focusField: Bool
     
-    private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
-    private let matchCellShape = Rectangle()
+    init(editingTournament: Binding<Tournament>? = nil) {
+        self.editingTournament = editingTournament
+    }
     
     var body: some View {
         PageView {
@@ -62,6 +68,19 @@ struct AddEditTournamentView: View {
             } else {
                 Text("There are some form errors")
             }
+        }
+        .onAppear {
+            // TODO: Eventually move the state initialization into the `init`.
+            guard let editingTournament = editingTournament else {
+                return
+            }
+
+            tournamentName = editingTournament.wrappedValue.name
+            tournamentDate = editingTournament.wrappedValue.date
+            tournamentFormat = editingTournament.wrappedValue.type
+            participants = editingTournament.wrappedValue.participants
+            tournamentRounds = editingTournament.wrappedValue.rounds
+            tournamentFormatManager = editingTournament.wrappedValue.tournamentFormatManager
         }
     }
     
@@ -199,16 +218,11 @@ struct AddEditTournamentView: View {
                 return
             }
             
-            let newTournament = Tournament(id: IdUtils.newUuid,
-                                           name: tournamentName,
-                                           participants: participants,
-                                           rounds: tournamentRounds,
-                                           date: tournamentDate,
-                                           state: .created,
-                                           type: tournamentFormat,
-                                           tournamentFormatManager: tournamentFormatManager)
-            
-            environmentValues.addTournament(tournament: newTournament)
+            if let editingTournament = editingTournament {
+                saveEditedTournament(editingTournament: editingTournament)
+            } else {
+                saveNewTournament()
+            }
             
             presentationMode.wrappedValue.dismiss()
         } label: {
@@ -244,6 +258,28 @@ struct AddEditTournamentView: View {
         }
         
         return true
+    }
+    
+    private func saveEditedTournament(editingTournament: Binding<Tournament>) {
+        editingTournament.wrappedValue.name = tournamentName
+        editingTournament.wrappedValue.participants = participants
+        editingTournament.wrappedValue.rounds = tournamentRounds
+        editingTournament.wrappedValue.date = tournamentDate
+        editingTournament.wrappedValue.type = tournamentFormat
+        editingTournament.wrappedValue.tournamentFormatManager = tournamentFormatManager
+    }
+    
+    private func saveNewTournament() {
+        let newTournament = Tournament(id: IdUtils.newUuid,
+                                       name: tournamentName,
+                                       participants: participants,
+                                       rounds: tournamentRounds,
+                                       date: tournamentDate,
+                                       state: .created,
+                                       type: tournamentFormat,
+                                       tournamentFormatManager: tournamentFormatManager)
+        
+        environmentValues.addTournament(tournament: newTournament)
     }
 }
 

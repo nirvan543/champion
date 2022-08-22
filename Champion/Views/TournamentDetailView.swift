@@ -25,6 +25,15 @@ struct TournamentDetailView: View {
         }
         .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    AddEditTournamentView(editingTournament: $tournament)
+                } label: {
+                    Text("Edit")
+                }
+            }
+        }
     }
     
     private var tournamentTypeSection: some View {

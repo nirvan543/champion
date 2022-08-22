@@ -10,12 +10,12 @@ import SwiftUI
 
 struct Tournament: Identifiable, Hashable, Equatable {
     let id: String
-    let name: String
-    let participants: [Participant]
+    var name: String
+    var participants: [Participant]
     var rounds: [Round]
-    let date: Date
+    var date: Date
     var state: TournamentState
-    let type: TournamentFormat
+    var type: TournamentFormat
     var tournamentFormatManager: TournamentFormatManager
     
     func hash(into hasher: inout Hasher) {
