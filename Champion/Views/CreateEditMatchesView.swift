@@ -14,18 +14,15 @@ struct CreateEditMatchesView: View {
     private let matchCellShape = Rectangle()
     
     let participants: [Participant]
-    let matchesPerOpponent: Int
-    let legsPerMatch: Int
+    let tournamentFormatManager: TournamentFormatManager
     @Binding var roundsBinding: [Round]
     
     init(participants: [Participant],
-         matchesPerOpponent: Int,
-         legsPerMatch: Int,
+         tournamentFormatManager: TournamentFormatManager,
          roundsBinding: Binding<[Round]>) {
         
         self.participants = participants
-        self.matchesPerOpponent = matchesPerOpponent
-        self.legsPerMatch = legsPerMatch
+        self.tournamentFormatManager = tournamentFormatManager
         _roundsBinding = roundsBinding
         _rounds = State(initialValue: roundsBinding.wrappedValue)
     }
@@ -54,9 +51,7 @@ struct CreateEditMatchesView: View {
         PageSection {
             VStack {
                 Button {
-                    rounds = MatchesService.shared.createMatches(participants: participants,
-                                                                 matchesPerOpponent: matchesPerOpponent,
-                                                                 legsPerMatch: legsPerMatch)
+                    rounds = tournamentFormatManager.generateMatches(participants: participants)
                 } label: {
                     Text("Auto-Generate")
                         .font(.title2)
@@ -114,6 +109,7 @@ struct CreateEditMatchesView: View {
 
 struct CreateEditMatchesView_Previews: PreviewProvider {
     private static let participants = MockData.participants
+    private static let tournamentFormatManager = RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
     @State private static var rounds = MockData.roundRobinStage.rounds
     @State private static var emptyRounds = [Round]()
     
@@ -121,15 +117,13 @@ struct CreateEditMatchesView_Previews: PreviewProvider {
         Group {
             NavigationView {
                 CreateEditMatchesView(participants: participants,
-                                      matchesPerOpponent: 1,
-                                      legsPerMatch: 1,
+                                      tournamentFormatManager: tournamentFormatManager,
                                       roundsBinding: $rounds)
             }
             
             NavigationView {
                 CreateEditMatchesView(participants: participants,
-                                      matchesPerOpponent: 1,
-                                      legsPerMatch: 1,
+                                      tournamentFormatManager: tournamentFormatManager,
                                       roundsBinding: $emptyRounds)
             }
         }

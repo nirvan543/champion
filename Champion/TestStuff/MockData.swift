@@ -10,12 +10,13 @@ import Foundation
 struct MockData {
     // MARK: Tournaments
     static let atlantaCup3 = Tournament(id: IdUtils.newUuid,
-                                        state: .created,
                                         name: "FIFA 22 Atlanta Cup III",
-                                        date: DateUtils.date(year: 2022, month: .july, day: 16)!,
-                                        type: .roundRobin,
                                         participants: participants,
-                                        roundRobinStage: roundRobinStage)
+                                        rounds: rounds,
+                                        date: DateUtils.date(year: 2022, month: .july, day: 16)!,
+                                        state: .created,
+                                        type: .roundRobin,
+                                        tournamentFormatManager: RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig()))
     
     static let tournaments = [
         atlantaCup3

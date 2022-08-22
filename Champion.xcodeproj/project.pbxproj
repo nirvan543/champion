@@ -40,6 +40,9 @@
 		D8BD21B9287E5C3C0018F7D2 /* MatchesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B8287E5C3C0018F7D2 /* MatchesService.swift */; };
 		D8E6494528AB2EB4007DC119 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494428AB2EB4007DC119 /* PageView.swift */; };
 		D8E6494728AB2FC0007DC119 /* EditableConfigLineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */; };
+		D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */; };
+		D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */; };
+		D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +99,9 @@
 		D8BD21B8287E5C3C0018F7D2 /* MatchesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesService.swift; sourceTree = "<group>"; };
 		D8E6494428AB2EB4007DC119 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableConfigLineItemView.swift; sourceTree = "<group>"; };
+		D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentFormatFactory.swift; sourceTree = "<group>"; };
+		D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinFormatView.swift; sourceTree = "<group>"; };
+		D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyRoundRobinFormatConfigView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +162,7 @@
 			children = (
 				D82E7D7A28826C37006750A3 /* TestStuff */,
 				D86187A42878DDC800553E5D /* Models */,
+				D8E6494828ADDB2A007DC119 /* Factories */,
 				D86187A32878DD4700553E5D /* Repositories */,
 				D86187AB2878ED4E00553E5D /* Services */,
 				D86187A22878DD4000553E5D /* Views */,
@@ -196,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				D86187C2287A221B00553E5D /* Components */,
+				D8E6494928ADDCF3007DC119 /* Formats */,
 				D86187BA2879C7AF00553E5D /* TournamentsListView.swift */,
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
 				D86187C0287A21E900553E5D /* MatchesView.swift */,
@@ -251,6 +259,31 @@
 				D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D8E6494828ADDB2A007DC119 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		D8E6494928ADDCF3007DC119 /* Formats */ = {
+			isa = PBXGroup;
+			children = (
+				D8E6494A28ADDD01007DC119 /* RoundRobin */,
+			);
+			path = Formats;
+			sourceTree = "<group>";
+		};
+		D8E6494A28ADDD01007DC119 /* RoundRobin */ = {
+			isa = PBXGroup;
+			children = (
+				D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */,
+				D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */,
+			);
+			path = RoundRobin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +437,7 @@
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
 				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,
+				D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */,
 				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
 				D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
@@ -411,6 +445,8 @@
 				D86187C4287A222700553E5D /* PageSection.swift in Sources */,
 				D8BD21B7287E5ADD0018F7D2 /* MatchCellView.swift in Sources */,
 				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
+				D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */,
+				D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

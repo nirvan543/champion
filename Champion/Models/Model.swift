@@ -10,12 +10,13 @@ import SwiftUI
 
 struct Tournament: Identifiable, Hashable, Equatable {
     let id: String
-    var state: TournamentState
     let name: String
-    let date: Date
-    let type: TournamentFormat
     let participants: [Participant]
-    var roundRobinStage: RoundRobinStage
+    var rounds: [Round]
+    let date: Date
+    var state: TournamentState
+    let type: TournamentFormat
+    var tournamentFormatManager: TournamentFormatManager
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -281,4 +282,50 @@ enum GameState: Codable {
     case notStarted
     case inProgress
     case completed
+}
+
+protocol TournamentFormatConfig {
+    func validate() -> ChampionError?
+}
+
+struct RoundRobinTournamentFormatConfig: TournamentFormatConfig {
+    var matchesPerOpponent: Int
+    var legsPerMatch: Int
+    
+    init(matchesPerOpponent: Int = 1, legsPerMatch: Int = 1) {
+        self.matchesPerOpponent = matchesPerOpponent
+        self.legsPerMatch = legsPerMatch
+    }
+    
+    func validate() -> ChampionError? {
+        if matchesPerOpponent < 1 {
+            return ChampionError(errorMessage: "League stage 'Matches per Opponent' must be at least '1'.")
+        }
+        
+        if legsPerMatch < 1 {
+            return ChampionError(errorMessage: "League stage 'Legs per Match' must be at least '1'.")
+        }
+        
+        return nil
+    }
+}
+
+protocol TournamentFormatManager {
+    var tournamentFormatConfig: TournamentFormatConfig { get set }
+    
+    func generateMatches(participants: [Participant]) -> [Round]
+}
+
+struct RoundRobinFormatManager: TournamentFormatManager {
+    var tournamentFormatConfig: TournamentFormatConfig
+    
+    func generateMatches(participants: [Participant]) -> [Round] {
+        guard let tournamentFormatConfig = tournamentFormatConfig as? RoundRobinTournamentFormatConfig else {
+            fatalError("Expected 'tournamentFormatConfig' to be of type 'RoundRobinTournamentFormatConfig'. Instead, is of type: \(tournamentFormatConfig.self)")
+        }
+        
+        return MatchesService.shared.createMatches(participants: participants,
+                                                   matchesPerOpponent: tournamentFormatConfig.matchesPerOpponent,
+                                                   legsPerMatch: tournamentFormatConfig.legsPerMatch)
+    }
 }

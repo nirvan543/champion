@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MatchesView: View {
-    let roundRobinStage: RoundRobinStage
+    let rounds: [Round]
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 42) {
-                ForEach(Array(roundRobinStage.rounds.enumerated()), id: \.element) { index, round in
+                ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
                     PageSection(headerText: "Round \(index + 1)") {
                         VStack {
                             ForEach(round.matches) { match in
@@ -36,15 +36,15 @@ struct MatchesView: View {
 }
 
 struct MatchesView_Previews: PreviewProvider {
-    static let roundRobinStage = MockData.roundRobinStage
+    static let rounds = MockData.rounds
     
     static var previews: some View {
         Group {
             NavigationView {
-                MatchesView(roundRobinStage: roundRobinStage)
+                MatchesView(rounds: rounds)
             }
             NavigationView {
-                MatchesView(roundRobinStage: roundRobinStage)
+                MatchesView(rounds: rounds)
             }
             .preferredColorScheme(.dark)
         }

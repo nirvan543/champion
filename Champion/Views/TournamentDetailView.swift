@@ -18,7 +18,8 @@ struct TournamentDetailView: View {
                 tournamentTypeSection
                 tournamentDateSection
                 participantsSection
-                leagueStageConfigSection
+                TournamentFormatFactory.tournamentFormatConfigView(for: tournament.type,
+                                                                   tournamentFormatConfig: tournament.tournamentFormatManager.tournamentFormatConfig)
                 finalActionSection
             }
         }
@@ -78,18 +79,6 @@ struct TournamentDetailView: View {
         }
     }
     
-    private var leagueStageConfigSection: some View {
-        PageSection(headerText: "League Stage Config") {
-            VStack(alignment: .leading, spacing: 8) {
-                ReadOnlyConfigLineItemView(labelText: "Matches per Opponent",
-                                           value: "\(tournament.roundRobinStage.matchesPerOpponent)")
-                
-                ReadOnlyConfigLineItemView(labelText: "Legs per Match",
-                                           value: "\(tournament.roundRobinStage.legsPerMatch)")
-            }
-        }
-    }
-    
     private var finalActionSection: some View {
         PageSection {
             VStack(spacing: 14) {
@@ -101,7 +90,7 @@ struct TournamentDetailView: View {
     
     private var viewMatchesButton: some View {
         NavigationLink {
-            MatchesView(roundRobinStage: tournament.roundRobinStage)
+            MatchesView(rounds: tournament.rounds)
         } label: {
             Text("View Matches")
                 .font(.title2)

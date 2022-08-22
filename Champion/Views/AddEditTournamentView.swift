@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct AddEditTournamentView: View {
+    static let defaultTournamentFormat: TournamentFormat = .roundRobin
+    
     @Environment(\.presentationMode) private var presentationMode
     
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
     @State private var tournamentName = ""
-    @State private var tournamentFormat: TournamentFormat = .roundRobin
-    @State private var leagueStageMatchesPerOpponent = 1
-    @State private var leagueLegsPerMatch = 1
+    @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
     @State private var participants = [Participant]()
     @State private var presentAddParticipantView = false
-    @State private var leagueStageRounds = [Round]()
+    @State private var tournamentRounds = [Round]()
     @State private var presentFormErrorAlert = false
     @State private var formError: ChampionError? = nil
+    @State private var tournamentFormatManager = TournamentFormatFactory.tournamentFormatManager(for: defaultTournamentFormat)
     
     @FocusState private var focusField: Bool
     
@@ -31,7 +32,8 @@ struct AddEditTournamentView: View {
         PageView {
             tournamentNameSection
             tournamentFormatSection
-            leageStageConfigSection
+            TournamentFormatFactory.addEditTournamentFormatView(for: tournamentFormat,
+                                                                tournamentFormatConfig: $tournamentFormatManager.tournamentFormatConfig)
             participantsSection
             actionSection
         }
@@ -83,18 +85,6 @@ struct AddEditTournamentView: View {
             .padding()
             .background()
             .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
-        }
-    }
-    
-    private var leageStageConfigSection: some View {
-        PageSection(headerText: "League Stage Config") {
-            VStack(alignment: .leading, spacing: 8) {
-                EditableConfigLineItemView(labelText: "Matches per Opponent",
-                                           value: $leagueStageMatchesPerOpponent)
-                
-                EditableConfigLineItemView(labelText: "Legs per Match",
-                                           value: $leagueLegsPerMatch)
-            }
         }
     }
     
@@ -174,11 +164,10 @@ struct AddEditTournamentView: View {
     private var createFixuresLink: some View {
         NavigationLink {
             CreateEditMatchesView(participants: participants,
-                                  matchesPerOpponent: leagueStageMatchesPerOpponent,
-                                  legsPerMatch: leagueLegsPerMatch,
-                                  roundsBinding: $leagueStageRounds)
+                                  tournamentFormatManager: tournamentFormatManager,
+                                  roundsBinding: $tournamentRounds)
         } label: {
-            Text(leagueStageRounds.isEmpty ? "Create Matches" : "View Matches")
+            Text(tournamentRounds.isEmpty ? "Create Matches" : "View Matches")
                 .font(.title2)
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
@@ -196,13 +185,13 @@ struct AddEditTournamentView: View {
             }
             
             let newTournament = Tournament(id: IdUtils.newUuid,
-                                           state: .created,
                                            name: tournamentName,
-                                           date: Date(), // TODO: Make this dynamic
-                                           type: tournamentFormat,
                                            participants: participants,
-                                           roundRobinStage: RoundRobinStage(matchesPerOpponent: leagueStageMatchesPerOpponent,
-                                                                            legsPerMatch: leagueLegsPerMatch))
+                                           rounds: tournamentRounds,
+                                           date: Date(), // TODO: Make this dynamic
+                                           state: .created,
+                                           type: tournamentFormat,
+                                           tournamentFormatManager: tournamentFormatManager)
             
             environmentValues.addTournament(tournament: newTournament)
             
@@ -224,13 +213,8 @@ struct AddEditTournamentView: View {
             return false
         }
         
-        if leagueStageMatchesPerOpponent < 1 {
-            formError = ChampionError(errorMessage: "League stage 'Matches per Opponent' must be at least '1'.")
-            return false
-        }
-        
-        if leagueLegsPerMatch < 1 {
-            formError = ChampionError(errorMessage: "League stage 'Legs per Match' must be at least '1'.")
+        if let configError = tournamentFormatManager.tournamentFormatConfig.validate() {
+            formError = configError
             return false
         }
         
@@ -239,7 +223,7 @@ struct AddEditTournamentView: View {
             return false
         }
         
-        if leagueStageRounds.isEmpty {
+        if tournamentRounds.isEmpty {
             formError = ChampionError(errorMessage: "Matches must be created before creating the tournament.")
             return false
         }
