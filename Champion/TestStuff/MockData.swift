@@ -174,8 +174,4 @@ struct MockData {
         round8,
         round9
     ]
-    
-    
-    // MARK: Stages
-    static let roundRobinStage = RoundRobinStage(matchesPerOpponent: 1, legsPerMatch: 1, rounds: rounds)
 }

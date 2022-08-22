@@ -110,7 +110,7 @@ struct CreateEditMatchesView: View {
 struct CreateEditMatchesView_Previews: PreviewProvider {
     private static let participants = MockData.participants
     private static let tournamentFormatManager = RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
-    @State private static var rounds = MockData.roundRobinStage.rounds
+    @State private static var rounds = MockData.rounds
     @State private static var emptyRounds = [Round]()
     
     static var previews: some View {

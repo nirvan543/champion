@@ -42,18 +42,6 @@ struct Participant: Identifiable, Hashable, Equatable, Codable {
     }
 }
 
-struct RoundRobinStage: Hashable, Equatable {
-    let matchesPerOpponent: Int
-    let legsPerMatch: Int
-    var rounds: [Round]
-    
-    init(matchesPerOpponent: Int, legsPerMatch: Int, rounds: [Round] = []) {
-        self.matchesPerOpponent = matchesPerOpponent
-        self.legsPerMatch = legsPerMatch
-        self.rounds = rounds
-    }
-}
-
 struct Round: Identifiable, Hashable, Equatable {
     let id: String
     var matches: [Match]
