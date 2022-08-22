@@ -15,6 +15,7 @@ struct AddEditTournamentView: View {
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
     @State private var tournamentName = ""
+    @State private var tournamentDate = Date()
     @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
     @State private var participants = [Participant]()
     @State private var presentAddParticipantView = false
@@ -31,6 +32,7 @@ struct AddEditTournamentView: View {
     var body: some View {
         PageView {
             tournamentNameSection
+            tournamentDateSection
             tournamentFormatSection
             TournamentFormatFactory.addEditTournamentFormatView(for: tournamentFormat,
                                                                 tournamentFormatConfig: $tournamentFormatManager.tournamentFormatConfig)
@@ -68,6 +70,19 @@ struct AddEditTournamentView: View {
             TextField("Tournament Name", text: $tournamentName)
                 .textFieldStyle(.roundedBorder)
                 .focused($focusField)
+        }
+    }
+    
+    private var tournamentDateSection: some View {
+        PageSection(headerText: "Tournament Date") {
+            HStack {
+                DatePicker("Tournament Date", selection: $tournamentDate)
+                    .labelsHidden()
+                    .frame(maxWidth: .infinity)
+            }
+            .padding()
+            .background()
+            .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
@@ -188,7 +203,7 @@ struct AddEditTournamentView: View {
                                            name: tournamentName,
                                            participants: participants,
                                            rounds: tournamentRounds,
-                                           date: Date(), // TODO: Make this dynamic
+                                           date: tournamentDate,
                                            state: .created,
                                            type: tournamentFormat,
                                            tournamentFormatManager: tournamentFormatManager)
