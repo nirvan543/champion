@@ -152,6 +152,10 @@ struct Match: Identifiable, Hashable, Equatable {
         return .inProgress
     }
     
+    func contains(participant: Participant) -> Bool {
+        participant == participant1 || participant == participant2
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -270,6 +274,7 @@ enum GameState: Codable {
     case notStarted
     case inProgress
     case completed
+    case unplayable
 }
 
 protocol TournamentFormatConfig {
@@ -302,6 +307,8 @@ protocol TournamentFormatManager {
     var tournamentFormatConfig: TournamentFormatConfig { get set }
     
     func generateMatches(participants: [Participant]) -> [Round]
+    
+    func matchStats(participants: [Participant], rounds: [Round]) -> [ParticipantStats]
 }
 
 struct RoundRobinFormatManager: TournamentFormatManager {
@@ -315,5 +322,54 @@ struct RoundRobinFormatManager: TournamentFormatManager {
         return MatchesService.shared.createMatches(participants: participants,
                                                    matchesPerOpponent: tournamentFormatConfig.matchesPerOpponent,
                                                    legsPerMatch: tournamentFormatConfig.legsPerMatch)
+    }
+    
+    func matchStats(participants: [Participant], rounds: [Round]) -> [ParticipantStats] {
+        var matchStats = [ParticipantStats]()
+        
+        participants.forEach { participant in
+            let participantMatches = rounds.flatMap({ $0.matches }).filter({ $0.contains(participant: participant) })
+            let matchesWon = participantMatches.filter({ $0.matchState == .completed && !$0.isByeGame && $0.winner == participant }).count
+            let matchesTied = participantMatches.filter({ $0.matchState == .completed && !$0.isByeGame && $0.endedInATie }).count
+            let matchesLost = participantMatches.filter({ $0.matchState == .completed && !$0.isByeGame && !$0.endedInATie && $0.winner != participant }).count
+            
+            let goals = participantMatches.flatMap { match in
+                match.legs.flatMap({ $0.goals })
+            }
+            
+            let goalsFor = goals.filter({ $0.scorer == participant }).count
+            let goalsAgainst = goals.filter({ $0.against == participant }).count
+            
+            let participantStats = ParticipantStats(participant: participant,
+                                                    matchesWon: matchesWon,
+                                                    matchesTied: matchesTied,
+                                                    matchesLost: matchesLost,
+                                                    goalsFor: goalsFor,
+                                                    goalsAgainst: goalsAgainst)
+            matchStats.append(participantStats)
+        }
+        
+        return matchStats
+    }
+}
+
+struct ParticipantStats: Equatable, Hashable {
+    let participant: Participant
+    let matchesWon: Int
+    let matchesTied: Int
+    let matchesLost: Int
+    let goalsFor: Int
+    let goalsAgainst: Int
+    
+    var matchesPlayed: Int {
+        matchesWon + matchesTied + matchesLost
+    }
+    
+    var goalsDifference: Int {
+        goalsFor - goalsAgainst
+    }
+    
+    var points: Int {
+        (matchesWon * 3) + (matchesTied * 1) + (matchesLost * 0)
     }
 }

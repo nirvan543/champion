@@ -11,20 +11,27 @@ struct TournamentProgressView: View {
     @Binding var tournament: Tournament
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
+        GeometryReader { geo in
+            PageView {
+                PageSection(headerText: "Standings") {
+                    StandingsView(geo: geo, stats: standingStats)
+                }
                 matchesSection
             }
-            .padding(.top)
         }
-        .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
         .onAppear {
             if tournament.state == .created {
                 tournament.state = .roundRobin
             }
         }
+    }
+    
+    private var standingStats: [ParticipantStats] {
+        tournament.tournamentFormatManager.matchStats(participants: tournament.participants,
+                                                      rounds: tournament.rounds)
+        // TODO: Add `matchesPlayed` as a sort criteria. But `matchesPlayed` would be compared with a `<` instead of `>`.
+            .sorted(by: { ($0.points, $0.goalsDifference) > ($1.points, $1.goalsDifference) })
     }
     
     private var matchesSection: some View {
@@ -61,8 +68,14 @@ struct TournamentProgressView_Previews: PreviewProvider {
     @State private static var tournament = MockData.atlantaCup3
     
     static var previews: some View {
-        NavigationView {
-            TournamentProgressView(tournament: $tournament)
+        Group {
+            NavigationView {
+                TournamentProgressView(tournament: $tournament)
+            }
+            NavigationView {
+                TournamentProgressView(tournament: $tournament)
+            }
+            .preferredColorScheme(.dark)
         }
     }
 }

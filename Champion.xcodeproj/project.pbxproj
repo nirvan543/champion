@@ -43,6 +43,7 @@
 		D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */; };
 		D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */; };
 		D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */; };
+		D8E6495228B65812007DC119 /* StandingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495128B65812007DC119 /* StandingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentFormatFactory.swift; sourceTree = "<group>"; };
 		D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinFormatView.swift; sourceTree = "<group>"; };
 		D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyRoundRobinFormatConfigView.swift; sourceTree = "<group>"; };
+		D8E6495128B65812007DC119 /* StandingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */,
 				D88CFE202882903A0061BC74 /* MatchProgressView.swift */,
 				D88CFE24288296870061BC74 /* MatchLegProgressView.swift */,
+				D8E6495128B65812007DC119 /* StandingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
+				D8E6495228B65812007DC119 /* StandingsView.swift in Sources */,
 				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,
 				D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */,
 				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
