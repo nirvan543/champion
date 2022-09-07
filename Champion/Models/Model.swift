@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Tournament: Identifiable, Hashable, Equatable {
+struct Tournament: Identifiable, Hashable, Equatable, Codable {
     let id: String
     var name: String
     var participants: [Participant]
@@ -18,12 +18,78 @@ struct Tournament: Identifiable, Hashable, Equatable {
     var type: TournamentFormat
     var tournamentFormatManager: TournamentFormatManager
     
+    init(id: String,
+         name: String,
+         participants: [Participant],
+         rounds: [Round],
+         date: Date,
+         state: TournamentState,
+         type: TournamentFormat,
+         tournamentFormatManager: TournamentFormatManager) {
+        
+        self.id = id
+        self.name = name
+        self.participants = participants
+        self.rounds = rounds
+        self.date = date
+        self.state = state
+        self.type = type
+        self.tournamentFormatManager = tournamentFormatManager
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        participants = try container.decode([Participant].self, forKey: .participants)
+        rounds = try container.decode([Round].self, forKey: .rounds)
+        date = try container.decode(Date.self, forKey: .date)
+        state = try container.decode(TournamentState.self, forKey: .state)
+        type = try container.decode(TournamentFormat.self, forKey: .type)
+        
+        do {
+            tournamentFormatManager = try container.decode(RoundRobinFormatManager.self, forKey: .tournamentFormatManager)
+        } catch {
+            fatalError("Could not convert `tournamentFormatManager` into a concrete type. Error: \(error)")
+        }
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
     static func ==(lhs: Tournament, rhs: Tournament) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(participants, forKey: .participants)
+        try container.encode(rounds, forKey: .rounds)
+        try container.encode(date, forKey: .date)
+        try container.encode(state, forKey: .state)
+        try container.encode(type, forKey: .type)
+        
+        if let tournamentFormatManager = tournamentFormatManager as? RoundRobinFormatManager {
+            try container.encode(tournamentFormatManager, forKey: .tournamentFormatManager)
+        } else {
+            fatalError("Could not convert `tournamentFormatManager` into a concrete type. `tournamentFormatManager`: \(tournamentFormatManager.self)")
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case participants
+        case rounds
+        case date
+        case state
+        case type
+        case tournamentFormatManager
     }
 }
 
@@ -42,7 +108,7 @@ struct Participant: Identifiable, Hashable, Equatable, Codable {
     }
 }
 
-struct Round: Identifiable, Hashable, Equatable {
+struct Round: Identifiable, Hashable, Equatable, Codable {
     let id: String
     var matches: [Match]
     
@@ -60,7 +126,7 @@ struct Round: Identifiable, Hashable, Equatable {
     }
 }
 
-struct Match: Identifiable, Hashable, Equatable {
+struct Match: Identifiable, Hashable, Equatable, Codable {
     let id: String
     let participant1: Participant
     let participant2: Participant?
@@ -259,11 +325,11 @@ struct Goal: Identifiable, Hashable, Equatable, Codable {
     let minute: Int
 }
 
-enum TournamentFormat: String {
+enum TournamentFormat: String, Codable {
     case roundRobin = "Round Robin"
 }
 
-enum TournamentState {
+enum TournamentState: Codable {
     case created
     case roundRobin
     case knockout
@@ -277,7 +343,7 @@ enum GameState: Codable {
     case unplayable
 }
 
-protocol TournamentFormatConfig {
+protocol TournamentFormatConfig: Codable {
     func validate() -> ChampionError?
 }
 
@@ -303,7 +369,7 @@ struct RoundRobinTournamentFormatConfig: TournamentFormatConfig {
     }
 }
 
-protocol TournamentFormatManager {
+protocol TournamentFormatManager: Codable {
     var tournamentFormatConfig: TournamentFormatConfig { get set }
     
     func generateMatches(participants: [Participant]) -> [Round]
@@ -313,6 +379,20 @@ protocol TournamentFormatManager {
 
 struct RoundRobinFormatManager: TournamentFormatManager {
     var tournamentFormatConfig: TournamentFormatConfig
+    
+    init(tournamentFormatConfig: TournamentFormatConfig) {
+        self.tournamentFormatConfig = tournamentFormatConfig
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        do {
+            self.tournamentFormatConfig = try container.decode(RoundRobinTournamentFormatConfig.self, forKey: .tournamentFormatConfig)
+        } catch {
+            fatalError("Could not convert `tournamentFormatConfig` into a concrete type. Error: \(error)")
+        }
+    }
     
     func generateMatches(participants: [Participant]) -> [Round] {
         guard let tournamentFormatConfig = tournamentFormatConfig as? RoundRobinTournamentFormatConfig else {
@@ -350,6 +430,20 @@ struct RoundRobinFormatManager: TournamentFormatManager {
         }
         
         return matchStats
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let tournamentFormatConfig = tournamentFormatConfig as? RoundRobinTournamentFormatConfig {
+            try container.encode(tournamentFormatConfig, forKey: .tournamentFormatConfig)
+        } else {
+            fatalError("Could not convert `tournamentFormatConfig` into a concrete type. `tournamentFormatConfig`: \(tournamentFormatConfig)")
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case tournamentFormatConfig
     }
 }
 
