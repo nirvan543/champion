@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TournamentProgressView: View {
+    @State private var navigateToTournamentResultsView = false
+    
     @Binding var tournament: Tournament
     
     var body: some View {
@@ -15,8 +17,20 @@ struct TournamentProgressView: View {
             PageView {
                 PageSection(headerText: "Standings") {
                     StandingsView(geo: geo, stats: standingStats)
+                    
+                    if tournament.state == .completed {
+                        viewTournamentResultsButton
+                    }
                 }
                 matchesSection
+                if tournament.state != .completed {
+                    completeTournamentButton
+                }
+                NavigationLink(isActive: $navigateToTournamentResultsView) {
+                    TournamentResultsView(results: TournamentResults(stats: standingStats), revistingResults: false)
+                } label: {
+                    EmptyView()
+                }
             }
         }
         .navigationTitle(tournament.name)
@@ -24,6 +38,38 @@ struct TournamentProgressView: View {
             if tournament.state == .created {
                 tournament.state = .roundRobin
             }
+        }
+    }
+    
+    private var viewTournamentResultsButton: some View {
+        NavigationLink {
+            TournamentResultsView(results: TournamentResults(stats: standingStats), revistingResults: true)
+        } label: {
+            Text("View Results")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background()
+        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+    }
+    
+    private var completeTournamentButton: some View {
+        PageSection {
+            Button {
+                tournament.state = .completed
+                navigateToTournamentResultsView = true
+            } label: {
+                Text("Finish Tournament")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 18)
+            }
+            .buttonStyle(.plain)
+            .background(DesignValues.themeColor)
+            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
         }
     }
     
