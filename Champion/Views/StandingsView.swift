@@ -15,7 +15,7 @@ struct StandingsView: View {
     
     var body: some View {
         ScrollView(.horizontal) {
-            LazyVStack(spacing: 10) {
+            LazyVStack(spacing: 0) {
                 HStack(spacing: 5) {
                     headerCell(text: "Rank")
                         .frame(width: playerStatCellWidth(geo: geo))
@@ -31,14 +31,14 @@ struct StandingsView: View {
                         .frame(width: playerStatCellWidth(geo: geo))
                     headerCell(text: "L")
                         .frame(width: playerStatCellWidth(geo: geo))
-                    headerCell(text: "GD")
-                        .frame(width: playerStatCellWidth(geo: geo))
                     headerCell(text: "GF")
                         .frame(width: playerStatCellWidth(geo: geo))
                     headerCell(text: "GA")
                         .frame(width: playerStatCellWidth(geo: geo))
+                    headerCell(text: "GD")
+                        .frame(width: playerStatCellWidth(geo: geo))
                 }
-                .padding(.vertical, 5)
+                .padding(.vertical, 10)
                 .frame(minWidth: geo.size.width)
                 
                 ForEach(Array(stats.enumerated()), id: \.element) { index, stat in
@@ -57,14 +57,14 @@ struct StandingsView: View {
                             .frame(width: playerStatCellWidth(geo: geo))
                         Text("\(stat.matchesLost)")
                             .frame(width: playerStatCellWidth(geo: geo))
-                        Text("\(gaolDifference(stat.goalsDifference))")
-                            .frame(width: playerStatCellWidth(geo: geo))
                         Text("\(stat.goalsFor)")
                             .frame(width: playerStatCellWidth(geo: geo))
                         Text("\(stat.goalsAgainst)")
                             .frame(width: playerStatCellWidth(geo: geo))
+                        Text("\(gaolDifference(stat.goalsDifference))")
+                            .frame(width: playerStatCellWidth(geo: geo))
                     }
-                    .padding(.vertical, 5)
+                    .padding(.vertical, 10)
                     .background(index % 2 == 0 ? nonClearColor : Color.clear)
                     .frame(minWidth: geo.size.width)
                 }
@@ -122,7 +122,16 @@ struct StandingsView_Previews: PreviewProvider {
                                      matchesTied: 3,
                                      matchesLost: 1,
                                      goalsFor: 17,
-                                     goalsAgainst: 11)
+                                     goalsAgainst: 11),
+                    ParticipantStats(participant: Participant(id: IdUtils.newUuid,
+                                                              playerName: "Nirvan",
+                                                              teamName: "PSG",
+                                                              imageName: ""),
+                                     matchesWon: 6,
+                                     matchesTied: 0,
+                                     matchesLost: 2,
+                                     goalsFor: 20,
+                                     goalsAgainst: 9)
                 ])
             }
             GeometryReader { geo in
@@ -144,7 +153,16 @@ struct StandingsView_Previews: PreviewProvider {
                                      matchesTied: 3,
                                      matchesLost: 1,
                                      goalsFor: 17,
-                                     goalsAgainst: 11)
+                                     goalsAgainst: 11),
+                    ParticipantStats(participant: Participant(id: IdUtils.newUuid,
+                                                              playerName: "Nirvan",
+                                                              teamName: "PSG",
+                                                              imageName: ""),
+                                     matchesWon: 6,
+                                     matchesTied: 0,
+                                     matchesLost: 2,
+                                     goalsFor: 20,
+                                     goalsAgainst: 9)
                 ])
             }
             .preferredColorScheme(.dark)
