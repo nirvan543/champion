@@ -14,9 +14,12 @@ struct AddParticipantView2: View {
     
     @State private var participantName: String = ""
     
-    @State private var clubTypeOption: ClubTypeOption? = nil
-    @State private var countryLeague: FootballLeague? = nil
-    @State private var club: FootballClub? = nil
+    @State private var clubTypeOptionName: String? = nil
+    @State private var countryLeagueName: String? = nil
+    @State private var clubName: String? = nil
+    
+    @State private var presentFormErrorAlert = false
+    @State private var formError: ChampionError? = nil
     
     var participants: Binding<[Participant]>
     let fifaVersion: FifaVersion
@@ -26,15 +29,6 @@ struct AddParticipantView2: View {
     init(participants: Binding<[Participant]>, fifaVersion: FifaVersion) {
         self.participants = participants
         self.fifaVersion = fifaVersion
-        
-        let clubTypeOptions = catalogService.selectionOptions(for: fifaVersion)
-        let clubTypeOption = clubTypeOptions.first
-        let league = clubTypeOption?.leagues?.first
-        let club = league?.clubs.first ?? clubTypeOption?.clubs?.first
-        
-        _clubTypeOption = State(initialValue: clubTypeOption)
-        _countryLeague = State(initialValue: league)
-        _club = State(initialValue: club)
     }
     
     var body: some View {
@@ -45,27 +39,30 @@ struct AddParticipantView2: View {
             }
             
             Section {
-                Picker("Country/Team Type", selection: $clubTypeOption) {
+                Picker("Country/Team Type", selection: $clubTypeOptionName) {
+                    Text("Select...").tag(String?.none)
                     ForEach(options) { option in
-                        Text(option.name).tag(option as ClubTypeOption?)
+                        Text(option.name).tag(option.name as String?)
                     }
                 }
             }
             
             if let leagues = clubTypeOption?.leagues {
                 Section {
-                    Picker("League", selection: $countryLeague) {
+                    Picker("League", selection: $countryLeagueName) {
+                        Text("Select...").tag(String?.none)
                         ForEach(leagues) { league in
-                            Text(league.name).tag(league as FootballLeague?)
+                            Text(league.name).tag(league.name as String?)
                         }
                     }
                 }
             }
             
             Section {
-                Picker("Club", selection: $club) {
+                Picker("Club", selection: $clubName) {
+                    Text("Select...").tag(String?.none)
                     ForEach(clubOptions) { club in
-                        Text(club.name).tag(club as FootballClub?)
+                        Text(club.name).tag(club.name as String?)
                     }
                 }
             }
@@ -83,13 +80,23 @@ struct AddParticipantView2: View {
                 }
             }
         }
+        .alert("There are some errors", isPresented: $presentFormErrorAlert) {
+            Button("Dismiss", role: .cancel, action: {})
+        } message: {
+            if let formError = formError {
+                Text(formError.errorMessage)
+            } else {
+                Text("There are some form errors")
+            }
+        }
     }
     
     private var saveButton: some View {
         Button {
-            guard !participantName.isEmpty,
+            guard formIsValid,
                   let clubTypeOption = clubTypeOption,
                   let club = club else {
+                presentFormErrorAlert = true
                 return
             }
             
@@ -114,6 +121,30 @@ struct AddParticipantView2: View {
         .background(DesignValues.themeColor)
     }
     
+    private var formIsValid: Bool {
+        if participantName.isEmpty {
+            formError = ChampionError(errorMessage: "Participant Name is required.")
+            return false
+        }
+        
+        guard let clubTypeOption = clubTypeOption else {
+            formError = ChampionError(errorMessage: "Country/Team Type is required.")
+            return false
+        }
+        
+        if clubTypeOption.leagues != nil, countryLeagueName == nil {
+            formError = ChampionError(errorMessage: "League Name is required")
+            return false
+        }
+        
+        if clubName == nil {
+            formError = ChampionError(errorMessage: "Club Name is required")
+            return false
+        }
+        
+        return true
+    }
+    
     private var fifaVersions: [FifaVersion] {
         catalogService.fifaVersions
     }
@@ -124,12 +155,52 @@ struct AddParticipantView2: View {
         } else if let league = countryLeague {
             return league.clubs
         } else {
-            fatalError("Expected a list of football clubs from either the ClubTypeOption or the League. ClubTypeOption: \(clubTypeOption.debugDescription) | FootballLeague: \(countryLeague.debugDescription)")
+            return []
         }
     }
     
     private var options: [ClubTypeOption] {
         return catalogService.selectionOptions(for: fifaVersion)
+    }
+    
+    private var clubTypeOption: ClubTypeOption? {
+        guard let clubTypeOptionName = clubTypeOptionName else {
+            return nil
+        }
+        
+        guard let option = options.first(where: { $0.name == clubTypeOptionName }) else {
+            fatalError("Could not find ClubTypeOption with name \(clubTypeOptionName)")
+        }
+        
+        return option
+    }
+    
+    private var countryLeague: FootballLeague? {
+        guard let countryLeagueName = countryLeagueName,
+              let clubTypeOption = clubTypeOption else {
+            return nil
+        }
+        
+        guard let footballLeague = clubTypeOption.leagues?.first(where: { $0.name == countryLeagueName }) else {
+            fatalError("Could not find FootballLeague with name \(countryLeagueName) in \(clubTypeOption.name)")
+        }
+        
+        return footballLeague
+    }
+    
+    private var club: FootballClub? {
+        guard let clubName = clubName,
+              let clubTypeOption = clubTypeOption else {
+            return nil
+        }
+        
+        if let footballClub = clubTypeOption.clubs?.first(where: { $0.name == clubName }) {
+            return footballClub
+        } else if let footballClub = countryLeague?.clubs.first(where: { $0.name == clubName }) {
+            return footballClub
+        } else {
+            fatalError("Could not find FootballClub with name \(clubName) in \(clubTypeOption.name)")
+        }
     }
 }
 
