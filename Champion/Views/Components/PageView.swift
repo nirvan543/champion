@@ -19,6 +19,7 @@ struct PageView<Content: View>: View {
             VStack(alignment: .leading, spacing: 42) {
                 content
             }
+            .padding(.top)
         }
         .frame(maxWidth: .infinity)
         .background(DesignValues.pageColor.ignoresSafeArea())

@@ -16,6 +16,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
     var date: Date
     var state: TournamentState
     var type: TournamentFormat
+    var fifaVersionName: String
     var tournamentFormatManager: TournamentFormatManager
     
     init(id: String,
@@ -25,6 +26,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
          date: Date,
          state: TournamentState,
          type: TournamentFormat,
+         fifaVersionName: String,
          tournamentFormatManager: TournamentFormatManager) {
         
         self.id = id
@@ -34,6 +36,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         self.date = date
         self.state = state
         self.type = type
+        self.fifaVersionName = fifaVersionName
         self.tournamentFormatManager = tournamentFormatManager
     }
     
@@ -47,6 +50,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         date = try container.decode(Date.self, forKey: .date)
         state = try container.decode(TournamentState.self, forKey: .state)
         type = try container.decode(TournamentFormat.self, forKey: .type)
+        fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
         
         do {
             tournamentFormatManager = try container.decode(RoundRobinFormatManager.self, forKey: .tournamentFormatManager)
@@ -73,6 +77,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         try container.encode(date, forKey: .date)
         try container.encode(state, forKey: .state)
         try container.encode(type, forKey: .type)
+        try container.encode(fifaVersionName, forKey: .fifaVersionName)
         
         if let tournamentFormatManager = tournamentFormatManager as? RoundRobinFormatManager {
             try container.encode(tournamentFormatManager, forKey: .tournamentFormatManager)
@@ -89,6 +94,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         case date
         case state
         case type
+        case fifaVersionName
         case tournamentFormatManager
     }
 }
@@ -96,7 +102,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
 struct Participant: Identifiable, Hashable, Equatable, Codable {
     let id: String
     let playerName: String
-    let teamName: String
+    let clubSelection: ClubSelection
     let imageName: String
     
     func hash(into hasher: inout Hasher) {
@@ -105,6 +111,22 @@ struct Participant: Identifiable, Hashable, Equatable, Codable {
     
     static func ==(lhs: Participant, rhs: Participant) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+struct ClubSelection: Identifiable, Hashable, Equatable, Codable {
+    var id: String {
+        "\(clubAssociation)_\(leagueName ?? "")_\(clubName)"
+    }
+    
+    let clubName: String
+    let leagueName: String?
+    let clubAssociation: String
+    
+    static func ==(lhs: ClubSelection, rhs: ClubSelection) -> Bool {
+        lhs.clubName == rhs.clubName &&
+        lhs.leagueName == rhs.leagueName &&
+        lhs.clubAssociation == rhs.clubAssociation
     }
 }
 

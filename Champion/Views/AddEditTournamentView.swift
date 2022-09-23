@@ -11,6 +11,7 @@ struct AddEditTournamentView: View {
     static let defaultTournamentFormat: TournamentFormat = .roundRobin
     
     private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
+    private let catalogService = ClubCatalogService.shared
     private let matchCellShape = Rectangle()
     
     @Environment(\.presentationMode) private var presentationMode
@@ -20,6 +21,7 @@ struct AddEditTournamentView: View {
     private var editingTournament: Binding<Tournament>? = nil
     @State private var tournamentName = ""
     @State private var tournamentDate = Date()
+    @State private var fifaVersionName: String
     @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
     @State private var participants = [Participant]()
     @State private var tournamentRounds = [Round]()
@@ -33,12 +35,14 @@ struct AddEditTournamentView: View {
     
     init(editingTournament: Binding<Tournament>? = nil) {
         self.editingTournament = editingTournament
+        _fifaVersionName = State(initialValue: catalogService.defaultSelections.fifaVersion.name)
     }
     
     var body: some View {
         PageView {
             tournamentNameSection
             tournamentDateSection
+            fifaVersionSection
             tournamentFormatSection
             TournamentFormatFactory.addEditTournamentFormatView(for: tournamentFormat,
                                                                 tournamentFormatConfig: $tournamentFormatManager.tournamentFormatConfig)
@@ -57,7 +61,7 @@ struct AddEditTournamentView: View {
         }
         .sheet(isPresented: $presentAddParticipantView) {
             NavigationView {
-                AddParticipantView(particiapnts: $participants)
+                AddParticipantView2(participants: $participants, fifaVersion: fifaVersion)
             }
         }
         .alert("There are some errors", isPresented: $presentFormErrorAlert) {
@@ -84,8 +88,16 @@ struct AddEditTournamentView: View {
         }
     }
     
+    private var fifaVersion: FifaVersion {
+        guard let version = catalogService.fifaVersions.first(where: { $0.name == fifaVersionName }) else {
+            fatalError("Could not find FIFA Version of \(fifaVersionName)")
+        }
+        
+        return version
+    }
+    
     private var tournamentNameSection: some View {
-        PageSection {
+        PageSection(headerText: "Tournament Name") {
             TextField("Tournament Name", text: $tournamentName)
                 .textFieldStyle(.roundedBorder)
                 .focused($focusField)
@@ -98,6 +110,22 @@ struct AddEditTournamentView: View {
                 DatePicker("Tournament Date", selection: $tournamentDate)
                     .labelsHidden()
                     .frame(maxWidth: .infinity)
+            }
+            .padding()
+            .background()
+            .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+        }
+    }
+    
+    private var fifaVersionSection: some View {
+        PageSection(headerText: "FIFA Version") {
+            HStack {
+                Picker("FIFA Version", selection: $fifaVersionName) {
+                    ForEach(catalogService.fifaVersions) { fifaGameVersion in
+                        Text(fifaGameVersion.name)
+                    }
+                }
+                .frame(maxWidth: .infinity)
             }
             .padding()
             .background()
@@ -266,6 +294,7 @@ struct AddEditTournamentView: View {
         editingTournament.wrappedValue.rounds = tournamentRounds
         editingTournament.wrappedValue.date = tournamentDate
         editingTournament.wrappedValue.type = tournamentFormat
+        editingTournament.wrappedValue.fifaVersionName = fifaVersionName
         editingTournament.wrappedValue.tournamentFormatManager = tournamentFormatManager
     }
     
@@ -277,6 +306,7 @@ struct AddEditTournamentView: View {
                                        date: tournamentDate,
                                        state: .created,
                                        type: tournamentFormat,
+                                       fifaVersionName: fifaVersionName,
                                        tournamentFormatManager: tournamentFormatManager)
         
         environmentValues.addTournament(tournament: newTournament)

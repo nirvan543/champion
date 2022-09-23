@@ -19,7 +19,7 @@ struct AddParticipantView: View {
     private let imageOptions = MockTournamentRepository.shared.retrieveImageOptions()
     private let matchCellShape = Rectangle()
     
-    @Binding var particiapnts: [Participant]
+    @Binding var participants: [Participant]
     
     var body: some View {
         VStack {
@@ -44,10 +44,10 @@ struct AddParticipantView: View {
                     return
                 }
                 
-                particiapnts.append(Participant(id: IdUtils.newUuid,
-                                                playerName: playerName,
-                                                teamName: teamName,
-                                                imageName: imageSelection))
+//                participants.append(Participant(id: IdUtils.newUuid,
+//                                                playerName: playerName,
+//                                                teamName: teamName,
+//                                                imageName: imageSelection))
                 
                 presentationMode.wrappedValue.dismiss()
             } label: {
@@ -101,7 +101,7 @@ struct AddParticipantView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            AddParticipantView(particiapnts: $participants)
+            AddParticipantView(participants: $participants)
         }
     }
 }

@@ -16,6 +16,7 @@ struct MockData {
                                         date: DateUtils.date(year: 2022, month: .july, day: 16)!,
                                         state: .created,
                                         type: .roundRobin,
+                                        fifaVersionName: "FIFA 22",
                                         tournamentFormatManager: RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig()))
     
     static let tournaments = [
@@ -26,53 +27,53 @@ struct MockData {
     // MARK: Participants
     static let neeraj = Participant(id: IdUtils.newUuid,
                                     playerName: "Neeraj",
-                                    teamName: "Manchester City",
+                                    clubSelection: ClubSelection(clubName: "Manchester City", leagueName: "EPL", clubAssociation: "England"),
                                     imageName: "man_city_logo")
     
     static let saurav = Participant(id: IdUtils.newUuid,
                                     playerName: "Saurav",
-                                    teamName: "FC Barcelona",
+                                    clubSelection: ClubSelection(clubName: "FC Barcelona", leagueName: "LaLiga", clubAssociation: "Spain"),
                                     imageName: "fc_barcelona_logo")
     
     static let mookie = Participant(id: IdUtils.newUuid,
                                     playerName: "Mookie",
-                                    teamName: "Liverpool F.C.",
+                                    clubSelection: ClubSelection(clubName: "Liverpool F.C.", leagueName: "EPL", clubAssociation: "England"),
                                     imageName: "liverpool_logo")
     
     static let antriksh = Participant(id: IdUtils.newUuid,
                                       playerName: "Antriksh",
-                                      teamName: "Paris Saint-Germain",
+                                      clubSelection: ClubSelection(clubName: "Paris Saint-Germain", leagueName: "Ligue 1", clubAssociation: "France"),
                                       imageName: "psg_logo")
     
     static let ovi = Participant(id: IdUtils.newUuid,
                                  playerName: "Ovi",
-                                 teamName: "FC Barcelona",
+                                 clubSelection: ClubSelection(clubName: "FC Barcelona", leagueName: "LaLiga", clubAssociation: "Spain"),
                                  imageName: "fc_barcelona_logo")
     
     
     static let mahendra = Participant(id: IdUtils.newUuid,
                                       playerName: "Mahendra",
-                                      teamName: "Real Madrid",
+                                      clubSelection: ClubSelection(clubName: "Real Madrid", leagueName: "LaLiga", clubAssociation: "Spain"),
                                       imageName: "real_madrid_logo")
     
     static let pranshu = Participant(id: IdUtils.newUuid,
                                      playerName: "Pranshu",
-                                     teamName: "Atletico Madrid",
+                                     clubSelection: ClubSelection(clubName: "Ateltico Madrid", leagueName: "LaLiga", clubAssociation: "Spain"),
                                      imageName: "atletico_madrid_logo")
     
     static let siddhant = Participant(id: IdUtils.newUuid,
                                       playerName: "Siddhant",
-                                      teamName: "FC Bayern Munchen",
+                                      clubSelection: ClubSelection(clubName: "FC Bayern Munchen", leagueName: "Bundesliga", clubAssociation: "Germany"),
                                       imageName: "fc_bayern_munchen_logo")
     
     static let keerti = Participant(id: IdUtils.newUuid,
                                     playerName: "Keerthi",
-                                    teamName: "Paris Saint-Germain",
+                                    clubSelection: ClubSelection(clubName: "Paris Saint-Germain", leagueName: "Ligue 1", clubAssociation: "France"),
                                     imageName: "psg_logo")
     
     static let aditya = Participant(id: IdUtils.newUuid,
                                     playerName: "Aditya",
-                                    teamName: "Liverpool F.C.",
+                                    clubSelection: ClubSelection(clubName: "Liverpool F.C.", leagueName: "EPL", clubAssociation: "England"),
                                     imageName: "liverpool_logo")
     
     static let participants = [
