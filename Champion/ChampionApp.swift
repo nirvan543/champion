@@ -18,7 +18,6 @@ struct ChampionApp: App {
                     do {
                         environmentValues.tournaments = try await EnvironmentValues.loadTournaments()
                     } catch {
-                        // TODO: Handle this error
                         fatalError("Could not load tournaments. Error: \(error)")
                     }
                 }

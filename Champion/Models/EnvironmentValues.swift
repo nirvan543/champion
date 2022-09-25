@@ -14,9 +14,8 @@ class EnvironmentValues: ObservableObject {
         didSet {
             Task {
                 do {
-                    try await EnvironmentValues.save(tournaments: tournaments)
+                    try await Self.save(tournaments: tournaments)
                 } catch {
-                    // TODO: Handle the error
                     fatalError("Could not save tournaments. Error: \(error)")
                 }
             }
