@@ -14,7 +14,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
     var rounds: [Round]
     var date: Date
     var state: TournamentState
-    var type: TournamentFormat
+    var format: TournamentFormat
     var fifaVersionName: String
     var tournamentFormatManager: TournamentFormatManager
     
@@ -34,7 +34,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         self.rounds = rounds
         self.date = date
         self.state = state
-        self.type = type
+        self.format = type
         self.fifaVersionName = fifaVersionName
         self.tournamentFormatManager = tournamentFormatManager
     }
@@ -48,7 +48,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         rounds = try container.decode([Round].self, forKey: .rounds)
         date = try container.decode(Date.self, forKey: .date)
         state = try container.decode(TournamentState.self, forKey: .state)
-        type = try container.decode(TournamentFormat.self, forKey: .type)
+        format = try container.decode(TournamentFormat.self, forKey: .format)
         fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
         
         do {
@@ -75,7 +75,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         try container.encode(rounds, forKey: .rounds)
         try container.encode(date, forKey: .date)
         try container.encode(state, forKey: .state)
-        try container.encode(type, forKey: .type)
+        try container.encode(format, forKey: .format)
         try container.encode(fifaVersionName, forKey: .fifaVersionName)
         
         if let tournamentFormatManager = tournamentFormatManager as? RoundRobinFormatManager {
@@ -92,7 +92,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         case rounds
         case date
         case state
-        case type
+        case format
         case fifaVersionName
         case tournamentFormatManager
     }

@@ -81,7 +81,7 @@ struct AddEditTournamentView: View {
 
             tournamentName = editingTournament.wrappedValue.name
             tournamentDate = editingTournament.wrappedValue.date
-            tournamentFormat = editingTournament.wrappedValue.type
+            tournamentFormat = editingTournament.wrappedValue.format
             participants = editingTournament.wrappedValue.participants
             tournamentRounds = editingTournament.wrappedValue.rounds
             tournamentFormatManager = editingTournament.wrappedValue.tournamentFormatManager
@@ -293,7 +293,7 @@ struct AddEditTournamentView: View {
         editingTournament.wrappedValue.participants = participants
         editingTournament.wrappedValue.rounds = tournamentRounds
         editingTournament.wrappedValue.date = tournamentDate
-        editingTournament.wrappedValue.type = tournamentFormat
+        editingTournament.wrappedValue.format = tournamentFormat
         editingTournament.wrappedValue.fifaVersionName = fifaVersionName
         editingTournament.wrappedValue.tournamentFormatManager = tournamentFormatManager
     }

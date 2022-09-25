@@ -18,7 +18,7 @@ struct TournamentDetailView: View {
                 tournamentTypeSection
                 tournamentDateSection
                 participantsSection
-                TournamentFormatFactory.tournamentFormatConfigView(for: tournament.type,
+                TournamentFormatFactory.tournamentFormatConfigView(for: tournament.format,
                                                                    tournamentFormatConfig: tournament.tournamentFormatManager.tournamentFormatConfig)
                 finalActionSection
             }
@@ -39,7 +39,7 @@ struct TournamentDetailView: View {
     private var tournamentTypeSection: some View {
         PageSection(headerText: "Tournament Format") {
             HStack {
-                Text(tournament.type.rawValue)
+                Text(tournament.format.rawValue)
                     .font(.title2)
                     .padding(.vertical)
                     .frame(maxWidth: .infinity)
