@@ -19,7 +19,7 @@ struct TournamentDetailView: View {
                 tournamentDateSection
                 participantsSection
                 TournamentFormatFactory.tournamentFormatConfigView(for: tournament.format,
-                                                                   tournamentFormatConfig: tournament.tournamentFormatManager.tournamentFormatConfig)
+                                                                   tournamentFormatConfig: tournament.manager.tournamentFormatConfig)
                 finalActionSection
             }
         }

@@ -43,10 +43,10 @@ struct TournamentFormatFactory {
         }
     }
     
-    static func tournamentFormatManager(for format: TournamentFormat) -> TournamentFormatManager {
+    static func tournamentFormatManager(for format: TournamentFormat) -> TournamentManager {
         switch format {
         case .roundRobin:
-            return RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
+            return RoundRobinTournamentManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
         }
     }
 }

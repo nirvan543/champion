@@ -14,15 +14,15 @@ struct CreateEditMatchesView: View {
     private let matchCellShape = Rectangle()
     
     let participants: [Participant]
-    let tournamentFormatManager: TournamentFormatManager
+    let tournamentManager: TournamentManager
     @Binding var roundsBinding: [Round]
     
     init(participants: [Participant],
-         tournamentFormatManager: TournamentFormatManager,
+         tournamentFormatManager: TournamentManager,
          roundsBinding: Binding<[Round]>) {
         
         self.participants = participants
-        self.tournamentFormatManager = tournamentFormatManager
+        self.tournamentManager = tournamentFormatManager
         _roundsBinding = roundsBinding
         _rounds = State(initialValue: roundsBinding.wrappedValue)
     }
@@ -51,7 +51,7 @@ struct CreateEditMatchesView: View {
         PageSection {
             VStack {
                 Button {
-                    rounds = tournamentFormatManager.generateMatches(participants: participants)
+                    rounds = tournamentManager.generateMatches(participants: participants)
                 } label: {
                     Text("Auto-Generate")
                         .font(.title2)
@@ -109,7 +109,7 @@ struct CreateEditMatchesView: View {
 
 struct CreateEditMatchesView_Previews: PreviewProvider {
     private static let participants = MockData.participants
-    private static let tournamentFormatManager = RoundRobinFormatManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
+    private static let tournamentFormatManager = RoundRobinTournamentManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
     @State private static var rounds = MockData.rounds
     @State private static var emptyRounds = [Round]()
     

@@ -25,7 +25,7 @@ struct AddEditTournamentView: View {
     @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
     @State private var participants = [Participant]()
     @State private var tournamentRounds = [Round]()
-    @State private var tournamentFormatManager = TournamentFormatFactory.tournamentFormatManager(for: defaultTournamentFormat)
+    @State private var tournamentManager = TournamentFormatFactory.tournamentFormatManager(for: defaultTournamentFormat)
     
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
@@ -45,7 +45,7 @@ struct AddEditTournamentView: View {
             fifaVersionSection
             tournamentFormatSection
             TournamentFormatFactory.addEditTournamentFormatView(for: tournamentFormat,
-                                                                tournamentFormatConfig: $tournamentFormatManager.tournamentFormatConfig)
+                                                                tournamentFormatConfig: $tournamentManager.tournamentFormatConfig)
             participantsSection
             actionSection
         }
@@ -84,7 +84,7 @@ struct AddEditTournamentView: View {
             tournamentFormat = editingTournament.wrappedValue.format
             participants = editingTournament.wrappedValue.participants
             tournamentRounds = editingTournament.wrappedValue.rounds
-            tournamentFormatManager = editingTournament.wrappedValue.tournamentFormatManager
+            tournamentManager = editingTournament.wrappedValue.manager
         }
     }
     
@@ -226,7 +226,7 @@ struct AddEditTournamentView: View {
     private var createFixuresLink: some View {
         NavigationLink {
             CreateEditMatchesView(participants: participants,
-                                  tournamentFormatManager: tournamentFormatManager,
+                                  tournamentFormatManager: tournamentManager,
                                   roundsBinding: $tournamentRounds)
         } label: {
             Text(tournamentRounds.isEmpty ? "Create Matches" : "View Matches")
@@ -270,7 +270,7 @@ struct AddEditTournamentView: View {
             return false
         }
         
-        if let configError = tournamentFormatManager.tournamentFormatConfig.validate() {
+        if let configError = tournamentManager.tournamentFormatConfig.validate() {
             formError = configError
             return false
         }
@@ -295,7 +295,7 @@ struct AddEditTournamentView: View {
         editingTournament.wrappedValue.date = tournamentDate
         editingTournament.wrappedValue.format = tournamentFormat
         editingTournament.wrappedValue.fifaVersionName = fifaVersionName
-        editingTournament.wrappedValue.tournamentFormatManager = tournamentFormatManager
+        editingTournament.wrappedValue.manager = tournamentManager
     }
     
     private func saveNewTournament() {
@@ -307,7 +307,7 @@ struct AddEditTournamentView: View {
                                        state: .created,
                                        type: tournamentFormat,
                                        fifaVersionName: fifaVersionName,
-                                       tournamentFormatManager: tournamentFormatManager)
+                                       manager: tournamentManager)
         
         environmentValues.addTournament(tournament: newTournament)
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TournamentFormatManager: Codable {
+protocol TournamentManager: Codable {
     var tournamentFormatConfig: TournamentFormatConfig { get set }
     
     func generateMatches(participants: [Participant]) -> [Round]

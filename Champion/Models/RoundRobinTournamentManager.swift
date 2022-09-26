@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RoundRobinFormatManager: TournamentFormatManager {
+struct RoundRobinTournamentManager: TournamentManager {
     var tournamentFormatConfig: TournamentFormatConfig
     
     init(tournamentFormatConfig: TournamentFormatConfig) {

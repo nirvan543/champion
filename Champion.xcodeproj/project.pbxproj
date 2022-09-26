@@ -20,10 +20,10 @@
 		D837096028E0E3AD00288509 /* TournamentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837095F28E0E3AD00288509 /* TournamentState.swift */; };
 		D837096228E0E3BC00288509 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096128E0E3BC00288509 /* GameState.swift */; };
 		D837096528E0E3F000288509 /* TournamentFormatConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096428E0E3F000288509 /* TournamentFormatConfig.swift */; };
-		D837096728E0E42700288509 /* TournamentFormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096628E0E42700288509 /* TournamentFormatManager.swift */; };
+		D837096728E0E42700288509 /* TournamentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096628E0E42700288509 /* TournamentManager.swift */; };
 		D837096928E0E44500288509 /* RoundRobinTournamentFormatConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096828E0E44500288509 /* RoundRobinTournamentFormatConfig.swift */; };
 		D837096B28E0E45A00288509 /* TournamentResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096A28E0E45A00288509 /* TournamentResults.swift */; };
-		D837096D28E0E46C00288509 /* RoundRobinFormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096C28E0E46C00288509 /* RoundRobinFormatManager.swift */; };
+		D837096D28E0E46C00288509 /* RoundRobinTournamentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096C28E0E46C00288509 /* RoundRobinTournamentManager.swift */; };
 		D837096F28E0E48700288509 /* ParticipantStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837096E28E0E48700288509 /* ParticipantStats.swift */; };
 		D83F442128D1FDD6003EEFA5 /* AddParticipantView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F442028D1FDD6003EEFA5 /* AddParticipantView2.swift */; };
 		D86187792878DC4800553E5D /* ChampionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187782878DC4800553E5D /* ChampionApp.swift */; };
@@ -96,10 +96,10 @@
 		D837095F28E0E3AD00288509 /* TournamentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentState.swift; sourceTree = "<group>"; };
 		D837096128E0E3BC00288509 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		D837096428E0E3F000288509 /* TournamentFormatConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentFormatConfig.swift; sourceTree = "<group>"; };
-		D837096628E0E42700288509 /* TournamentFormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentFormatManager.swift; sourceTree = "<group>"; };
+		D837096628E0E42700288509 /* TournamentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentManager.swift; sourceTree = "<group>"; };
 		D837096828E0E44500288509 /* RoundRobinTournamentFormatConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinTournamentFormatConfig.swift; sourceTree = "<group>"; };
 		D837096A28E0E45A00288509 /* TournamentResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentResults.swift; sourceTree = "<group>"; };
-		D837096C28E0E46C00288509 /* RoundRobinFormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinFormatManager.swift; sourceTree = "<group>"; };
+		D837096C28E0E46C00288509 /* RoundRobinTournamentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinTournamentManager.swift; sourceTree = "<group>"; };
 		D837096E28E0E48700288509 /* ParticipantStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantStats.swift; sourceTree = "<group>"; };
 		D83F442028D1FDD6003EEFA5 /* AddParticipantView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantView2.swift; sourceTree = "<group>"; };
 		D86187752878DC4800553E5D /* Champion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Champion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				D837096428E0E3F000288509 /* TournamentFormatConfig.swift */,
-				D837096628E0E42700288509 /* TournamentFormatManager.swift */,
+				D837096628E0E42700288509 /* TournamentManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -305,7 +305,7 @@
 				D837095B28E0E37A00288509 /* ClubSelection.swift */,
 				D837096828E0E44500288509 /* RoundRobinTournamentFormatConfig.swift */,
 				D837096A28E0E45A00288509 /* TournamentResults.swift */,
-				D837096C28E0E46C00288509 /* RoundRobinFormatManager.swift */,
+				D837096C28E0E46C00288509 /* RoundRobinTournamentManager.swift */,
 				D837096E28E0E48700288509 /* ParticipantStats.swift */,
 			);
 			path = Models;
@@ -521,7 +521,7 @@
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
 				D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */,
 				D837096028E0E3AD00288509 /* TournamentState.swift in Sources */,
-				D837096D28E0E46C00288509 /* RoundRobinFormatManager.swift in Sources */,
+				D837096D28E0E46C00288509 /* RoundRobinTournamentManager.swift in Sources */,
 				D837095A28E0E35900288509 /* Goal.swift in Sources */,
 				D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
@@ -532,7 +532,7 @@
 				D837096B28E0E45A00288509 /* TournamentResults.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
-				D837096728E0E42700288509 /* TournamentFormatManager.swift in Sources */,
+				D837096728E0E42700288509 /* TournamentManager.swift in Sources */,
 				D8E6495228B65812007DC119 /* StandingsView.swift in Sources */,
 				D837096928E0E44500288509 /* RoundRobinTournamentFormatConfig.swift in Sources */,
 				D86187BF2879DB7000553E5D /* DesignValues.swift in Sources */,

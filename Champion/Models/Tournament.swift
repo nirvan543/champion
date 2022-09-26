@@ -16,7 +16,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
     var state: TournamentState
     var format: TournamentFormat
     var fifaVersionName: String
-    var tournamentFormatManager: TournamentFormatManager
+    var manager: TournamentManager
     
     init(id: String,
          name: String,
@@ -26,7 +26,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
          state: TournamentState,
          type: TournamentFormat,
          fifaVersionName: String,
-         tournamentFormatManager: TournamentFormatManager) {
+         manager: TournamentManager) {
         
         self.id = id
         self.name = name
@@ -36,7 +36,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         self.state = state
         self.format = type
         self.fifaVersionName = fifaVersionName
-        self.tournamentFormatManager = tournamentFormatManager
+        self.manager = manager
     }
     
     init(from decoder: Decoder) throws {
@@ -52,7 +52,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
         
         do {
-            tournamentFormatManager = try container.decode(RoundRobinFormatManager.self, forKey: .tournamentFormatManager)
+            manager = try container.decode(RoundRobinTournamentManager.self, forKey: .tournamentFormatManager)
         } catch {
             fatalError("Could not convert `tournamentFormatManager` into a concrete type. Error: \(error)")
         }
@@ -78,10 +78,10 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         try container.encode(format, forKey: .format)
         try container.encode(fifaVersionName, forKey: .fifaVersionName)
         
-        if let tournamentFormatManager = tournamentFormatManager as? RoundRobinFormatManager {
+        if let tournamentFormatManager = manager as? RoundRobinTournamentManager {
             try container.encode(tournamentFormatManager, forKey: .tournamentFormatManager)
         } else {
-            fatalError("Could not convert `tournamentFormatManager` into a concrete type. `tournamentFormatManager`: \(tournamentFormatManager.self)")
+            fatalError("Could not convert `tournamentFormatManager` into a concrete type. `tournamentFormatManager`: \(manager.self)")
         }
     }
     
