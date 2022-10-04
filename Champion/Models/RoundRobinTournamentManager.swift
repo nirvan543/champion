@@ -8,20 +8,10 @@
 import Foundation
 
 struct RoundRobinTournamentManager: TournamentManager {
-    var tournamentFormatConfig: TournamentFormatConfig
+    let tournamentFormatConfig: TournamentFormatConfig
     
     init(tournamentFormatConfig: TournamentFormatConfig) {
         self.tournamentFormatConfig = tournamentFormatConfig
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        do {
-            self.tournamentFormatConfig = try container.decode(RoundRobinTournamentFormatConfig.self, forKey: .tournamentFormatConfig)
-        } catch {
-            fatalError("Could not convert `tournamentFormatConfig` into a concrete type. Error: \(error)")
-        }
     }
     
     func generateMatches(participants: [Participant]) -> [Round] {
@@ -60,19 +50,5 @@ struct RoundRobinTournamentManager: TournamentManager {
         }
         
         return matchStats
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        if let tournamentFormatConfig = tournamentFormatConfig as? RoundRobinTournamentFormatConfig {
-            try container.encode(tournamentFormatConfig, forKey: .tournamentFormatConfig)
-        } else {
-            fatalError("Could not convert `tournamentFormatConfig` into a concrete type. `tournamentFormatConfig`: \(tournamentFormatConfig)")
-        }
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case tournamentFormatConfig
     }
 }

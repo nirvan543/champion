@@ -17,7 +17,7 @@ struct MockData {
                                         state: .created,
                                         type: .roundRobin,
                                         fifaVersionName: "FIFA 22",
-                                        manager: RoundRobinTournamentManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig()))
+                                        formatConfig: RoundRobinTournamentFormatConfig())
     
     static let tournaments = [
         atlantaCup3

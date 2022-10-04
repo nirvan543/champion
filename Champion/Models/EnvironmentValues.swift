@@ -8,7 +8,7 @@
 import Foundation
 
 class EnvironmentValues: ObservableObject {
-    private static let tournamentsFilePath = "tournaments"
+    private static let tournamentsFilePath = "tournaments2"
     
     @Published var tournaments: [Tournament] {
         didSet {

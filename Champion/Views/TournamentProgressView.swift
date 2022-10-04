@@ -74,10 +74,14 @@ struct TournamentProgressView: View {
     }
     
     private var standingStats: [ParticipantStats] {
-        tournament.manager.matchStats(participants: tournament.participants,
+        tournamentManager.matchStats(participants: tournament.participants,
                                                       rounds: tournament.rounds)
         // TODO: Add `matchesPlayed` as a sort criteria. But `matchesPlayed` would be compared with a `<` instead of `>`.
             .sorted(by: { ($0.points, $0.goalsDifference) > ($1.points, $1.goalsDifference) })
+    }
+    
+    private var tournamentManager: TournamentManager {
+        TournamentManagerFactory.tournamentManager(for: tournament.format, with: tournament.formatConfig)
     }
     
     private var matchesSection: some View {

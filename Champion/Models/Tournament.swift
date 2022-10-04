@@ -16,7 +16,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
     var state: TournamentState
     var format: TournamentFormat
     var fifaVersionName: String
-    var manager: TournamentManager
+    var formatConfig: TournamentFormatConfig
     
     init(id: String,
          name: String,
@@ -26,7 +26,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
          state: TournamentState,
          type: TournamentFormat,
          fifaVersionName: String,
-         manager: TournamentManager) {
+         formatConfig: TournamentFormatConfig) {
         
         self.id = id
         self.name = name
@@ -36,7 +36,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         self.state = state
         self.format = type
         self.fifaVersionName = fifaVersionName
-        self.manager = manager
+        self.formatConfig = formatConfig
     }
     
     init(from decoder: Decoder) throws {
@@ -52,9 +52,9 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
         
         do {
-            manager = try container.decode(RoundRobinTournamentManager.self, forKey: .tournamentFormatManager)
+            formatConfig = try container.decode(RoundRobinTournamentFormatConfig.self, forKey: .formatConfig)
         } catch {
-            fatalError("Could not convert `tournamentFormatManager` into a concrete type. Error: \(error)")
+            fatalError("Could not convert `formatConfig` into a concrete type. Error: \(error)")
         }
     }
     
@@ -78,10 +78,10 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         try container.encode(format, forKey: .format)
         try container.encode(fifaVersionName, forKey: .fifaVersionName)
         
-        if let tournamentFormatManager = manager as? RoundRobinTournamentManager {
-            try container.encode(tournamentFormatManager, forKey: .tournamentFormatManager)
+        if let formatConfig = formatConfig as? RoundRobinTournamentFormatConfig {
+            try container.encode(formatConfig, forKey: .formatConfig)
         } else {
-            fatalError("Could not convert `tournamentFormatManager` into a concrete type. `tournamentFormatManager`: \(manager.self)")
+            fatalError("Could not convert `formatConfig` into a concrete type. `formatConfig`: \(formatConfig.self)")
         }
     }
     
@@ -94,6 +94,6 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         case state
         case format
         case fifaVersionName
-        case tournamentFormatManager
+        case formatConfig
     }
 }
