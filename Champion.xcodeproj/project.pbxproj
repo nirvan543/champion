@@ -45,7 +45,6 @@
 		D86187C1287A21E900553E5D /* MatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C0287A21E900553E5D /* MatchesView.swift */; };
 		D86187C4287A222700553E5D /* PageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C3287A222700553E5D /* PageSection.swift */; };
 		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
-		D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C7287B245A00553E5D /* AddParticipantView.swift */; };
 		D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE202882903A0061BC74 /* MatchProgressView.swift */; };
 		D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE222882913B0061BC74 /* LegsCellView.swift */; };
 		D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE24288296870061BC74 /* MatchLegProgressView.swift */; };
@@ -125,7 +124,6 @@
 		D86187C0287A21E900553E5D /* MatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesView.swift; sourceTree = "<group>"; };
 		D86187C3287A222700553E5D /* PageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSection.swift; sourceTree = "<group>"; };
 		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
-		D86187C7287B245A00553E5D /* AddParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantView.swift; sourceTree = "<group>"; };
 		D88CFE202882903A0061BC74 /* MatchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProgressView.swift; sourceTree = "<group>"; };
 		D88CFE222882913B0061BC74 /* LegsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegsCellView.swift; sourceTree = "<group>"; };
 		D88CFE24288296870061BC74 /* MatchLegProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchLegProgressView.swift; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
 				D86187C0287A21E900553E5D /* MatchesView.swift */,
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
-				D86187C7287B245A00553E5D /* AddParticipantView.swift */,
 				D83F442028D1FDD6003EEFA5 /* AddParticipantView2.swift */,
 				D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */,
 				D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */,
@@ -527,7 +524,6 @@
 				D837096D28E0E46C00288509 /* RoundRobinTournamentManager.swift in Sources */,
 				D837095A28E0E35900288509 /* Goal.swift in Sources */,
 				D8B1C28528EBC72100FACCEF /* TournamentManagerFactory.swift in Sources */,
-				D86187C8287B245A00553E5D /* AddParticipantView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
 				D82E7D7C28826C5C006750A3 /* MockData.swift in Sources */,
 				D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */,
