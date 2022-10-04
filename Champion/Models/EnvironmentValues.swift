@@ -12,12 +12,10 @@ class EnvironmentValues: ObservableObject {
     
     @Published var tournaments: [Tournament] {
         didSet {
-            Task {
-                do {
-                    try await Self.save(tournaments: tournaments)
-                } catch {
-                    fatalError("Could not save tournaments. Error: \(error)")
-                }
+            do {
+                try Self.save(tournaments: tournaments)
+            } catch {
+                fatalError("Could not save tournaments. Error: \(error)")
             }
         }
     }
@@ -41,7 +39,7 @@ class EnvironmentValues: ObservableObject {
         tournaments.sort(by: { $0.date < $1.date })
     }
     
-    static func loadTournaments() async throws -> [Tournament] {
+    static func loadTournaments() throws -> [Tournament] {
         let fileUrl = try fileURL()
         
         guard let file = try? FileHandle(forReadingFrom: fileUrl) else {
@@ -52,7 +50,7 @@ class EnvironmentValues: ObservableObject {
         return tournaments.sorted(by: { $0.date < $1.date })
     }
     
-    static func save(tournaments: [Tournament]) async throws {
+    static func save(tournaments: [Tournament]) throws {
         let data = try JSONEncoder().encode(tournaments)
         let outfile = try fileURL()
         try data.write(to: outfile)

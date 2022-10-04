@@ -14,9 +14,9 @@ struct ChampionApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .task {
+                .onAppear {
                     do {
-                        environmentValues.tournaments = try await EnvironmentValues.loadTournaments()
+                        environmentValues.tournaments = try EnvironmentValues.loadTournaments()
                     } catch {
                         fatalError("Could not load tournaments. Error: \(error)")
                     }
