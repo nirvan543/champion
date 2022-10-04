@@ -23,7 +23,7 @@ struct TournamentDetailView: View {
                 finalActionSection
             }
         }
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -108,7 +108,7 @@ struct TournamentDetailView: View {
                 .padding(.vertical, 18)
         }
         .background()
-        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private var startTournamentButton: some View {
@@ -122,8 +122,8 @@ struct TournamentDetailView: View {
                 .padding(.vertical, 18)
         }
         .buttonStyle(.plain)
-        .background(DesignValues.themeColor)
-        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+        .background(Design.themeColor)
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private var primaryActionText: String {

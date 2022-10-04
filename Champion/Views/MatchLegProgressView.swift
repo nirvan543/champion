@@ -51,7 +51,7 @@ struct MatchLegProgressView: View {
             .padding(.top)
         }
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Leg \(legNumber)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

@@ -37,7 +37,7 @@ struct MatchProgressView: View {
             .padding(.top)
         }
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Match")
         .navigationBarTitleDisplayMode(.inline)
     }

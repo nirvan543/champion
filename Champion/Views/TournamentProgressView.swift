@@ -52,7 +52,7 @@ struct TournamentProgressView: View {
                 .padding(.vertical, 18)
         }
         .background()
-        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private var completeTournamentButton: some View {
@@ -68,8 +68,8 @@ struct TournamentProgressView: View {
                     .padding(.vertical, 18)
             }
             .buttonStyle(.plain)
-            .background(DesignValues.themeColor)
-            .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+            .background(Design.themeColor)
+            .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
         }
     }
     

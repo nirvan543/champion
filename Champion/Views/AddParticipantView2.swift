@@ -118,7 +118,7 @@ struct AddParticipantView2: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
         }
-        .background(DesignValues.themeColor)
+        .background(Design.themeColor)
     }
     
     private var formIsValid: Bool {

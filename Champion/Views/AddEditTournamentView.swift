@@ -176,7 +176,7 @@ struct AddEditTournamentView: View {
                         .padding(.vertical, 18)
                 }
                 .background()
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
             }
         }
     }
@@ -236,7 +236,7 @@ struct AddEditTournamentView: View {
                 .padding(.vertical, 18)
         }
         .background()
-        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private var saveTournamentButton: some View {
@@ -260,8 +260,8 @@ struct AddEditTournamentView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
         }
-        .background(DesignValues.themeColor)
-        .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+        .background(Design.themeColor)
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private func formIsValid() -> Bool {

@@ -58,12 +58,12 @@ struct AddParticipantView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
             }
-            .background(DesignValues.themeColor)
+            .background(Design.themeColor)
             .padding(.bottom)
         }
         .padding(.horizontal)
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Add Participant")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

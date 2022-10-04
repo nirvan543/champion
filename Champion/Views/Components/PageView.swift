@@ -22,7 +22,7 @@ struct PageView<Content: View>: View {
             .padding(.top)
         }
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
     }
 }
 

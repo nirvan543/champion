@@ -29,7 +29,7 @@ struct MatchesView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Matches")
         .navigationBarTitleDisplayMode(.inline)
     }

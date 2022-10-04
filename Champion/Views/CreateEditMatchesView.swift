@@ -35,7 +35,7 @@ struct CreateEditMatchesView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(DesignValues.pageColor.ignoresSafeArea())
+        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Create Matches")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -60,7 +60,7 @@ struct CreateEditMatchesView: View {
                         .padding(.vertical, 18)
                 }
                 .background()
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
                 
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -72,7 +72,7 @@ struct CreateEditMatchesView: View {
                         .padding(.vertical, 18)
                 }
                 .background()
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
                 
                 Button {
                     roundsBinding = rounds
@@ -84,8 +84,8 @@ struct CreateEditMatchesView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 18)
                 }
-                .background(DesignValues.themeColor)
-                .overlay(Rectangle().strokeBorder(DesignValues.themeColor, lineWidth: 5))
+                .background(Design.themeColor)
+                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
             }
         }
     }
