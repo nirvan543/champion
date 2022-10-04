@@ -26,10 +26,12 @@ struct TournamentDetailView: View {
         .navigationTitle(tournament.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                NavigationLink {
-                    AddEditTournamentView(editingTournament: $tournament)
-                } label: {
-                    Text("Edit")
+                if tournament.state != .completed {
+                    NavigationLink {
+                        AddEditTournamentView(editingTournament: $tournament)
+                    } label: {
+                        Text("Edit")
+                    }
                 }
             }
         }
@@ -129,9 +131,7 @@ struct TournamentDetailView: View {
         switch tournament.state {
         case .created:
             return "Start Tournament"
-        case .roundRobin:
-            return "Continue Tournament"
-        case .knockout:
+        case .inProgress:
             return "Continue Tournament"
         case .completed:
             return "View Results"

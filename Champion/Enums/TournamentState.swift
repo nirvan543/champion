@@ -9,7 +9,6 @@ import Foundation
 
 enum TournamentState: Codable {
     case created
-    case roundRobin
-    case knockout
+    case inProgress
     case completed
 }

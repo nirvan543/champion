@@ -36,7 +36,7 @@ struct TournamentProgressView: View {
         .navigationTitle(tournament.name)
         .onAppear {
             if tournament.state == .created {
-                tournament.state = .roundRobin
+                tournament.state = .inProgress
             }
         }
     }
