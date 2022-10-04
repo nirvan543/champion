@@ -15,7 +15,7 @@ struct MockData {
                                         rounds: rounds,
                                         date: DateUtils.date(year: 2022, month: .july, day: 16)!,
                                         state: .created,
-                                        type: .roundRobin,
+                                        format: .roundRobin,
                                         fifaVersionName: "FIFA 22",
                                         formatConfig: RoundRobinTournamentFormatConfig())
     

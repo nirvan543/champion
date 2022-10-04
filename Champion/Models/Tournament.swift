@@ -24,7 +24,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
          rounds: [Round],
          date: Date,
          state: TournamentState,
-         type: TournamentFormat,
+         format: TournamentFormat,
          fifaVersionName: String,
          formatConfig: TournamentFormatConfig) {
         
@@ -34,7 +34,7 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         self.rounds = rounds
         self.date = date
         self.state = state
-        self.format = type
+        self.format = format
         self.fifaVersionName = fifaVersionName
         self.formatConfig = formatConfig
     }

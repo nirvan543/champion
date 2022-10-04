@@ -295,7 +295,7 @@ struct AddEditTournamentView: View {
                                        rounds: tournamentRounds,
                                        date: tournamentDate,
                                        state: .created,
-                                       type: tournamentFormat,
+                                       format: tournamentFormat,
                                        fifaVersionName: fifaVersionName,
                                        formatConfig: tournamentFormatConfig)
         
