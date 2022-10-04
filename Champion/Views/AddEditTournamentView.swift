@@ -68,7 +68,7 @@ struct AddEditTournamentView: View {
         }
         .sheet(isPresented: $presentAddParticipantView) {
             NavigationView {
-                AddParticipantView2(participants: $participants, fifaVersion: fifaVersion)
+                AddParticipantView(participants: $participants, fifaVersion: fifaVersion)
             }
         }
         .alert("There are some errors", isPresented: $presentFormErrorAlert) {

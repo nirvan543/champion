@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddParticipantView2: View {
+struct AddParticipantView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @FocusState private var inputIsActive: Bool
@@ -204,11 +204,11 @@ struct AddParticipantView2: View {
     }
 }
 
-struct AddParticipantView2_Previews: PreviewProvider {
+struct AddParticipantView_Previews: PreviewProvider {
     @State private static var participants = MockData.participants
     @State private static var fifaVersion = ClubCatalogService.shared.defaultSelections.fifaVersion
     
     static var previews: some View {
-        AddParticipantView2(participants: $participants, fifaVersion: fifaVersion)
+        AddParticipantView(participants: $participants, fifaVersion: fifaVersion)
     }
 }
