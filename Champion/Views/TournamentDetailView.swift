@@ -36,7 +36,7 @@ struct TournamentDetailView: View {
     }
     
     private var tournamentTypeSection: some View {
-        PageSection(headerText: "Tournament Format") {
+        PageSection("Tournament Format") {
             HStack {
                 Text(tournament.format.rawValue)
                     .font(.title2)
@@ -49,7 +49,7 @@ struct TournamentDetailView: View {
     }
     
     private var tournamentDateSection: some View {
-        PageSection(headerText: "Tournament Date") {
+        PageSection("Tournament Date") {
             HStack {
                 Text(DateUtils.displayString(for: tournament.date))
                     .font(.title2)
@@ -62,7 +62,7 @@ struct TournamentDetailView: View {
     }
     
     private var participantsSection: some View {
-        PageSection(headerText: "Participants") {
+        PageSection("Participants") {
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 150))
             ]) {

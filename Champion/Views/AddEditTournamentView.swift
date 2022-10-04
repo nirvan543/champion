@@ -21,9 +21,9 @@ struct AddEditTournamentView: View {
     @State private var tournamentDate = Date()
     @State private var fifaVersionName: String
     @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
+    @State private var tournamentFormatConfig = Self.tournamentFormatManager(for: defaultTournamentFormat)
     @State private var participants = [Participant]()
     @State private var tournamentRounds = [Round]()
-    @State private var tournamentFormatConfig = Self.tournamentFormatManager(for: defaultTournamentFormat)
     
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
@@ -54,7 +54,7 @@ struct AddEditTournamentView: View {
             participantsSection
             actionSection
         }
-        .navigationTitle("New Tournament")
+        .navigationTitle(editingTournament == nil ? "New Tournament" : "Edit Tournament")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
@@ -94,15 +94,11 @@ struct AddEditTournamentView: View {
     }
     
     private var fifaVersion: FifaVersion {
-        guard let version = Self.catalogService.fifaVersions.first(where: { $0.name == fifaVersionName }) else {
-            fatalError("Could not find FIFA Version of \(fifaVersionName)")
-        }
-        
-        return version
+        return Self.catalogService.fifaVersion(for: fifaVersionName)
     }
     
     private var tournamentNameSection: some View {
-        PageSection(headerText: "Tournament Name") {
+        PageSection("Tournament Name") {
             TextField("Tournament Name", text: $tournamentName)
                 .textFieldStyle(.roundedBorder)
                 .focused($focusField)
@@ -110,7 +106,7 @@ struct AddEditTournamentView: View {
     }
     
     private var tournamentDateSection: some View {
-        PageSection(headerText: "Tournament Date") {
+        PageSection("Tournament Date") {
             HStack {
                 DatePicker("Tournament Date", selection: $tournamentDate)
                     .labelsHidden()
@@ -123,7 +119,7 @@ struct AddEditTournamentView: View {
     }
     
     private var fifaVersionSection: some View {
-        PageSection(headerText: "FIFA Version") {
+        PageSection("FIFA Version") {
             HStack {
                 Picker("FIFA Version", selection: $fifaVersionName) {
                     ForEach(Self.catalogService.fifaVersions) { fifaGameVersion in
@@ -139,7 +135,7 @@ struct AddEditTournamentView: View {
     }
     
     private var tournamentFormatSection: some View {
-        PageSection(headerText: "Tournament Format") {
+        PageSection("Tournament Format") {
             HStack {
                 Picker("Tournament Format",
                        selection: $tournamentFormat) {
@@ -156,7 +152,7 @@ struct AddEditTournamentView: View {
     }
     
     private var participantsSection: some View {
-        PageSection(headerText: "Participants") {
+        PageSection("Participants") {
             VStack {
                 LazyVGrid(columns: [
                     GridItem(.adaptive(minimum: 150))

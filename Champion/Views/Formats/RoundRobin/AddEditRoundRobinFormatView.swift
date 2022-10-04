@@ -11,7 +11,7 @@ struct AddEditRoundRobinFormatView: View {
     @Binding var tournamentFormatConfig: RoundRobinTournamentFormatConfig
     
     var body: some View {
-        PageSection(headerText: "League Stage Config") {
+        PageSection("League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
                 EditableConfigLineItemView(labelText: "Matches per Opponent",
                                            value: $tournamentFormatConfig.matchesPerOpponent)

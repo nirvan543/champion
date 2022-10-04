@@ -14,7 +14,7 @@ struct MatchesView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 42) {
                 ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
-                    PageSection(headerText: "Round \(index + 1)") {
+                    PageSection("Round \(index + 1)") {
                         VStack {
                             ForEach(round.matches) { match in
                                 MatchCellView(participant1: match.participant1,

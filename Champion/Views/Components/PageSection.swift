@@ -11,7 +11,7 @@ struct PageSection<Content: View>: View {
     let headerText: String?
     let content: Content
     
-    init(headerText: String? = nil, @ViewBuilder content: () -> Content) {
+    init(_ headerText: String? = nil, @ViewBuilder content: () -> Content) {
         self.headerText = headerText
         self.content = content()
     }
@@ -30,7 +30,7 @@ struct PageSection<Content: View>: View {
 
 struct PageSection_Previews: PreviewProvider {
     static var previews: some View {
-        PageSection(headerText: "Some header") {
+        PageSection("Some header") {
             Text("Yo dawg")
         }
     }

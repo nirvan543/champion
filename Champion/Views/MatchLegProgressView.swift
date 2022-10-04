@@ -41,7 +41,7 @@ struct MatchLegProgressView: View {
                              winner: matchLeg.winner,
                              endedInATie: matchLeg.endedInATie)
                 
-                PageSection(headerText: "Score Card") {
+                PageSection("Score Card") {
                     ScoreCellView(participant1Score: matchLeg.homeScore, participant2Score: matchLeg.awayScore)
                 }
                 
@@ -83,7 +83,7 @@ struct MatchLegProgressView: View {
     }
     
     private var goalsSection: some View {
-        PageSection(headerText: "Goals") {
+        PageSection("Goals") {
             VStack(spacing: 25) {
                 goalsListSection
                 

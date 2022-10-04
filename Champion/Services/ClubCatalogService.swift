@@ -65,6 +65,14 @@ class ClubCatalogService {
         
         return latestVersion
     }
+    
+    func fifaVersion(for name: String) -> FifaVersion {
+        guard let fifaVersion = fifaVersions.first(where: { $0.name == name }) else {
+            fatalError("Could not find FIFA Version of \(name)")
+        }
+        
+        return fifaVersion
+    }
 }
 
 struct ClubTypeOption: Identifiable, Hashable {

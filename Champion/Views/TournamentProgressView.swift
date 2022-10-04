@@ -15,7 +15,7 @@ struct TournamentProgressView: View {
     var body: some View {
         GeometryReader { geo in
             PageView {
-                PageSection(headerText: "Standings") {
+                PageSection("Standings") {
                     StandingsView(geo: geo, stats: standingStats)
                     
                     if tournament.state == .completed {
@@ -86,7 +86,7 @@ struct TournamentProgressView: View {
     
     private var matchesSection: some View {
         ForEach($tournament.rounds) { round in
-            PageSection(headerText: "Round \(number(for: round.wrappedValue))") {
+            PageSection("Round \(number(for: round.wrappedValue))") {
                 VStack {
                     ForEach(round.matches) { match in
                         NavigationLink {

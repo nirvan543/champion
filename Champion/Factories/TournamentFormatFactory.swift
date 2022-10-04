@@ -35,11 +35,4 @@ struct TournamentFormatFactory {
             return ReadOnlyRoundRobinFormatConfigView(tournamentFormatConfig: roundRobinFormatConfig)
         }
     }
-    
-    static func tournamentFormatConfig(for format: TournamentFormat) -> TournamentFormatConfig {
-        switch format {
-        case .roundRobin:
-            return RoundRobinTournamentFormatConfig()
-        }
-    }
 }

@@ -92,7 +92,7 @@ struct CreateEditMatchesView: View {
     
     private var roundsViews: some View {
         ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
-            PageSection(headerText: "Round \(index + 1)") {
+            PageSection("Round \(index + 1)") {
                 VStack {
                     ForEach(round.matches) { match in
                         MatchCellView(participant1: match.participant1,

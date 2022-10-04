@@ -19,7 +19,7 @@ struct MatchProgressView: View {
                               winner: match.winner,
                               endedInATie: match.endedInATie)
                 
-                PageSection(headerText: "Legs") {
+                PageSection("Legs") {
                     ForEach($match.legs) { leg in
                         NavigationLink {
                             MatchLegProgressView(matchLeg: leg, legNumber: number(for: leg.wrappedValue))
