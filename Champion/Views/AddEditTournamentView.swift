@@ -114,7 +114,7 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(sectionOverlay)
         }
     }
     
@@ -130,15 +130,14 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(sectionOverlay)
         }
     }
     
     private var tournamentFormatSection: some View {
         PageSection("Tournament Format") {
             HStack {
-                Picker("Tournament Format",
-                       selection: $tournamentFormat) {
+                Picker("Tournament Format", selection: $tournamentFormat) {
                     ForEach(Self.tournamentFormats, id: \.self) { format in
                         Text(format.rawValue)
                     }
@@ -147,8 +146,12 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(sectionOverlay)
         }
+    }
+    
+    private var sectionOverlay: some View {
+        Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1)
     }
     
     private var participantsSection: some View {
