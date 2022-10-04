@@ -206,7 +206,7 @@ struct AddParticipantView: View {
 
 struct AddParticipantView_Previews: PreviewProvider {
     @State private static var participants = MockData.participants
-    @State private static var fifaVersion = ClubCatalogService.shared.defaultSelections.fifaVersion
+    @State private static var fifaVersion = ClubCatalogService.shared.defaultFifaVersion
     
     static var previews: some View {
         AddParticipantView(participants: $participants, fifaVersion: fifaVersion)

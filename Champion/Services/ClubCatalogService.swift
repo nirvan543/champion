@@ -58,29 +58,12 @@ class ClubCatalogService {
         return options
     }
     
-    var defaultSelections: (fifaVersion: FifaVersion, clubTypeOption: ClubTypeOption, league: FootballLeague?, club: FootballClub?) {
+    var defaultFifaVersion: FifaVersion {
         guard let latestVersion = fifaVersions.first else {
             fatalError("The FIFA version catalog is empty.")
         }
         
-        let options = selectionOptions(for: latestVersion)
-        guard let clubTypeOption = options.first else {
-            fatalError("ClubTypeOptions is empty")
-        }
-        
-        let league = clubTypeOption.leagues?.first
-        var club: FootballClub? = nil
-        
-        if let league = league {
-            club = league.clubs.first
-        } else {
-            club = clubTypeOption.clubs?.first
-        }
-        
-        return (fifaVersion: latestVersion,
-                clubTypeOption: clubTypeOption,
-                league: league,
-                club: club)
+        return latestVersion
     }
 }
 

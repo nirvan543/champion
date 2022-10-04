@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct AddEditTournamentView: View {
-    static let defaultTournamentFormat: TournamentFormat = .roundRobin
-    
-    private let tournamentFormats = MockTournamentRepository.shared.retrieveTournamentFormats()
-    private let catalogService = ClubCatalogService.shared
-    private let matchCellShape = Rectangle()
+    private static let defaultTournamentFormat: TournamentFormat = .roundRobin
+    private static let tournamentFormats: [TournamentFormat] = [ .roundRobin ]
+    private static let catalogService = ClubCatalogService.shared
     
     @Environment(\.presentationMode) private var presentationMode
     
@@ -35,7 +33,7 @@ struct AddEditTournamentView: View {
     
     init(editingTournament: Binding<Tournament>? = nil) {
         self.editingTournament = editingTournament
-        _fifaVersionName = State(initialValue: catalogService.defaultSelections.fifaVersion.name)
+        _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
     }
     
     private static func tournamentFormatManager(for format: TournamentFormat) -> TournamentFormatConfig {
@@ -96,7 +94,7 @@ struct AddEditTournamentView: View {
     }
     
     private var fifaVersion: FifaVersion {
-        guard let version = catalogService.fifaVersions.first(where: { $0.name == fifaVersionName }) else {
+        guard let version = Self.catalogService.fifaVersions.first(where: { $0.name == fifaVersionName }) else {
             fatalError("Could not find FIFA Version of \(fifaVersionName)")
         }
         
@@ -120,7 +118,7 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
@@ -128,7 +126,7 @@ struct AddEditTournamentView: View {
         PageSection(headerText: "FIFA Version") {
             HStack {
                 Picker("FIFA Version", selection: $fifaVersionName) {
-                    ForEach(catalogService.fifaVersions) { fifaGameVersion in
+                    ForEach(Self.catalogService.fifaVersions) { fifaGameVersion in
                         Text(fifaGameVersion.name)
                     }
                 }
@@ -136,7 +134,7 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
@@ -145,7 +143,7 @@ struct AddEditTournamentView: View {
             HStack {
                 Picker("Tournament Format",
                        selection: $tournamentFormat) {
-                    ForEach(tournamentFormats, id: \.self) { format in
+                    ForEach(Self.tournamentFormats, id: \.self) { format in
                         Text(format.rawValue)
                     }
                 }
@@ -153,7 +151,7 @@ struct AddEditTournamentView: View {
             }
             .padding()
             .background()
-            .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1))
         }
     }
     
