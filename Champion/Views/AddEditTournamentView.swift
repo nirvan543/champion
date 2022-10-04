@@ -17,13 +17,17 @@ struct AddEditTournamentView: View {
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
     private var editingTournament: Binding<Tournament>? = nil
-    @State private var tournamentName = ""
-    @State private var tournamentDate = Date()
+    @State private var tournamentName: String
+    @State private var tournamentDate: Date
     @State private var fifaVersionName: String
-    @State private var tournamentFormat: TournamentFormat = defaultTournamentFormat
-    @State private var tournamentFormatConfig = Self.tournamentFormatManager(for: defaultTournamentFormat)
-    @State private var participants = [Participant]()
-    @State private var tournamentRounds = [Round]()
+    @State private var tournamentFormat: TournamentFormat
+    @State private var tournamentFormatConfig: TournamentFormatConfig
+    @State private var participants: [Participant] {
+        didSet {
+            tournamentRounds.removeAll()
+        }
+    }
+    @State private var tournamentRounds: [Round]
     
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
@@ -33,7 +37,14 @@ struct AddEditTournamentView: View {
     
     init(editingTournament: Binding<Tournament>? = nil) {
         self.editingTournament = editingTournament
+
+        _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
+        _tournamentDate = State(initialValue: editingTournament?.wrappedValue.date ?? Date())
         _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
+        _tournamentFormat = State(initialValue: editingTournament?.wrappedValue.format ?? Self.defaultTournamentFormat)
+        _tournamentFormatConfig = State(initialValue: editingTournament?.wrappedValue.formatConfig ?? Self.tournamentFormatManager(for: Self.defaultTournamentFormat))
+        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
+        _tournamentRounds = State(initialValue: editingTournament?.wrappedValue.rounds ?? [])
     }
     
     private static func tournamentFormatManager(for format: TournamentFormat) -> TournamentFormatConfig {
@@ -77,19 +88,6 @@ struct AddEditTournamentView: View {
             } else {
                 Text("There are some form errors")
             }
-        }
-        .onAppear {
-            // TODO: Eventually move the state initialization into the `init`.
-            guard let editingTournament = editingTournament else {
-                return
-            }
-
-            tournamentName = editingTournament.wrappedValue.name
-            tournamentDate = editingTournament.wrappedValue.date
-            tournamentFormat = editingTournament.wrappedValue.format
-            participants = editingTournament.wrappedValue.participants
-            tournamentRounds = editingTournament.wrappedValue.rounds
-            tournamentFormatConfig = editingTournament.wrappedValue.formatConfig
         }
     }
     
@@ -156,68 +154,52 @@ struct AddEditTournamentView: View {
     
     private var participantsSection: some View {
         PageSection("Participants") {
-            VStack {
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 150))
-                ]) {
-                    ForEach(participants) { participant in
-                        ZStack {
-                            participantGridItem(imageName: participant.imageName,
-                                                playerName: participant.playerName)
-                            deleteParticipantButton(participant: participant)
-                                .offset(x: 10, y: -10)
-                        }
-                    }
+            VStack(alignment: .leading) {
+                ForEach(participants) { participant in
+                    participantRow(participant: participant)
                 }
                 
-                Button {
-                    presentAddParticipantView.toggle()
-                } label: {
-                    Text("Add Participant")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .background()
-                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
+                addParticipantButton
             }
         }
     }
     
-    private func participantGridItem(imageName: String, playerName: String) -> some View {
-        VStack {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 75, height: 75)
-                .padding(.vertical, 7)
-            
-            Text(playerName)
-                .font(.title3)
-                .frame(maxWidth: .infinity)
+    private func participantRow(participant: Participant) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(participant.playerName)
+                    .font(.title3)
+                Text(participant.clubSelection.clubName)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            deleteParticipantButton(participant: participant)
         }
-        .padding(.horizontal)
-        .padding(.vertical, 12)
+        .padding()
         .background()
-        .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
     }
     
     private func deleteParticipantButton(participant: Participant) -> some View {
-        HStack {
-            Spacer()
-            VStack {
-                Button {
-                    participants.removeAll(where: { $0 == participant })
-                } label: {
-                    Image(systemName: "x.circle.fill")
-                        .resizable()
-                        .foregroundColor(.red)
-                        .frame(width: 22, height: 20)
-                }
-                Spacer()
-            }
+        Button {
+            participants.removeAll(where: { $0 == participant })
+        } label: {
+            Image(systemName: "xmark")
+                .foregroundColor(.red)
         }
+    }
+    
+    private var addParticipantButton: some View {
+        Button {
+            presentAddParticipantView.toggle()
+        } label: {
+            Text("Add Participant")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background()
+        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
     }
     
     private var actionSection: some View {
@@ -323,10 +305,11 @@ struct AddEditTournamentView: View {
 
 struct AddEditTournamentView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    @State private static var editingTournament = MockData.atlantaCup3
     
     static var previews: some View {
         NavigationView {
-            AddEditTournamentView()
+            AddEditTournamentView(editingTournament: $editingTournament)
                 .environmentObject(environmentValues)
         }
     }
