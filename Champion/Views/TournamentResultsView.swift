@@ -49,7 +49,9 @@ struct TournamentResultRankView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             HStack {
+                Spacer()
                 Text("\(rank)")
                     .font(.system(size: 300))
                     .minimumScaleFactor(0.01)
@@ -58,12 +60,15 @@ struct TournamentResultRankView: View {
                         .font(.system(size: 100))
                         .minimumScaleFactor(0.01)
                 }
+                Spacer()
             }
             
             Text(stats.participant.playerName)
                 .font(.system(size: 50))
                 .minimumScaleFactor(0.01)
+            Spacer()
         }
+        .background(backgroundColor.ignoresSafeArea())
     }
     
     private var placementSuffix: String {
@@ -75,6 +80,16 @@ struct TournamentResultRankView: View {
             return "rd"
         } else {
             fatalError("Unrecognized rank: \(rank)")
+        }
+    }
+    
+    private var backgroundColor: some View {
+        if rank == 1 {
+            return Color.gold
+        } else if rank == 2 {
+            return Color.silver
+        } else {
+            return Color.bronze
         }
     }
 }

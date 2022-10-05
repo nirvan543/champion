@@ -49,6 +49,7 @@
 		D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE222882913B0061BC74 /* LegsCellView.swift */; };
 		D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE24288296870061BC74 /* MatchLegProgressView.swift */; };
 		D8B1C28528EBC72100FACCEF /* TournamentManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28428EBC72100FACCEF /* TournamentManagerFactory.swift */; };
+		D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */; };
 		D8B84B3D2882990B00B06BA3 /* ScoreCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B84B3C2882990B00B06BA3 /* ScoreCellView.swift */; };
 		D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */; };
 		D8BD21B5287E52C40018F7D2 /* CreateEditMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */; };
@@ -128,6 +129,7 @@
 		D88CFE222882913B0061BC74 /* LegsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegsCellView.swift; sourceTree = "<group>"; };
 		D88CFE24288296870061BC74 /* MatchLegProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchLegProgressView.swift; sourceTree = "<group>"; };
 		D8B1C28428EBC72100FACCEF /* TournamentManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentManagerFactory.swift; sourceTree = "<group>"; };
+		D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		D8B84B3C2882990B00B06BA3 /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		D8B84B3E28829A0E00B06BA3 /* GoalCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCellView.swift; sourceTree = "<group>"; };
 		D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditMatchesView.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 		D86187772878DC4800553E5D /* Champion */ = {
 			isa = PBXGroup;
 			children = (
+				D8B1C28628ED2C6900FACCEF /* Extensions */,
 				D8E6495528CD9952007DC119 /* Resources */,
 				D82E7D7A28826C37006750A3 /* TestStuff */,
 				D837096328E0E3D700288509 /* Protocols */,
@@ -334,6 +337,14 @@
 				D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D8B1C28628ED2C6900FACCEF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D8E6494828ADDB2A007DC119 /* Factories */ = {
@@ -551,6 +562,7 @@
 				D837096228E0E3BC00288509 /* GameState.swift in Sources */,
 				D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */,
 				D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */,
+				D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
