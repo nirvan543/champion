@@ -11,27 +11,31 @@ struct MatchesView: View {
     let rounds: [Round]
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
-                    PageSection("Round \(index + 1)") {
-                        VStack {
-                            ForEach(round.matches) { match in
-                                MatchCellView(participant1: match.participant1,
-                                              participant2: match.participant2,
-                                              matchState: match.matchState,
-                                              winner: match.winner,
-                                              endedInATie: match.endedInATie)
-                            }
-                        }
-                    }
+        PageView {
+            ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
+                PageSection("Round \(index + 1)") {
+                    RoundMatchesView(round: round)
                 }
             }
         }
-        .frame(maxWidth: .infinity)
-        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Matches")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+private struct RoundMatchesView: View {
+    let round: Round
+    
+    var body: some View {
+        VStack {
+            ForEach(round.matches) { match in
+                MatchCellView(participant1: match.participant1,
+                              participant2: match.participant2,
+                              matchState: match.matchState,
+                              winner: match.winner,
+                              endedInATie: match.endedInATie)
+            }
+        }
     }
 }
 

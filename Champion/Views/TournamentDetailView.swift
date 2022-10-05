@@ -21,7 +21,6 @@ struct TournamentDetailView: View {
                                                                formatConfig: tournament.formatConfig)
             finalActionSection
         }
-        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
