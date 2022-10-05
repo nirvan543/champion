@@ -13,14 +13,13 @@ struct TournamentDetailView: View {
     @Binding var tournament: Tournament
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                tournamentTypeSection
-                tournamentDateSection
-                participantsSection
-                TournamentFormatFactory.tournamentFormatConfigView(for: tournament.format, formatConfig: tournament.formatConfig)
-                finalActionSection
-            }
+        PageView {
+            tournamentTypeSection
+            tournamentDateSection
+            participantsSection
+            TournamentFormatFactory.tournamentFormatConfigView(for: tournament.format,
+                                                               formatConfig: tournament.formatConfig)
+            finalActionSection
         }
         .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle(tournament.name)
@@ -46,8 +45,12 @@ struct TournamentDetailView: View {
                     .frame(maxWidth: .infinity)
             }
             .background()
-            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(sectionOverlay)
         }
+    }
+    
+    private var sectionOverlay: some View {
+        Design.defaultShape.strokeBorder(.quaternary, lineWidth: 1)
     }
     
     private var tournamentDateSection: some View {
@@ -59,34 +62,32 @@ struct TournamentDetailView: View {
                     .frame(maxWidth: .infinity)
             }
             .background()
-            .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+            .overlay(sectionOverlay)
         }
     }
     
     private var participantsSection: some View {
         PageSection("Participants") {
-            LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 150))
-            ]) {
+            VStack(alignment: .leading) {
                 ForEach(tournament.participants) { participant in
-                    VStack {
-                        Image(participant.imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 75, height: 75)
-                            .padding(.vertical, 7)
-                        
-                        Text(participant.playerName)
-                            .font(.title3)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 12)
-                    .background()
-                    .overlay(Rectangle().strokeBorder(.quaternary, lineWidth: 1))
+                    participantRow(participant: participant)
                 }
             }
         }
+    }
+    
+    private func participantRow(participant: Participant) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(participant.playerName)
+                    .font(.title3)
+                Text(participant.clubSelection.clubName)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+        .padding()
+        .background()
     }
     
     private var finalActionSection: some View {
@@ -109,7 +110,11 @@ struct TournamentDetailView: View {
                 .padding(.vertical, 18)
         }
         .background()
-        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
+        .overlay(buttonOverlay)
+    }
+    
+    private var buttonOverlay: some View {
+        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
     }
     
     private var startTournamentButton: some View {
@@ -124,7 +129,7 @@ struct TournamentDetailView: View {
         }
         .buttonStyle(.plain)
         .background(Design.themeColor)
-        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
+        .overlay(buttonOverlay)
     }
     
     private var primaryActionText: String {
