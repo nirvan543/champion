@@ -58,6 +58,10 @@ struct Tournament: Identifiable, Hashable, Equatable, Codable {
         }
     }
     
+    var roundsAreComplete: Bool {
+        rounds.allSatisfy({ $0.isComplete })
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

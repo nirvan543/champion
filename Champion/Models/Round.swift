@@ -16,6 +16,10 @@ struct Round: Identifiable, Hashable, Equatable, Codable {
         self.matches = matches
     }
     
+    var isComplete: Bool {
+        matches.allSatisfy({ $0.matchState == .completed })
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

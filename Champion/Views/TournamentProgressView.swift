@@ -23,7 +23,7 @@ struct TournamentProgressView: View {
                     }
                 }
                 matchesSection
-                if tournament.state != .completed {
+                if showCompleteTournamentButton {
                     completeTournamentButton
                 }
                 NavigationLink(isActive: $navigateToTournamentResultsView) {
@@ -39,6 +39,10 @@ struct TournamentProgressView: View {
                 tournament.state = .inProgress
             }
         }
+    }
+    
+    private var showCompleteTournamentButton: Bool {
+        tournament.state != .completed && tournament.roundsAreComplete
     }
     
     private var viewTournamentResultsButton: some View {
