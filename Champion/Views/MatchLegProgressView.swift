@@ -37,6 +37,8 @@ struct MatchLegProgressView: View {
             VStack(alignment: .leading, spacing: 42) {
                 LegsCellView(homeParticipant: matchLeg.homeParticipant,
                              awayParticipant: matchLeg.awayParticipant,
+                             homeScore: matchLeg.homeScore,
+                             awayScore: matchLeg.awayScore,
                              legState: matchLeg.legState,
                              winner: matchLeg.winner,
                              endedInATie: matchLeg.endedInATie)

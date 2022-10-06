@@ -28,6 +28,8 @@ struct MatchProgressView: View {
                         } label: {
                             LegsCellView(homeParticipant: leg.wrappedValue.homeParticipant,
                                          awayParticipant: leg.wrappedValue.awayParticipant,
+                                         homeScore: leg.wrappedValue.homeScore,
+                                         awayScore: leg.wrappedValue.awayScore,
                                          legState: leg.wrappedValue.legState,
                                          winner: leg.wrappedValue.winner,
                                          endedInATie: leg.wrappedValue.endedInATie)

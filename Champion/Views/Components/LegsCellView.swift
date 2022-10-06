@@ -13,37 +13,52 @@ struct LegsCellView: View {
     
     let homeParticipant: Participant
     let awayParticipant: Participant
+    let homeScore: Int
+    let awayScore: Int
     let legState: GameState
     let winner: Participant?
     let endedInATie: Bool
     
     var body: some View {
         HStack {
-            HStack {
-                leadingImage(for: homeParticipant)
-                Text(homeParticipant.playerName)
-                    .font(.title3)
-            }
+            homeSection
             Spacer()
             Text("vs")
                 .font(.title3)
                 .fontWeight(.bold)
             Spacer()
-            HStack {
-                leadingImage(for: awayParticipant)
-                Text(awayParticipant.playerName)
-                    .font(.title3)
-                    .frame(alignment: .trailing)
-            }
+            awaySection
         }
         .padding()
         .background(backgroundColor)
         .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
     }
     
+    private var homeSection: some View {
+        HStack {
+            leadingImage(for: homeParticipant)
+            Text(homeParticipant.playerName)
+                .font(.title3)
+            Text("(\(homeScore))")
+        }
+    }
+    
+    @ViewBuilder
+    private var awaySection: some View {
+        HStack {
+            leadingImage(for: awayParticipant)
+            Text(awayParticipant.playerName)
+                .font(.title3)
+                .frame(alignment: .trailing)
+            Text("(\(awayScore))")
+        }
+    }
+    
     private var backgroundColor: Color {
         if legState == .completed {
             return .green.opacity(0.30)
+        } else if legState == .inProgress {
+            return .yellow.opacity(0.40)
         } else {
             return colorScheme == .light ? .white : .black
         }
@@ -67,6 +82,8 @@ struct LegsCellView_Previews: PreviewProvider {
     static var previews: some View {
         LegsCellView(homeParticipant: leg.homeParticipant,
                      awayParticipant: leg.awayParticipant,
+                     homeScore: leg.homeScore,
+                     awayScore: leg.awayScore,
                      legState: leg.legState,
                      winner: leg.winner,
                      endedInATie: leg.endedInATie)
