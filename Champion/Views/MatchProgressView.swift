@@ -15,6 +15,8 @@ struct MatchProgressView: View {
             VStack(alignment: .leading, spacing: 42) {
                 MatchCellView(participant1: match.participant1,
                               participant2: match.participant2,
+                              participant1Score: match.participant1Score,
+                              participant2Score: match.participant2Score,
                               matchState: match.matchState,
                               winner: match.winner,
                               endedInATie: match.endedInATie)

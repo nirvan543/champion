@@ -13,6 +13,8 @@ struct MatchCellView: View {
     
     let participant1: Participant
     let participant2: Participant?
+    let participant1Score: Int
+    let participant2Score: Int?
     let matchState: GameState
     let winner: Participant?
     let endedInATie: Bool
@@ -20,25 +22,9 @@ struct MatchCellView: View {
     var body: some View {
         ZStack {
             HStack {
-                HStack {
-                    leadingImage(for: participant1)
-                    Text(participant1.playerName)
-                        .font(.title3)
-                }
+                participant1Section
                 Spacer()
-                if let participant2 = participant2 {
-                    HStack {
-                        leadingImage(for: participant2)
-                        Text(participant2.playerName)
-                            .font(.title3)
-                            .frame(alignment: .trailing)
-                    }
-                } else {
-                    Text("-")
-                        .font(.title3)
-                        .frame(alignment: .trailing)
-                }
-                
+                participant2Section
             }
             
             Text("vs")
@@ -50,11 +36,40 @@ struct MatchCellView: View {
         .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
     }
     
+    private var participant1Section: some View {
+        HStack {
+            leadingImage(for: participant1)
+            Text(participant1.playerName)
+                .font(.title3)
+            Text("(\(participant1Score))")
+        }
+    }
+    
+    @ViewBuilder
+    private var participant2Section: some View {
+        if let participant2 = participant2,
+           let participant2Score = participant2Score {
+            HStack {
+                leadingImage(for: participant2)
+                Text(participant2.playerName)
+                    .font(.title3)
+                    .frame(alignment: .trailing)
+                Text("(\(participant2Score))")
+            }
+        } else {
+            Text("-")
+                .font(.title3)
+                .frame(alignment: .trailing)
+        }
+    }
+    
     private var backgroundColor: Color {
         if participant2 == nil {
             return .gray.opacity(0.30)
         } else if matchState == .completed {
             return .green.opacity(0.30)
+        } else if matchState == .inProgress {
+            return .yellow.opacity(0.40)
         } else {
             return colorScheme == .light ? .white : .black
         }
@@ -109,17 +124,23 @@ struct MatchCellView_Previews: PreviewProvider {
         Group {
             MatchCellView(participant1: oneLegMatch.participant1,
                           participant2: oneLegMatch.participant2,
+                          participant1Score: oneLegMatch.participant1Score,
+                          participant2Score: oneLegMatch.participant2Score,
                           matchState: oneLegMatch.matchState,
                           winner: oneLegMatch.winner,
                           endedInATie: oneLegMatch.endedInATie)
             MatchCellView(participant1: oneLegMatch.participant1,
                           participant2: oneLegMatch.participant2,
+                          participant1Score: oneLegMatch.participant1Score,
+                          participant2Score: oneLegMatch.participant2Score,
                           matchState: oneLegMatch.matchState,
                           winner: oneLegMatch.winner,
                           endedInATie: oneLegMatch.endedInATie)
                 .preferredColorScheme(.dark)
             MatchCellView(participant1: oneLegMatch.participant1,
                           participant2: nil,
+                          participant1Score: oneLegMatch.participant1Score,
+                          participant2Score: nil,
                           matchState: oneLegMatch.matchState,
                           winner: oneLegMatch.winner,
                           endedInATie: oneLegMatch.endedInATie)

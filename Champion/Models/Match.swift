@@ -41,18 +41,31 @@ struct Match: Identifiable, Hashable, Equatable, Codable {
         self.legs = legs
     }
     
+    var participant1Score: Int {
+        aggregateScore(for: participant1)
+    }
+    
+    var participant2Score: Int? {
+        guard let participant2 = participant2 else {
+            return nil
+        }
+        
+        return aggregateScore(for: participant2)
+    }
+    
+    private func aggregateScore(for participant: Participant) -> Int {
+        legs.reduce(0) { partialResult, leg in
+            partialResult + leg.score(for: participant)
+        }
+    }
+    
     var winner: Participant? {
         guard matchState == .completed, let participant2 = participant2 else {
             return nil
         }
         
-        let participant1AggregateScore = legs.reduce(0) { partialResult, leg in
-            partialResult + leg.score(for: participant1)
-        }
-        
-        let participant2AggregateScore = legs.reduce(0) { partialResult, leg in
-            partialResult + leg.score(for: participant2)
-        }
+        let participant1AggregateScore = aggregateScore(for: participant1)
+        let participant2AggregateScore = aggregateScore(for: participant2)
         
         if (participant1AggregateScore > participant2AggregateScore) {
             return participant1
@@ -68,13 +81,8 @@ struct Match: Identifiable, Hashable, Equatable, Codable {
             return false
         }
         
-        let participant1Score = legs.reduce(0) { partialResult, leg in
-            partialResult + leg.score(for: participant1)
-        }
-        
-        let participant2Score = legs.reduce(0) { partialResult, leg in
-            partialResult + leg.score(for: participant2)
-        }
+        let participant1Score = aggregateScore(for: participant1)
+        let participant2Score = aggregateScore(for: participant2)
         
         return participant1Score == participant2Score
     }
