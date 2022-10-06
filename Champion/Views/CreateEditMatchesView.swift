@@ -28,14 +28,10 @@ struct CreateEditMatchesView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                roundsViews
-                actionSection
-            }
+        PageView {
+            roundsViews
+            actionSection
         }
-        .frame(maxWidth: .infinity)
-        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Create Matches")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -50,44 +46,58 @@ struct CreateEditMatchesView: View {
     private var actionSection: some View {
         PageSection {
             VStack {
-                Button {
-                    rounds = tournamentManager.generateMatches(participants: participants)
-                } label: {
-                    Text("Auto-Generate")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .background()
-                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
-                
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Cancel")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .background()
-                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
-                
-                Button {
-                    roundsBinding = rounds
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Save")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                }
-                .background(Design.themeColor)
-                .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
+                autoGenerateButton
+                cancelButton
+                saveButton
             }
         }
+    }
+    
+    private var autoGenerateButton: some View {
+        Button {
+            rounds = tournamentManager.generateMatches(participants: participants)
+        } label: {
+            Text("Auto-Generate")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background()
+        .overlay(overlay)
+    }
+    
+    private var cancelButton: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("Cancel")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background()
+        .overlay(overlay)
+    }
+    
+    private var saveButton: some View {
+        Button {
+            roundsBinding = rounds
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("Save")
+                .font(.title2)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+        }
+        .background(Design.themeColor)
+        .overlay(overlay)
+    }
+    
+    private var overlay: some View {
+        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
     }
     
     private var roundsViews: some View {
