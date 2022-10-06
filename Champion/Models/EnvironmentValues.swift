@@ -34,6 +34,18 @@ class EnvironmentValues: ObservableObject {
         self.selectedTournamentId = selectedTournamentId
     }
     
+    var selectedTournament: Tournament? {
+        guard let selectedTournamentId = selectedTournamentId else {
+            return nil
+        }
+        
+        guard let tournament = tournaments.first(where: { $0.id == selectedTournamentId }) else {
+            fatalError("Could not find tournament with id \(selectedTournamentId)")
+        }
+        
+        return tournament
+    }
+    
     func addTournament(tournament: Tournament) {
         tournaments.append(tournament)
         tournaments.sort(by: { $0.date < $1.date })

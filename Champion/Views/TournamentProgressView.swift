@@ -98,6 +98,8 @@ struct TournamentProgressView: View {
                         } label: {
                             MatchCellView(participant1: match.wrappedValue.participant1,
                                           participant2: match.wrappedValue.participant2,
+                                          participant1Score: match.wrappedValue.participant1Score,
+                                          participant2Score: match.wrappedValue.participant2Score,
                                           matchState: match.wrappedValue.matchState,
                                           winner: match.wrappedValue.winner,
                                           endedInATie: match.wrappedValue.endedInATie)

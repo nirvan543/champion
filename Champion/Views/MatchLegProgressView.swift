@@ -15,6 +15,8 @@ struct MatchLegProgressView: View {
         case distance
     }
     
+    @EnvironmentObject private var environmentValues: EnvironmentValues
+    
     @FocusState private var focusField: FocusField?
     
     @State private var minute: String = ""
@@ -33,32 +35,27 @@ struct MatchLegProgressView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                LegsCellView(homeParticipant: matchLeg.homeParticipant,
-                             awayParticipant: matchLeg.awayParticipant,
-                             homeScore: matchLeg.homeScore,
-                             awayScore: matchLeg.awayScore,
-                             legState: matchLeg.legState,
-                             winner: matchLeg.winner,
-                             endedInATie: matchLeg.endedInATie)
-                
-                PageSection("Score Card") {
-                    ScoreCellView(participant1Score: matchLeg.homeScore, participant2Score: matchLeg.awayScore)
-                }
-                
-                goalsSection
-                actionSection
+        PageView {
+            LegsCellView(homeParticipant: matchLeg.homeParticipant,
+                         awayParticipant: matchLeg.awayParticipant,
+                         homeScore: matchLeg.homeScore,
+                         awayScore: matchLeg.awayScore,
+                         legState: matchLeg.legState,
+                         winner: matchLeg.winner,
+                         endedInATie: matchLeg.endedInATie)
+            
+            PageSection("Score Card") {
+                ScoreCellView(participant1Score: matchLeg.homeScore, participant2Score: matchLeg.awayScore)
             }
-            .padding(.top)
+            
+            goalsSection
+            actionSection
         }
-        .frame(maxWidth: .infinity)
-        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Leg \(legNumber)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if matchLeg.legState == .completed {
+                if matchLeg.legState == .completed, environmentValues.selectedTournament?.state == .inProgress {
                     Button {
                         matchLeg.reactivateLeg()
                     } label: {
@@ -162,7 +159,7 @@ struct MatchLegProgressView: View {
     }
     
     private func saveGoal() {
-        guard let minute = Int(minute) else {
+        guard let minute = Int(minute), minute >= 0, minute <= 90 else {
             return
         }
         
@@ -177,7 +174,6 @@ struct MatchLegProgressView: View {
         }
         
         self.minute = ""
-        
         focusField = nil
     }
     
@@ -210,6 +206,8 @@ struct MatchLegProgressView: View {
 }
 
 struct MatchLegProgressView_Previews: PreviewProvider {
+    @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    
     @State private static var legExample1 = MatchLeg(id: IdUtils.newUuid,
                                                      homeParticipant: MockData.mahendra,
                                                      awayParticipant: MockData.saurav,
@@ -258,5 +256,6 @@ struct MatchLegProgressView_Previews: PreviewProvider {
                 MatchLegProgressView(matchLeg: $legExample3, legNumber: 1)
             }
         }
+        .environmentObject(environmentValues)
     }
 }

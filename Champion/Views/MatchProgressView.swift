@@ -11,37 +11,32 @@ struct MatchProgressView: View {
     @Binding var match: Match
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 42) {
-                MatchCellView(participant1: match.participant1,
-                              participant2: match.participant2,
-                              participant1Score: match.participant1Score,
-                              participant2Score: match.participant2Score,
-                              matchState: match.matchState,
-                              winner: match.winner,
-                              endedInATie: match.endedInATie)
-                
-                PageSection("Legs") {
-                    ForEach($match.legs) { leg in
-                        NavigationLink {
-                            MatchLegProgressView(matchLeg: leg, legNumber: number(for: leg.wrappedValue))
-                        } label: {
-                            LegsCellView(homeParticipant: leg.wrappedValue.homeParticipant,
-                                         awayParticipant: leg.wrappedValue.awayParticipant,
-                                         homeScore: leg.wrappedValue.homeScore,
-                                         awayScore: leg.wrappedValue.awayScore,
-                                         legState: leg.wrappedValue.legState,
-                                         winner: leg.wrappedValue.winner,
-                                         endedInATie: leg.wrappedValue.endedInATie)
-                        }
-                        .buttonStyle(.plain)
+        PageView {
+            MatchCellView(participant1: match.participant1,
+                          participant2: match.participant2,
+                          participant1Score: match.participant1Score,
+                          participant2Score: match.participant2Score,
+                          matchState: match.matchState,
+                          winner: match.winner,
+                          endedInATie: match.endedInATie)
+            
+            PageSection("Legs") {
+                ForEach($match.legs) { leg in
+                    NavigationLink {
+                        MatchLegProgressView(matchLeg: leg, legNumber: number(for: leg.wrappedValue))
+                    } label: {
+                        LegsCellView(homeParticipant: leg.wrappedValue.homeParticipant,
+                                     awayParticipant: leg.wrappedValue.awayParticipant,
+                                     homeScore: leg.wrappedValue.homeScore,
+                                     awayScore: leg.wrappedValue.awayScore,
+                                     legState: leg.wrappedValue.legState,
+                                     winner: leg.wrappedValue.winner,
+                                     endedInATie: leg.wrappedValue.endedInATie)
                     }
+                    .buttonStyle(.plain)
                 }
             }
-            .padding(.top)
         }
-        .frame(maxWidth: .infinity)
-        .background(Design.pageColor.ignoresSafeArea())
         .navigationTitle("Match")
         .navigationBarTitleDisplayMode(.inline)
     }
