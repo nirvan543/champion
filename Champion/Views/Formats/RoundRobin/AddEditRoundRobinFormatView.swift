@@ -13,9 +13,6 @@ struct AddEditRoundRobinFormatView: View {
     var body: some View {
         PageSection("League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
-                EditableConfigLineItemView(labelText: "Matches per Opponent",
-                                           value: $tournamentFormatConfig.matchesPerOpponent)
-                
                 EditableConfigLineItemView(labelText: "Legs per Match",
                                            value: $tournamentFormatConfig.legsPerMatch)
             }
@@ -24,7 +21,7 @@ struct AddEditRoundRobinFormatView: View {
 }
 
 struct AddEditRoundRobinFormatView_Previews: PreviewProvider {
-    @State private static var tournamentFormatConfig = RoundRobinTournamentFormatConfig(matchesPerOpponent: 1, legsPerMatch: 1)
+    @State private static var tournamentFormatConfig = RoundRobinTournamentFormatConfig(legsPerMatch: 1)
     
     static var previews: some View {
         AddEditRoundRobinFormatView(tournamentFormatConfig: $tournamentFormatConfig)

@@ -20,7 +20,6 @@ struct RoundRobinTournamentManager: TournamentManager {
         }
         
         return MatchesService.shared.createMatches(participants: participants,
-                                                   matchesPerOpponent: tournamentFormatConfig.matchesPerOpponent,
                                                    legsPerMatch: tournamentFormatConfig.legsPerMatch)
     }
     

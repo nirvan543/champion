@@ -13,10 +13,7 @@ struct ReadOnlyRoundRobinFormatConfigView: View {
     var body: some View {
         PageSection("League Stage Config") {
             VStack(alignment: .leading, spacing: 8) {
-                ReadOnlyConfigLineItemView(labelText: "Matches per Opponent",
-                                           value: "\(tournamentFormatConfig.matchesPerOpponent)")
-                
-                ReadOnlyConfigLineItemView(labelText: "Legs per Match",
+               ReadOnlyConfigLineItemView(labelText: "Legs per Match",
                                            value: "\(tournamentFormatConfig.legsPerMatch)")
             }
         }

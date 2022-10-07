@@ -11,7 +11,7 @@ struct MatchesService {
     static let shared = MatchesService()
     
     // Courtesy: https://stackoverflow.com/questions/6648512/scheduling-algorithm-for-a-round-robin-tournament
-    func createMatches(participants: [Participant], matchesPerOpponent: Int, legsPerMatch: Int) -> [Round] {
+    func createMatches(participants: [Participant], legsPerMatch: Int) -> [Round] {
         var players: [Participant?] = participants
         
         if players.count % 2 == 1 {
