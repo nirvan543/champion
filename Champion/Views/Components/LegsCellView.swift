@@ -39,8 +39,14 @@ struct LegsCellView: View {
             leadingImage(for: homeParticipant)
             Text(homeParticipant.playerName)
                 .font(.title3)
-            Text("(\(homeScore))")
+            if shouldShowScore {
+                Text("(\(homeScore))")
+            }
         }
+    }
+    
+    private var shouldShowScore: Bool {
+        legState == .inProgress || legState == .completed
     }
     
     @ViewBuilder
@@ -50,7 +56,9 @@ struct LegsCellView: View {
             Text(awayParticipant.playerName)
                 .font(.title3)
                 .frame(alignment: .trailing)
-            Text("(\(awayScore))")
+            if shouldShowScore {
+                Text("(\(awayScore))")
+            }
         }
     }
     

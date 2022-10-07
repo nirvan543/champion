@@ -41,8 +41,14 @@ struct MatchCellView: View {
             leadingImage(for: participant1)
             Text(participant1.playerName)
                 .font(.title3)
-            Text("(\(participant1Score))")
+            if shouldShowScore {
+                Text("(\(participant1Score))")
+            }
         }
+    }
+    
+    private var shouldShowScore: Bool {
+        matchState == .inProgress || matchState == .completed
     }
     
     @ViewBuilder
@@ -54,7 +60,9 @@ struct MatchCellView: View {
                 Text(participant2.playerName)
                     .font(.title3)
                     .frame(alignment: .trailing)
-                Text("(\(participant2Score))")
+                if shouldShowScore {
+                    Text("(\(participant2Score))")
+                }
             }
         } else {
             Text("-")
