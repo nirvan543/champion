@@ -21,7 +21,7 @@ struct AddEditTournamentView: View {
     @State private var tournamentDate: Date
     @State private var fifaVersionName: String
     @State private var tournamentFormat: TournamentFormat
-    @State private var participants: [Participant] = Array(MockData.participants.prefix(4))
+    @State private var participants: [Participant]
     
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
@@ -43,7 +43,7 @@ struct AddEditTournamentView: View {
             _tournamentFormat = State(initialValue: Self.defaultTournamentFormat)
         }
         
-//        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
+        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
     }
     
     private static func tournamentFormat(for tournament: Tournament) -> TournamentFormat {

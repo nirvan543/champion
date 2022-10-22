@@ -93,7 +93,7 @@ struct Match: Identifiable, Hashable, Equatable, Codable {
     
     var matchState: GameState {
         if isByeGame {
-            return .completed
+            return .unplayable
         }
         
         if legs.allSatisfy({ $0.legState == .notStarted }) {
