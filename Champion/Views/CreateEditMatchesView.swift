@@ -7,38 +7,87 @@
 
 import SwiftUI
 
-struct CreateEditMatchesView: View {
-    @Environment(\.presentationMode) private var presentationMode
-    @State private var rounds: [Round]
-    
-    private let matchCellShape = Rectangle()
-    
+struct TournamentInfo {
+    let tournamentName: String
+    let tournamentDate: Date
+    let fifaVersionName: String
+    let tournamentFormat: TournamentFormat
     let participants: [Participant]
-    let tournamentManager: TournamentManager
-    @Binding var roundsBinding: [Round]
+}
+
+struct CreateEditMatchesView: View {
+    static private let defaultLegsPerMatch = 1
     
-    init(participants: [Participant],
-         tournamentFormatManager: TournamentManager,
-         roundsBinding: Binding<[Round]>) {
-        
-        self.participants = participants
-        self.tournamentManager = tournamentFormatManager
-        _roundsBinding = roundsBinding
-        _rounds = State(initialValue: roundsBinding.wrappedValue)
-    }
+    @Environment(\.presentationMode) private var presentationMode
+    @EnvironmentObject private var environmentValues: EnvironmentValues
+    
+    @FocusState private var focusField: Bool
+    
+    @State private var legsPerMatch: Int = Self.defaultLegsPerMatch
+    @State private var rounds: [Round] = []
+    
+    @State private var formError: ChampionError? = nil
+    @State private var presentFormErrorAlert = false
+    
+    let tournamentInfo: TournamentInfo
     
     var body: some View {
         PageView {
+            configSection
             roundsViews
             actionSection
         }
         .navigationTitle("Create Matches")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button {
-                rounds.removeAll()
-            } label: {
-                Text("Clear")
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    rounds.removeAll()
+                } label: {
+                    Text("Clear")
+                }
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    focusField = false
+                }
+            }
+        }
+        .alert("There are some errors", isPresented: $presentFormErrorAlert) {
+            Button("Dismiss", role: .cancel, action: {})
+        } message: {
+            if let formError = formError {
+                Text(formError.errorMessage)
+            } else {
+                Text("There are some form errors")
+            }
+        }
+    }
+    
+    private var configSection: some View {
+        PageSection("League Stage Config") {
+            VStack(alignment: .leading, spacing: 8) {
+                EditableConfigLineItemView(labelText: "Legs per Match", value: $legsPerMatch)
+                    .focused($focusField)
+            }
+        }
+    }
+    
+    private var roundsViews: some View {
+        ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
+            PageSection("Round \(index + 1)") {
+                VStack {
+                    ForEach(round.matches) { match in
+                        MatchCellView(participant1: match.participant1,
+                                      participant2: match.participant2,
+                                      participant1Score: match.participant1Score,
+                                      participant2Score: match.participant2Score,
+                                      matchState: match.matchState,
+                                      winner: match.winner,
+                                      endedInATie: match.endedInATie)
+                    }
+                }
             }
         }
     }
@@ -55,7 +104,8 @@ struct CreateEditMatchesView: View {
     
     private var autoGenerateButton: some View {
         Button {
-            rounds = tournamentManager.generateMatches(participants: participants)
+            rounds = MatchesService.shared.createMatches(participants: tournamentInfo.participants,
+                                                         legsPerMatch: legsPerMatch)
         } label: {
             Text("Auto-Generate")
                 .font(.title2)
@@ -83,8 +133,12 @@ struct CreateEditMatchesView: View {
     
     private var saveButton: some View {
         Button {
-            roundsBinding = rounds
-            presentationMode.wrappedValue.dismiss()
+            guard formIsValid() else {
+                presentFormErrorAlert = true
+                return
+            }
+            
+            saveNewTournament()
         } label: {
             Text("Save")
                 .font(.title2)
@@ -96,48 +150,55 @@ struct CreateEditMatchesView: View {
         .overlay(overlay)
     }
     
-    private var overlay: some View {
-        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
+    private func formIsValid() -> Bool {
+        if legsPerMatch < 1 {
+            formError = ChampionError(errorMessage: "Legs per match must be '1' or more")
+            return false
+        }
+        
+        if rounds.isEmpty {
+            formError = ChampionError(errorMessage: "Matches must be created before saving")
+            return false
+        }
+        
+        return true
     }
     
-    private var roundsViews: some View {
-        ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
-            PageSection("Round \(index + 1)") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        MatchCellView(participant1: match.participant1,
-                                      participant2: match.participant2,
-                                      participant1Score: match.participant1Score,
-                                      participant2Score: match.participant2Score,
-                                      matchState: match.matchState,
-                                      winner: match.winner,
-                                      endedInATie: match.endedInATie)
-                    }
-                }
-            }
-        }
+    private func saveNewTournament() {
+        let newTournament = RoundRobinTournament(name: tournamentInfo.tournamentName,
+                                                 date: tournamentInfo.tournamentDate,
+                                                 fifaVersionName: tournamentInfo.fifaVersionName,
+                                                 participants: tournamentInfo.participants,
+                                                 state: .created,
+                                                 rounds: rounds)
+        
+        environmentValues.addTournament(tournament: newTournament)
+        environmentValues.navigateToCreateTournamentView = false
+    }
+    
+    private var overlay: some View {
+        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
     }
 }
 
 struct CreateEditMatchesView_Previews: PreviewProvider {
-    private static let participants = MockData.participants
-    private static let tournamentFormatManager = RoundRobinTournamentManager(tournamentFormatConfig: RoundRobinTournamentFormatConfig())
-    @State private static var rounds = MockData.rounds
-    @State private static var emptyRounds = [Round]()
+    @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
+                                                       tournamentDate: Date(),
+                                                       fifaVersionName: "FIFA 23",
+                                                       tournamentFormat: .roundRobin,
+                                                       participants: MockData.participants)
     
     static var previews: some View {
         Group {
             NavigationView {
-                CreateEditMatchesView(participants: participants,
-                                      tournamentFormatManager: tournamentFormatManager,
-                                      roundsBinding: $rounds)
+                CreateEditMatchesView(tournamentInfo: tournamentInfo)
             }
             
             NavigationView {
-                CreateEditMatchesView(participants: participants,
-                                      tournamentFormatManager: tournamentFormatManager,
-                                      roundsBinding: $emptyRounds)
+                CreateEditMatchesView(tournamentInfo: tournamentInfo)
             }
         }
+        .environmentObject(environmentValues)
     }
 }

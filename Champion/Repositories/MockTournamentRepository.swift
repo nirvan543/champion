@@ -12,7 +12,7 @@ class MockTournamentRepository: TournamentRepository {
     
     static let shared = MockTournamentRepository(loadMockData: true)
     
-    private var tournaments: [Tournament]
+    private var tournaments: [RoundRobinTournament]
     
     init(loadMockData: Bool = true) {
         tournaments = []
@@ -22,19 +22,19 @@ class MockTournamentRepository: TournamentRepository {
         }
     }
     
-    private func loadData() -> [Tournament] {
+    private func loadData() -> [RoundRobinTournament] {
         MockData.tournaments
     }
     
-    func retreiveTournaments() -> [Tournament] {
+    func retreiveTournaments() -> [RoundRobinTournament] {
         tournaments
     }
     
-    func addTournament(tournament: Tournament) {
+    func addTournament(tournament: RoundRobinTournament) {
         tournaments.append(tournament)
     }
     
-    func saveTournaments(tournaments: [Tournament]) {
+    func saveTournaments(tournaments: [RoundRobinTournament]) {
         self.tournaments = tournaments
     }
     

@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct TournamentFormatFactory {
-    static func addEditTournamentFormatView(for format: TournamentFormat, formatConfig: Binding<TournamentFormatConfig>) -> some View {
-        switch format {
-        case .roundRobin:
-            let newFormatConfigBinding = Binding<RoundRobinTournamentFormatConfig> {
-                if let tournamentFormatConfig = formatConfig.wrappedValue as? RoundRobinTournamentFormatConfig {
-                    return tournamentFormatConfig
-                } else {
-                    fatalError("Expected the 'tournamentFormatConfig' to be of type 'RoundRobinTournamentFormatConfig'. But it is instead of type \(formatConfig.wrappedValue.self)")
-                }
-            } set: { newValue in
-                formatConfig.wrappedValue = newValue
-            }
-
-            return AddEditRoundRobinFormatView(tournamentFormatConfig: newFormatConfigBinding)
-        }
-    }
+//    static func addEditTournamentFormatView(for format: TournamentFormat, formatConfig: Binding<TournamentFormatConfig>) -> some View {
+//        switch format {
+//        case .roundRobin:
+//            let newFormatConfigBinding = Binding<RoundRobinTournamentFormatConfig> {
+//                if let tournamentFormatConfig = formatConfig.wrappedValue as? RoundRobinTournamentFormatConfig {
+//                    return tournamentFormatConfig
+//                } else {
+//                    fatalError("Expected the 'tournamentFormatConfig' to be of type 'RoundRobinTournamentFormatConfig'. But it is instead of type \(formatConfig.wrappedValue.self)")
+//                }
+//            } set: { newValue in
+//                formatConfig.wrappedValue = newValue
+//            }
+//
+//            return AddEditRoundRobinFormatView(tournamentFormatConfig: newFormatConfigBinding)
+//        }
+//    }
     
     static func tournamentFormatConfigView(for format: TournamentFormat, formatConfig: TournamentFormatConfig) -> some View {
         switch format {

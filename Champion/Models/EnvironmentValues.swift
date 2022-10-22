@@ -10,7 +10,7 @@ import Foundation
 class EnvironmentValues: ObservableObject {
     private static let tournamentsFilePath = "tournaments"
     
-    @Published var tournaments: [Tournament] {
+    @Published var tournaments: [RoundRobinTournament] {
         didSet {
             do {
                 try Self.save(tournaments: tournaments)
@@ -20,21 +20,27 @@ class EnvironmentValues: ObservableObject {
         }
     }
     @Published var selectedTournamentId: String?
+    @Published var navigateToCreateTournamentView: Bool
     
     convenience init() {
-        self.init(tournaments: [], selectedTournamentId: nil)
+        self.init(tournaments: [],
+                  selectedTournamentId: nil,
+                  navigateToCreateTournamentView: false)
     }
     
-    convenience init(tournaments: [Tournament]) {
-        self.init(tournaments: tournaments, selectedTournamentId: nil)
+    convenience init(tournaments: [RoundRobinTournament]) {
+        self.init(tournaments: tournaments,
+                  selectedTournamentId: nil,
+                  navigateToCreateTournamentView: false)
     }
     
-    private init(tournaments: [Tournament], selectedTournamentId: String?) {
+    private init(tournaments: [RoundRobinTournament], selectedTournamentId: String?, navigateToCreateTournamentView: Bool) {
         self.tournaments = tournaments
         self.selectedTournamentId = selectedTournamentId
+        self.navigateToCreateTournamentView = navigateToCreateTournamentView
     }
     
-    var selectedTournament: Tournament? {
+    var selectedTournament: RoundRobinTournament? {
         guard let selectedTournamentId = selectedTournamentId else {
             return nil
         }
@@ -46,23 +52,23 @@ class EnvironmentValues: ObservableObject {
         return tournament
     }
     
-    func addTournament(tournament: Tournament) {
+    func addTournament(tournament: RoundRobinTournament) {
         tournaments.append(tournament)
         tournaments.sort(by: { $0.date < $1.date })
     }
     
-    static func loadTournaments() throws -> [Tournament] {
+    static func loadTournaments() throws -> [RoundRobinTournament] {
         let fileUrl = try fileURL()
         
         guard let file = try? FileHandle(forReadingFrom: fileUrl) else {
             return []
         }
         
-        let tournaments = try JSONDecoder().decode([Tournament].self, from: file.availableData)
+        let tournaments = try JSONDecoder().decode([RoundRobinTournament].self, from: file.availableData)
         return tournaments.sorted(by: { $0.date < $1.date })
     }
     
-    static func save(tournaments: [Tournament]) throws {
+    static func save(tournaments: [RoundRobinTournament]) throws {
         let data = try JSONEncoder().encode(tournaments)
         let outfile = try fileURL()
         try data.write(to: outfile)

@@ -13,7 +13,7 @@ final class ModelTests: XCTestCase {
     func testV1ModelsDecodeCorrectly() throws {
         let data = try readJsonFile(fileName: "tournaments_v1", fileType: "json")
         
-        let tournaments = try JSONDecoder().decode([Tournament].self, from: data)
+        let tournaments = try JSONDecoder().decode([RoundRobinTournament].self, from: data)
         XCTAssertEqual(1, tournaments.count)
     }
     

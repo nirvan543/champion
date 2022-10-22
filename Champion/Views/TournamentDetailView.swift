@@ -10,15 +10,13 @@ import SwiftUI
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    @Binding var tournament: Tournament
+    @Binding var tournament: RoundRobinTournament
     
     var body: some View {
         PageView {
             tournamentTypeSection
             tournamentDateSection
             participantsSection
-            TournamentFormatFactory.tournamentFormatConfigView(for: tournament.format,
-                                                               formatConfig: tournament.formatConfig)
             finalActionSection
         }
         .navigationTitle(tournament.name)

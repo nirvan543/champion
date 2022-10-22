@@ -29,10 +29,14 @@ struct TournamentsListView: View {
         }
         .navigationTitle("Tournaments")
         .toolbar {
-            NavigationLink {
+            NavigationLink(isActive: $environmentValues.navigateToCreateTournamentView) {
                 AddEditTournamentView()
             } label: {
-                Image(systemName: "plus")
+                Button {
+                    environmentValues.navigateToCreateTournamentView = true
+                } label: {
+                    Image(systemName: "plus")
+                }
             }
         }
     }
