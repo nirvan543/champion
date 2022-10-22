@@ -15,13 +15,15 @@ struct RoundRobinTournament: Tournament, Identifiable, Hashable, Equatable, Coda
     var participants: [Participant]
     var state: TournamentState
     var rounds: [Round]
+    var legsPerMatch: Int
     
     init(name: String,
          date: Date,
          fifaVersionName: String,
          participants: [Participant],
          state: TournamentState,
-         rounds: [Round]) {
+         rounds: [Round],
+         legsPerMatch: Int) {
         
         self.id = IdUtils.newUuid
         self.name = name
@@ -30,6 +32,7 @@ struct RoundRobinTournament: Tournament, Identifiable, Hashable, Equatable, Coda
         self.participants = participants
         self.state = state
         self.rounds = rounds
+        self.legsPerMatch = legsPerMatch
     }
     
     var format: TournamentFormat {
@@ -71,6 +74,10 @@ struct RoundRobinTournament: Tournament, Identifiable, Hashable, Equatable, Coda
     
     var matchesAreCreated: Bool {
         !rounds.isEmpty
+    }
+    
+    mutating func clearMatches() {
+        rounds.removeAll()
     }
     
     func hash(into hasher: inout Hasher) {

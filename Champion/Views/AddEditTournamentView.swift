@@ -88,15 +88,24 @@ struct AddEditTournamentView: View {
                 Text("There are some form errors")
             }
         }
+        .onChange(of: participants) { _ in
+            if let editingTournament {
+                editingTournament.wrappedValue.clearMatches()
+            }
+        }
     }
     
     private var links: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
-            CreateEditMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
-                                                                 tournamentDate: tournamentDate,
-                                                                 fifaVersionName: fifaVersionName,
-                                                                 tournamentFormat: tournamentFormat,
-                                                                 participants: participants))
+            if let editingTournament {
+                CreateEditMatchesView(editingTournament: editingTournament)
+            } else {
+                CreateEditMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
+                                                                     tournamentDate: tournamentDate,
+                                                                     fifaVersionName: fifaVersionName,
+                                                                     tournamentFormat: tournamentFormat,
+                                                                     participants: participants))
+            }
         } label: {
             EmptyView()
         }
@@ -135,6 +144,7 @@ struct AddEditTournamentView: View {
                         Text(fifaGameVersion.name)
                     }
                 }
+                .disabled(editingTournament != nil)
                 .frame(maxWidth: .infinity)
             }
             .padding()
@@ -151,6 +161,7 @@ struct AddEditTournamentView: View {
                         Text(format.rawValue)
                     }
                 }
+                .disabled(editingTournament != nil)
                 .frame(maxWidth: .infinity)
             }
             .padding()
@@ -216,7 +227,7 @@ struct AddEditTournamentView: View {
     private var actionSection: some View {
         PageSection {
             createFixuresLink
-//            saveTournamentButton
+            saveTournamentButton
         }
     }
     
@@ -241,7 +252,7 @@ struct AddEditTournamentView: View {
     
     private var createMatchesButtonText: String {
         if let editingTournament, editingTournament.wrappedValue.matchesAreCreated {
-            return "View Matches"
+            return "Edit Matches"
         } else {
             return "Create Matches"
         }
@@ -249,17 +260,16 @@ struct AddEditTournamentView: View {
     
     private var saveTournamentButton: some View {
         Button {
+            guard let editingTournament = editingTournament else {
+                fatalError("Expected an editingTournament but did not have one.")
+            }
+            
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return
             }
             
-            if let editingTournament = editingTournament {
-                saveEditedTournament(editingTournament: editingTournament)
-            } else {
-                saveNewTournament()
-            }
-            
+            saveEditedTournament(editingTournament: editingTournament)
             presentationMode.wrappedValue.dismiss()
         } label: {
             Text("Save")
@@ -270,6 +280,12 @@ struct AddEditTournamentView: View {
         }
         .background(Design.themeColor)
         .overlay(buttonOverlay)
+    }
+    
+    private func saveEditedTournament(editingTournament: Binding<RoundRobinTournament>) {
+        editingTournament.wrappedValue.name = tournamentName
+        editingTournament.wrappedValue.date = tournamentDate
+        editingTournament.wrappedValue.participants = participants
     }
     
     private var buttonOverlay: some View {
@@ -287,30 +303,7 @@ struct AddEditTournamentView: View {
             return false
         }
         
-        if let editingTournament, !editingTournament.wrappedValue.matchesAreCreated {
-            formError = ChampionError(errorMessage: "Matches must be created before creating the tournament.")
-            return false
-        }
-        
         return true
-    }
-    
-    private func saveEditedTournament(editingTournament: Binding<RoundRobinTournament>) {
-        editingTournament.wrappedValue.name = tournamentName
-        editingTournament.wrappedValue.date = tournamentDate
-        editingTournament.wrappedValue.fifaVersionName = fifaVersionName
-        editingTournament.wrappedValue.participants = participants
-    }
-    
-    private func saveNewTournament() {
-        let newTournament = RoundRobinTournament(name: tournamentName,
-                                                 date: tournamentDate,
-                                                 fifaVersionName: fifaVersionName,
-                                                 participants: participants,
-                                                 state: .created,
-                                                 rounds: [])
-        
-        environmentValues.addTournament(tournament: newTournament)
     }
 }
 

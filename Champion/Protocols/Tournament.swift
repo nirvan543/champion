@@ -17,4 +17,5 @@ protocol Tournament {
     var format: TournamentFormat { get }
     
     var matchesAreCreated: Bool { get }
+    mutating func clearMatches() -> Void
 }

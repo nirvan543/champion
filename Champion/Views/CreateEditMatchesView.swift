@@ -23,13 +23,30 @@ struct CreateEditMatchesView: View {
     
     @FocusState private var focusField: Bool
     
-    @State private var legsPerMatch: Int = Self.defaultLegsPerMatch
-    @State private var rounds: [Round] = []
+    @State private var legsPerMatch: Int
+    @State private var rounds: [Round]
     
     @State private var formError: ChampionError? = nil
     @State private var presentFormErrorAlert = false
     
-    let tournamentInfo: TournamentInfo
+    let tournamentInfo: TournamentInfo?
+    var editingTournament: Binding<RoundRobinTournament>?
+    
+    init(tournamentInfo: TournamentInfo) {
+        self.tournamentInfo = tournamentInfo
+        editingTournament = nil
+        
+        _legsPerMatch = State(initialValue: Self.defaultLegsPerMatch)
+        _rounds = State(initialValue: [])
+    }
+    
+    init(editingTournament: Binding<RoundRobinTournament>) {
+        self.editingTournament = editingTournament
+        tournamentInfo = nil
+        
+        _legsPerMatch = State(initialValue: editingTournament.wrappedValue.legsPerMatch)
+        _rounds = State(initialValue: editingTournament.wrappedValue.rounds)
+    }
     
     var body: some View {
         PageView {
@@ -62,6 +79,9 @@ struct CreateEditMatchesView: View {
             } else {
                 Text("There are some form errors")
             }
+        }
+        .onChange(of: legsPerMatch) { _ in
+            rounds.removeAll()
         }
     }
     
@@ -104,7 +124,7 @@ struct CreateEditMatchesView: View {
     
     private var autoGenerateButton: some View {
         Button {
-            rounds = MatchesService.shared.createMatches(participants: tournamentInfo.participants,
+            rounds = MatchesService.shared.createMatches(participants: participants,
                                                          legsPerMatch: legsPerMatch)
         } label: {
             Text("Auto-Generate")
@@ -115,6 +135,18 @@ struct CreateEditMatchesView: View {
         }
         .background()
         .overlay(overlay)
+    }
+    
+    private var participants: [Participant] {
+        if let editingTournament {
+            return editingTournament.wrappedValue.participants
+        }
+        
+        if let tournamentInfo {
+            return tournamentInfo.participants
+        }
+        
+        fatalError("Both editingTournament and tournamentInfo are nil. This should not be possible.")
     }
     
     private var cancelButton: some View {
@@ -138,7 +170,11 @@ struct CreateEditMatchesView: View {
                 return
             }
             
-            saveNewTournament()
+            if let editingTournament {
+                saveEditedTournament(editingTournament: editingTournament)
+            } else {
+                saveNewTournament()
+            }
         } label: {
             Text("Save")
                 .font(.title2)
@@ -164,13 +200,25 @@ struct CreateEditMatchesView: View {
         return true
     }
     
+    private func saveEditedTournament(editingTournament: Binding<RoundRobinTournament>) {
+        editingTournament.wrappedValue.legsPerMatch = legsPerMatch
+        editingTournament.wrappedValue.rounds = rounds
+        
+        presentationMode.wrappedValue.dismiss()
+    }
+    
     private func saveNewTournament() {
+        guard let tournamentInfo = tournamentInfo else {
+            fatalError("tournamentInfo should not be nil here")
+        }
+        
         let newTournament = RoundRobinTournament(name: tournamentInfo.tournamentName,
                                                  date: tournamentInfo.tournamentDate,
                                                  fifaVersionName: tournamentInfo.fifaVersionName,
                                                  participants: tournamentInfo.participants,
                                                  state: .created,
-                                                 rounds: rounds)
+                                                 rounds: rounds,
+                                                 legsPerMatch: legsPerMatch)
         
         environmentValues.addTournament(tournament: newTournament)
         environmentValues.navigateToCreateTournamentView = false

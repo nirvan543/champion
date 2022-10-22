@@ -14,7 +14,8 @@ struct MockData {
                                                   fifaVersionName: "FIFA 22",
                                                   participants: participants,
                                                   state: .created,
-                                                  rounds: rounds)
+                                                  rounds: rounds,
+                                                  legsPerMatch: 1)
     
     static let tournaments = [
         atlantaCup3
