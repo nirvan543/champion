@@ -28,9 +28,9 @@ struct AddEditTournamentView: View {
     @State private var formError: ChampionError? = nil
     @State private var navigateToCreateMatchesView = false
     
-    private var editingTournament: Binding<RoundRobinTournament>? = nil
+    private var editingTournament: Binding<Tournament>? = nil
     
-    init(editingTournament: Binding<RoundRobinTournament>? = nil) {
+    init(editingTournament: Binding<Tournament>? = nil) {
         self.editingTournament = editingTournament
 
         _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
@@ -98,7 +98,7 @@ struct AddEditTournamentView: View {
     private var links: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
             if let editingTournament {
-                CreateEditMatchesView(editingTournament: editingTournament)
+                CreateEditMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
             } else {
                 CreateEditMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
                                                                      tournamentDate: tournamentDate,
@@ -108,6 +108,14 @@ struct AddEditTournamentView: View {
             }
         } label: {
             EmptyView()
+        }
+    }
+    
+    private func roundRobinTournament(from tournament: Binding<Tournament>) -> Binding<RoundRobinTournament> {
+        return Binding {
+            tournament.wrappedValue as! RoundRobinTournament
+        } set: { newValue in
+            tournament.wrappedValue = newValue
         }
     }
     
@@ -282,7 +290,7 @@ struct AddEditTournamentView: View {
         .overlay(buttonOverlay)
     }
     
-    private func saveEditedTournament(editingTournament: Binding<RoundRobinTournament>) {
+    private func saveEditedTournament(editingTournament: Binding<Tournament>) {
         editingTournament.wrappedValue.name = tournamentName
         editingTournament.wrappedValue.date = tournamentDate
         editingTournament.wrappedValue.participants = participants
@@ -309,7 +317,7 @@ struct AddEditTournamentView: View {
 
 struct AddEditTournamentView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
-    @State private static var editingTournament = MockData.atlantaCup3
+    @State private static var editingTournament: Tournament = MockData.atlantaCup3
     
     static var previews: some View {
         NavigationView {

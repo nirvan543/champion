@@ -24,12 +24,20 @@ struct TournamentDetailView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if tournament.state != .completed {
                     NavigationLink {
-                        AddEditTournamentView(editingTournament: $tournament)
+                        AddEditTournamentView(editingTournament: tournamentBinding)
                     } label: {
                         Text("Edit")
                     }
                 }
             }
+        }
+    }
+    
+    private var tournamentBinding: Binding<Tournament> {
+        Binding {
+            tournament as Tournament
+        } set: { newValue in
+            self.tournament = newValue as! RoundRobinTournament
         }
     }
     
