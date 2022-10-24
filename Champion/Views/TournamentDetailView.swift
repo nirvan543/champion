@@ -137,7 +137,7 @@ struct TournamentDetailView: View {
     private var tournamentProgressView: some View {
         switch tournament.format {
         case .roundRobin:
-            TournamentProgressView(tournament: roundRobinTournamentBinding)
+            RoundRobinTournamentProgressView(tournament: roundRobinTournamentBinding)
         }
     }
     

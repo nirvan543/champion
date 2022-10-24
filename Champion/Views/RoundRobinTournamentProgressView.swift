@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TournamentProgressView: View {
+struct RoundRobinTournamentProgressView: View {
     @State private var navigateToTournamentResultsView = false
     
     @Binding var tournament: RoundRobinTournament
@@ -111,16 +111,16 @@ struct TournamentProgressView: View {
     }
 }
 
-struct TournamentProgressView_Previews: PreviewProvider {
+struct RoundRobinTournamentProgressView_Previews: PreviewProvider {
     @State private static var tournament = MockData.atlantaCup3
     
     static var previews: some View {
         Group {
             NavigationView {
-                TournamentProgressView(tournament: $tournament)
+                RoundRobinTournamentProgressView(tournament: $tournament)
             }
             NavigationView {
-                TournamentProgressView(tournament: $tournament)
+                RoundRobinTournamentProgressView(tournament: $tournament)
             }
             .preferredColorScheme(.dark)
         }

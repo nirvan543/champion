@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D82E7D7C28826C5C006750A3 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82E7D7B28826C5C006750A3 /* MockData.swift */; };
-		D82E7D7E288276C0006750A3 /* TournamentProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */; };
+		D82E7D7E288276C0006750A3 /* RoundRobinTournamentProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82E7D7D288276C0006750A3 /* RoundRobinTournamentProgressView.swift */; };
 		D837094F28E0E28100288509 /* RoundRobinTournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837094E28E0E28100288509 /* RoundRobinTournament.swift */; };
 		D837095128E0E2A000288509 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837095028E0E2A000288509 /* Participant.swift */; };
 		D837095328E0E2E900288509 /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837095228E0E2E900288509 /* Round.swift */; };
@@ -89,7 +89,7 @@
 
 /* Begin PBXFileReference section */
 		D82E7D7B28826C5C006750A3 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
-		D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentProgressView.swift; sourceTree = "<group>"; };
+		D82E7D7D288276C0006750A3 /* RoundRobinTournamentProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinTournamentProgressView.swift; sourceTree = "<group>"; };
 		D837094E28E0E28100288509 /* RoundRobinTournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinTournament.swift; sourceTree = "<group>"; };
 		D837095028E0E2A000288509 /* Participant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
 		D837095228E0E2E900288509 /* Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
@@ -286,7 +286,7 @@
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
 				D83F442028D1FDD6003EEFA5 /* AddParticipantView.swift */,
 				D8BD21B4287E52C40018F7D2 /* CreateEditRoundRobinMatchesView.swift */,
-				D82E7D7D288276C0006750A3 /* TournamentProgressView.swift */,
+				D82E7D7D288276C0006750A3 /* RoundRobinTournamentProgressView.swift */,
 				D88CFE202882903A0061BC74 /* MatchProgressView.swift */,
 				D88CFE24288296870061BC74 /* MatchLegProgressView.swift */,
 				D8E6495128B65812007DC119 /* StandingsView.swift */,
@@ -541,7 +541,7 @@
 				D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */,
 				D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */,
 				D837096F28E0E48700288509 /* ParticipantStats.swift in Sources */,
-				D82E7D7E288276C0006750A3 /* TournamentProgressView.swift in Sources */,
+				D82E7D7E288276C0006750A3 /* RoundRobinTournamentProgressView.swift in Sources */,
 				D837096528E0E3F000288509 /* TournamentFormatConfig.swift in Sources */,
 				D837095C28E0E37A00288509 /* ClubSelection.swift in Sources */,
 				D8E6495928CD99ED007DC119 /* ClubCatalogService.swift in Sources */,
