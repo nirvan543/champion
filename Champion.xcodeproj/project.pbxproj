@@ -67,7 +67,6 @@
 		D8E6495728CD998D007DC119 /* fifa_versions.json in Resources */ = {isa = PBXBuildFile; fileRef = D8E6495628CD998D007DC119 /* fifa_versions.json */; };
 		D8E6495928CD99ED007DC119 /* ClubCatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */; };
 		D8EFA1E52901888100D283FF /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1E42901888100D283FF /* Tournament.swift */; };
-		D8EFA1E72903108B00D283FF /* AddEditRoundRobinMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1E62903108B00D283FF /* AddEditRoundRobinMatchesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,7 +150,6 @@
 		D8E6495628CD998D007DC119 /* fifa_versions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fifa_versions.json; sourceTree = "<group>"; };
 		D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCatalogService.swift; sourceTree = "<group>"; };
 		D8EFA1E42901888100D283FF /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
-		D8EFA1E62903108B00D283FF /* AddEditRoundRobinMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinMatchesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,7 +289,6 @@
 				D88CFE24288296870061BC74 /* MatchLegProgressView.swift */,
 				D8E6495128B65812007DC119 /* StandingsView.swift */,
 				D8E6495328C84DBE007DC119 /* TournamentResultsView.swift */,
-				D8EFA1E62903108B00D283FF /* AddEditRoundRobinMatchesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -553,7 +550,6 @@
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,
 				D8B84B3F28829A0E00B06BA3 /* GoalCellView.swift in Sources */,
-				D8EFA1E72903108B00D283FF /* AddEditRoundRobinMatchesView.swift in Sources */,
 				D837096028E0E3AD00288509 /* TournamentState.swift in Sources */,
 				D837096D28E0E46C00288509 /* RoundRobinTournamentManager.swift in Sources */,
 				D837095A28E0E35900288509 /* Goal.swift in Sources */,
