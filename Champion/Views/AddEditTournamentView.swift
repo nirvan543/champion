@@ -235,7 +235,9 @@ struct AddEditTournamentView: View {
     private var actionSection: some View {
         PageSection {
             createFixuresLink
-            saveTournamentButton
+            if let editingTournament = editingTournament {
+                saveTournamentButton(editingTournament: editingTournament)
+            }
         }
     }
     
@@ -266,12 +268,8 @@ struct AddEditTournamentView: View {
         }
     }
     
-    private var saveTournamentButton: some View {
+    private func saveTournamentButton(editingTournament: Binding<Tournament>) -> some View {
         Button {
-            guard let editingTournament = editingTournament else {
-                fatalError("Expected an editingTournament but did not have one.")
-            }
-            
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return

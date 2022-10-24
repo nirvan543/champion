@@ -10,7 +10,7 @@ import SwiftUI
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    @Binding var tournament: RoundRobinTournament
+    @Binding var tournament: Tournament
     
     var body: some View {
         PageView {
@@ -24,20 +24,12 @@ struct TournamentDetailView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if tournament.state != .completed {
                     NavigationLink {
-                        AddEditTournamentView(editingTournament: tournamentBinding)
+                        AddEditTournamentView(editingTournament: $tournament)
                     } label: {
                         Text("Edit")
                     }
                 }
             }
-        }
-    }
-    
-    private var tournamentBinding: Binding<Tournament> {
-        Binding {
-            tournament as Tournament
-        } set: { newValue in
-            self.tournament = newValue as! RoundRobinTournament
         }
     }
     
@@ -106,7 +98,11 @@ struct TournamentDetailView: View {
     
     private var viewMatchesButton: some View {
         NavigationLink {
-            MatchesView(rounds: tournament.rounds)
+            if let tournament = tournament as? RoundRobinTournament {
+                MatchesView(rounds: tournament.rounds)
+            } else {
+                fatalError("Unknown tournament type: \(tournament.self)")
+            }
         } label: {
             Text("View Matches")
                 .font(.title2)
@@ -124,7 +120,7 @@ struct TournamentDetailView: View {
     
     private var startTournamentButton: some View {
         NavigationLink {
-            TournamentProgressView(tournament: $tournament)
+            tournamentProgressView
         } label: {
             Text(primaryActionText)
                 .font(.title2)
@@ -135,6 +131,22 @@ struct TournamentDetailView: View {
         .buttonStyle(.plain)
         .background(Design.themeColor)
         .overlay(buttonOverlay)
+    }
+    
+    @ViewBuilder
+    private var tournamentProgressView: some View {
+        switch tournament.format {
+        case .roundRobin:
+            TournamentProgressView(tournament: roundRobinTournamentBinding)
+        }
+    }
+    
+    private var roundRobinTournamentBinding: Binding<RoundRobinTournament> {
+        Binding {
+            tournament as! RoundRobinTournament
+        } set: { newValue in
+            self.tournament = newValue
+        }
     }
     
     private var primaryActionText: String {
@@ -184,7 +196,7 @@ struct ReadOnlyConfigLineItemView: View {
 
 struct TournamentDetailView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
-    @State private static var tournament = MockData.atlantaCup3
+    @State private static var tournament: Tournament = MockData.atlantaCup3
     
     static var previews: some View {
         Group {
