@@ -42,7 +42,7 @@
 		D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BA2879C7AF00553E5D /* TournamentsListView.swift */; };
 		D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BC2879CC5800553E5D /* TournamentDetailView.swift */; };
 		D86187BF2879DB7000553E5D /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187BE2879DB7000553E5D /* Design.swift */; };
-		D86187C1287A21E900553E5D /* MatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C0287A21E900553E5D /* MatchesView.swift */; };
+		D86187C1287A21E900553E5D /* RoundRobinMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C0287A21E900553E5D /* RoundRobinMatchesView.swift */; };
 		D86187C4287A222700553E5D /* PageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C3287A222700553E5D /* PageSection.swift */; };
 		D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */; };
 		D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE202882903A0061BC74 /* MatchProgressView.swift */; };
@@ -126,7 +126,7 @@
 		D86187BA2879C7AF00553E5D /* TournamentsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentsListView.swift; sourceTree = "<group>"; };
 		D86187BC2879CC5800553E5D /* TournamentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDetailView.swift; sourceTree = "<group>"; };
 		D86187BE2879DB7000553E5D /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
-		D86187C0287A21E900553E5D /* MatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesView.swift; sourceTree = "<group>"; };
+		D86187C0287A21E900553E5D /* RoundRobinMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinMatchesView.swift; sourceTree = "<group>"; };
 		D86187C3287A222700553E5D /* PageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSection.swift; sourceTree = "<group>"; };
 		D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTournamentView.swift; sourceTree = "<group>"; };
 		D88CFE202882903A0061BC74 /* MatchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProgressView.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 				D8E6494928ADDCF3007DC119 /* Formats */,
 				D86187BA2879C7AF00553E5D /* TournamentsListView.swift */,
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
-				D86187C0287A21E900553E5D /* MatchesView.swift */,
+				D86187C0287A21E900553E5D /* RoundRobinMatchesView.swift */,
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
 				D83F442028D1FDD6003EEFA5 /* AddParticipantView.swift */,
 				D8BD21B4287E52C40018F7D2 /* CreateEditMatchesView.swift */,
@@ -548,7 +548,7 @@
 				D86187AA2878E9A400553E5D /* TournamentRepository.swift in Sources */,
 				D8E6494528AB2EB4007DC119 /* PageView.swift in Sources */,
 				D8BD21B9287E5C3C0018F7D2 /* MatchesService.swift in Sources */,
-				D86187C1287A21E900553E5D /* MatchesView.swift in Sources */,
+				D86187C1287A21E900553E5D /* RoundRobinMatchesView.swift in Sources */,
 				D837094F28E0E28100288509 /* RoundRobinTournament.swift in Sources */,
 				D86187AD2878ED6600553E5D /* IdUtils.swift in Sources */,
 				D86187BB2879C7AF00553E5D /* TournamentsListView.swift in Sources */,

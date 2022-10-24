@@ -99,7 +99,7 @@ struct TournamentDetailView: View {
     private var viewMatchesButton: some View {
         NavigationLink {
             if let tournament = tournament as? RoundRobinTournament {
-                MatchesView(rounds: tournament.rounds)
+                RoundRobinMatchesView(rounds: tournament.rounds)
             } else {
                 fatalError("Unknown tournament type: \(tournament.self)")
             }
