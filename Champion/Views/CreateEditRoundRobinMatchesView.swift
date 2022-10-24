@@ -15,7 +15,7 @@ struct TournamentInfo {
     let participants: [Participant]
 }
 
-struct CreateEditMatchesView: View {
+struct CreateEditRoundRobinMatchesView: View {
     static private let defaultLegsPerMatch = 1
     
     @Environment(\.presentationMode) private var presentationMode
@@ -229,7 +229,7 @@ struct CreateEditMatchesView: View {
     }
 }
 
-struct CreateEditMatchesView_Previews: PreviewProvider {
+struct CreateEditRoundRobinMatchesView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
     private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
                                                        tournamentDate: Date(),
@@ -240,11 +240,11 @@ struct CreateEditMatchesView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                CreateEditMatchesView(tournamentInfo: tournamentInfo)
+                CreateEditRoundRobinMatchesView(tournamentInfo: tournamentInfo)
             }
             
             NavigationView {
-                CreateEditMatchesView(tournamentInfo: tournamentInfo)
+                CreateEditRoundRobinMatchesView(tournamentInfo: tournamentInfo)
             }
         }
         .environmentObject(environmentValues)

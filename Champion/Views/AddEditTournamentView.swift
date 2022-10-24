@@ -98,9 +98,9 @@ struct AddEditTournamentView: View {
     private var links: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
             if let editingTournament {
-                CreateEditMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
+                CreateEditRoundRobinMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
             } else {
-                CreateEditMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
+                CreateEditRoundRobinMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
                                                                      tournamentDate: tournamentDate,
                                                                      fifaVersionName: fifaVersionName,
                                                                      tournamentFormat: tournamentFormat,
