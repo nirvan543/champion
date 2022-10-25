@@ -10,7 +10,7 @@ import SwiftUI
 struct TournamentDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    @Binding var tournament: Tournament
+    @Binding var tournament: any Tournament
     
     var body: some View {
         PageView {
@@ -138,6 +138,8 @@ struct TournamentDetailView: View {
         switch tournament.format {
         case .roundRobin:
             RoundRobinTournamentProgressView(tournament: roundRobinTournamentBinding)
+        case .grouped:
+            fatalError()
         }
     }
     
@@ -196,7 +198,7 @@ struct ReadOnlyConfigLineItemView: View {
 
 struct TournamentDetailView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
-    @State private static var tournament: Tournament = MockData.atlantaCup3
+    @State private static var tournament: any Tournament = MockData.atlantaCup3
     
     static var previews: some View {
         Group {

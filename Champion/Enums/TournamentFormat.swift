@@ -9,4 +9,5 @@ import Foundation
 
 enum TournamentFormat: String, Codable {
     case roundRobin = "Round Robin"
+    case grouped = "Grouped"
 }

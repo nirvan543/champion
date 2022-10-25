@@ -67,6 +67,7 @@
 		D8E6495728CD998D007DC119 /* fifa_versions.json in Resources */ = {isa = PBXBuildFile; fileRef = D8E6495628CD998D007DC119 /* fifa_versions.json */; };
 		D8E6495928CD99ED007DC119 /* ClubCatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */; };
 		D8EFA1E52901888100D283FF /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1E42901888100D283FF /* Tournament.swift */; };
+		D8EFA1EC2907147300D283FF /* GroupedTournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1EB2907147300D283FF /* GroupedTournament.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,7 @@
 		D8E6495628CD998D007DC119 /* fifa_versions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fifa_versions.json; sourceTree = "<group>"; };
 		D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCatalogService.swift; sourceTree = "<group>"; };
 		D8EFA1E42901888100D283FF /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
+		D8EFA1EB2907147300D283FF /* GroupedTournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedTournament.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,13 +280,13 @@
 			children = (
 				D86187C2287A221B00553E5D /* Components */,
 				D8E6494928ADDCF3007DC119 /* Formats */,
+				D8EFA1E82907134B00D283FF /* MatchesView */,
+				D8EFA1E92907138800D283FF /* CreateEditMatchesView */,
+				D8EFA1EA290713AF00D283FF /* TournamentProgressView */,
 				D86187BA2879C7AF00553E5D /* TournamentsListView.swift */,
 				D86187BC2879CC5800553E5D /* TournamentDetailView.swift */,
-				D86187C0287A21E900553E5D /* RoundRobinMatchesView.swift */,
 				D86187C5287A4F9F00553E5D /* AddEditTournamentView.swift */,
 				D83F442028D1FDD6003EEFA5 /* AddParticipantView.swift */,
-				D8BD21B4287E52C40018F7D2 /* CreateEditRoundRobinMatchesView.swift */,
-				D82E7D7D288276C0006750A3 /* RoundRobinTournamentProgressView.swift */,
 				D88CFE202882903A0061BC74 /* MatchProgressView.swift */,
 				D88CFE24288296870061BC74 /* MatchLegProgressView.swift */,
 				D8E6495128B65812007DC119 /* StandingsView.swift */,
@@ -318,6 +320,7 @@
 				D837096A28E0E45A00288509 /* TournamentResults.swift */,
 				D837096C28E0E46C00288509 /* RoundRobinTournamentManager.swift */,
 				D837096E28E0E48700288509 /* ParticipantStats.swift */,
+				D8EFA1EB2907147300D283FF /* GroupedTournament.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,6 +399,30 @@
 				D8E6495628CD998D007DC119 /* fifa_versions.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		D8EFA1E82907134B00D283FF /* MatchesView */ = {
+			isa = PBXGroup;
+			children = (
+				D86187C0287A21E900553E5D /* RoundRobinMatchesView.swift */,
+			);
+			path = MatchesView;
+			sourceTree = "<group>";
+		};
+		D8EFA1E92907138800D283FF /* CreateEditMatchesView */ = {
+			isa = PBXGroup;
+			children = (
+				D8BD21B4287E52C40018F7D2 /* CreateEditRoundRobinMatchesView.swift */,
+			);
+			path = CreateEditMatchesView;
+			sourceTree = "<group>";
+		};
+		D8EFA1EA290713AF00D283FF /* TournamentProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				D82E7D7D288276C0006750A3 /* RoundRobinTournamentProgressView.swift */,
+			);
+			path = TournamentProgressView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,6 +562,7 @@
 				D8B84B3D2882990B00B06BA3 /* ScoreCellView.swift in Sources */,
 				D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */,
 				D8E6494728AB2FC0007DC119 /* EditableConfigLineItemView.swift in Sources */,
+				D8EFA1EC2907147300D283FF /* GroupedTournament.swift in Sources */,
 				D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */,
 				D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */,
 				D837096F28E0E48700288509 /* ParticipantStats.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Tournament {
+protocol Tournament: Identifiable, Hashable, Equatable, Codable {
     var id: String { get }
     var name: String { get set }
     var date: Date { get set }

@@ -85,9 +85,11 @@ class EnvironmentValues: ObservableObject {
     
     struct TournamentStorage: Codable {
         private var roundRobinTournaments: [RoundRobinTournament]
+        private var groupedTournaments: [GroupedTournament]
         
         init(tournaments: [any Tournament]) {
             roundRobinTournaments = [RoundRobinTournament]()
+            groupedTournaments = [GroupedTournament]()
             bucketTournaments(tournaments: tournaments)
         }
         
@@ -96,12 +98,17 @@ class EnvironmentValues: ObservableObject {
                 switch tournament.format {
                 case .roundRobin:
                     roundRobinTournaments.append(tournament as! RoundRobinTournament)
+                case .grouped:
+                    groupedTournaments.append(tournament as! GroupedTournament)
                 }
             }
         }
         
         var tournaments: [any Tournament] {
-            roundRobinTournaments.sorted(by: { $0.date < $1.date })
+            var combinedTournaments: [any Tournament] = roundRobinTournaments + groupedTournaments
+            combinedTournaments.sort { $0.date < $1.date }
+            
+            return combinedTournaments
         }
     }
 }

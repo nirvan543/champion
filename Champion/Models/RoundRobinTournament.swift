@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RoundRobinTournament: Tournament, Identifiable, Hashable, Equatable, Codable {
+struct RoundRobinTournament: Tournament {
     let id: String
     var name: String
     var date: Date

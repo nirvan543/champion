@@ -33,6 +33,8 @@ struct TournamentFormatFactory {
             }
             
             return ReadOnlyRoundRobinFormatConfigView(tournamentFormatConfig: roundRobinFormatConfig)
+        case .grouped:
+            fatalError()
         }
     }
 }
