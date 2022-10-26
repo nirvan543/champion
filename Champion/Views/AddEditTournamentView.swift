@@ -131,7 +131,7 @@ struct AddEditTournamentView: View {
     
     private var createGroupedMatchesLink: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
-            CreateEditGroupedTournamentMatchesView(participants: participants)
+            CreateEditGroupsView(participants: participants)
         } label: {
             EmptyView()
         }

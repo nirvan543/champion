@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateEditGroupedTournamentMatchesView: View {
+struct CreateEditGroupsView: View {
     @State private var groups = [TournamentGroup]()
     @State private var participants: [Participant]
     
@@ -114,8 +114,8 @@ struct CreateEditGroupedTournamentMatchesView: View {
     }
 }
 
-struct CreateEditGroupedTournamentMatchesView_Previews: PreviewProvider {
+struct CreateEditGroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateEditGroupedTournamentMatchesView(participants: MockData.participants)
+        CreateEditGroupsView(participants: MockData.participants)
     }
 }
