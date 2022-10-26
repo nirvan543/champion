@@ -38,6 +38,22 @@ struct GroupedTournament: Tournament {
     }
 }
 
-struct TournamentGroup: Codable {
+struct TournamentGroup: Identifiable, Codable, Equatable, Hashable {
+    let id: String
+    var participants: [Participant]
     var rounds: [Round]
+    
+    init() {
+        self.init(participants: [])
+    }
+    
+    init(participants: [Participant]) {
+        self.init(id: IdUtils.newUuid, participants: participants, rounds: [])
+    }
+    
+    private init(id: String, participants: [Participant], rounds: [Round]) {
+        self.id = id
+        self.participants = participants
+        self.rounds = rounds
+    }
 }

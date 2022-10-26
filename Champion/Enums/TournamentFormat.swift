@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TournamentFormat: String, Codable {
+enum TournamentFormat: String, Codable, CaseIterable {
     case roundRobin = "Round Robin"
     case grouped = "Grouped"
 }

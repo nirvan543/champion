@@ -68,6 +68,7 @@
 		D8E6495928CD99ED007DC119 /* ClubCatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */; };
 		D8EFA1E52901888100D283FF /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1E42901888100D283FF /* Tournament.swift */; };
 		D8EFA1EC2907147300D283FF /* GroupedTournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1EB2907147300D283FF /* GroupedTournament.swift */; };
+		D8EFA1EE290787D800D283FF /* CreateEditGroupedTournamentMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFA1ED290787D800D283FF /* CreateEditGroupedTournamentMatchesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		D8E6495828CD99ED007DC119 /* ClubCatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCatalogService.swift; sourceTree = "<group>"; };
 		D8EFA1E42901888100D283FF /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		D8EFA1EB2907147300D283FF /* GroupedTournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedTournament.swift; sourceTree = "<group>"; };
+		D8EFA1ED290787D800D283FF /* CreateEditGroupedTournamentMatchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditGroupedTournamentMatchesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				D8BD21B4287E52C40018F7D2 /* CreateEditRoundRobinMatchesView.swift */,
+				D8EFA1ED290787D800D283FF /* CreateEditGroupedTournamentMatchesView.swift */,
 			);
 			path = CreateEditMatchesView;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				D837096228E0E3BC00288509 /* GameState.swift in Sources */,
 				D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */,
 				D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */,
+				D8EFA1EE290787D800D283FF /* CreateEditGroupedTournamentMatchesView.swift in Sources */,
 				D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

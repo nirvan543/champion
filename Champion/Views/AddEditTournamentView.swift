@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddEditTournamentView: View {
-    private static let tournamentFormats: [TournamentFormat] = [ .roundRobin ]
-    private static let defaultTournamentFormat: TournamentFormat = Self.tournamentFormats.first!
+    private static let tournamentFormats: [TournamentFormat] = TournamentFormat.allCases
+    private static let defaultTournamentFormat: TournamentFormat = TournamentFormat.grouped//Self.tournamentFormats.first!
     private static let catalogService = ClubCatalogService.shared
     
     @Environment(\.presentationMode) private var presentationMode
@@ -33,7 +33,7 @@ struct AddEditTournamentView: View {
     init(editingTournament: Binding<any Tournament>? = nil) {
         self.editingTournament = editingTournament
 
-        _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
+        _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "Tournament Name")
         _tournamentDate = State(initialValue: editingTournament?.wrappedValue.date ?? Date())
         _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
         
@@ -43,7 +43,7 @@ struct AddEditTournamentView: View {
             _tournamentFormat = State(initialValue: Self.defaultTournamentFormat)
         }
         
-        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
+        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? Array(MockData.participants.prefix(4)))
     }
     
     private static func tournamentFormat(for tournament: any Tournament) -> TournamentFormat {
@@ -62,7 +62,7 @@ struct AddEditTournamentView: View {
             tournamentFormatSection
             participantsSection
             actionSection
-            links
+            createMatchesLink
         }
         .navigationTitle(editingTournament == nil ? "New Tournament" : "Edit Tournament")
         .navigationBarTitleDisplayMode(.inline)
@@ -95,7 +95,17 @@ struct AddEditTournamentView: View {
         }
     }
     
-    private var links: some View {
+    @ViewBuilder
+    private var createMatchesLink: some View {
+        switch tournamentFormat {
+        case .roundRobin:
+            createRoundRobinMatchesLink
+        case .grouped:
+            createGroupedMatchesLink
+        }
+    }
+    
+    private var createRoundRobinMatchesLink: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
             if let editingTournament {
                 CreateEditRoundRobinMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
@@ -116,6 +126,14 @@ struct AddEditTournamentView: View {
             tournament.wrappedValue as! RoundRobinTournament
         } set: { newValue in
             tournament.wrappedValue = newValue
+        }
+    }
+    
+    private var createGroupedMatchesLink: some View {
+        NavigationLink(isActive: $navigateToCreateMatchesView) {
+            CreateEditGroupedTournamentMatchesView(participants: participants)
+        } label: {
+            EmptyView()
         }
     }
     
