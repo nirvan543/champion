@@ -98,10 +98,11 @@ struct TournamentDetailView: View {
     
     private var viewMatchesButton: some View {
         NavigationLink {
-            if let tournament = tournament as? RoundRobinTournament {
-                RoundRobinMatchesView(rounds: tournament.rounds)
-            } else {
-                fatalError("Unknown tournament type: \(tournament.self)")
+            switch tournament.format {
+            case .roundRobin:
+                RoundRobinMatchesView(rounds: (tournament as! RoundRobinTournament).rounds)
+            case .grouped:
+                GroupedMatchesView(groups: (tournament as! GroupedTournament).groups)
             }
         } label: {
             Text("View Matches")
@@ -139,13 +140,21 @@ struct TournamentDetailView: View {
         case .roundRobin:
             RoundRobinTournamentProgressView(tournament: roundRobinTournamentBinding)
         case .grouped:
-            fatalError()
+            GroupedTournamentProgressView(tournament: groupedTournamentBinding)
         }
     }
     
     private var roundRobinTournamentBinding: Binding<RoundRobinTournament> {
         Binding {
             tournament as! RoundRobinTournament
+        } set: { newValue in
+            self.tournament = newValue
+        }
+    }
+    
+    private var groupedTournamentBinding: Binding<GroupedTournament> {
+        Binding {
+            tournament as! GroupedTournament
         } set: { newValue in
             self.tournament = newValue
         }

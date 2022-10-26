@@ -11,8 +11,15 @@ struct CreateEditGroupsView: View {
     @State private var groups = [TournamentGroup]()
     @State private var participants: [Participant]
     
-    init(participants: [Participant]) {
-        _participants = State(initialValue: participants)
+    @State private var navigateToCreateMatchesView = false
+    @State private var formError: ChampionError? = nil
+    @State private var presentFormErrorAlert = false
+    
+    let tournamentInfo: TournamentInfo?
+    
+    init(tournamentInfo: TournamentInfo) {
+        self.tournamentInfo = tournamentInfo
+        _participants = State(initialValue: tournamentInfo.participants)
     }
     
     var body: some View {
@@ -35,8 +42,13 @@ struct CreateEditGroupsView: View {
             addGroupButton
             
             PageSection {
-                NavigationLink {
-                    
+                Button {
+                    if groups.contains(where: { $0.participants.isEmpty }) {
+                        formError = ChampionError(errorMessage: "There are groups with no participants")
+                        presentFormErrorAlert = true
+                    } else {
+                        navigateToCreateMatchesView = true
+                    }
                 } label: {
                     Text("Create Matches")
                         .padding(.vertical, 5)
@@ -46,8 +58,25 @@ struct CreateEditGroupsView: View {
                 .disabled(!participants.isEmpty)
             }
             
+            if let tournamentInfo {
+                NavigationLink(isActive: $navigateToCreateMatchesView) {
+                    CreateEditGroupedMatchesView(tournamentInfo: tournamentInfo, groups: groups)
+                } label: {
+                    EmptyView()
+                }
+            }
         }
         .navigationTitle("Create Groups")
+        .navigationBarTitleDisplayMode(.inline)
+        .alert("There are some errors", isPresented: $presentFormErrorAlert) {
+            Button("Dismiss", role: .cancel, action: {})
+        } message: {
+            if let formError = formError {
+                Text(formError.errorMessage)
+            } else {
+                Text("There are some form errors")
+            }
+        }
     }
     
     private func participantRow(for participant: Participant) -> some View {
@@ -115,7 +144,15 @@ struct CreateEditGroupsView: View {
 }
 
 struct CreateEditGroupsView_Previews: PreviewProvider {
+    private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
+                                                       tournamentDate: Date(),
+                                                       fifaVersionName: "FIFA 23",
+                                                       tournamentFormat: .grouped,
+                                                       participants: MockData.participants)
+    
     static var previews: some View {
-        CreateEditGroupsView(participants: MockData.participants)
+        NavigationView {
+            CreateEditGroupsView(tournamentInfo: tournamentInfo)
+        }
     }
 }

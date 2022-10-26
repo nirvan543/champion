@@ -17,6 +17,17 @@ struct GroupedTournament: Tournament {
     var groups: [TournamentGroup]
     var legsPerMatch: Int
     
+    init(name: String, date: Date, fifaVersionName: String, participants: [Participant], state: TournamentState, groups: [TournamentGroup], legsPerMatch: Int) {
+        self.id = IdUtils.newUuid
+        self.name = name
+        self.date = date
+        self.fifaVersionName = fifaVersionName
+        self.participants = participants
+        self.state = state
+        self.groups = groups
+        self.legsPerMatch = legsPerMatch
+    }
+    
     var format: TournamentFormat {
         .grouped
     }
@@ -48,12 +59,21 @@ struct TournamentGroup: Identifiable, Codable, Equatable, Hashable {
     }
     
     init(participants: [Participant]) {
-        self.init(id: IdUtils.newUuid, participants: participants, rounds: [])
+        self.init(participants: participants, rounds: [])
+    }
+    
+    init(participants: [Participant], rounds: [Round]) {
+        self.init(id: IdUtils.newUuid, participants: participants, rounds: rounds)
     }
     
     private init(id: String, participants: [Participant], rounds: [Round]) {
         self.id = id
         self.participants = participants
         self.rounds = rounds
+    }
+    
+    mutating func generateMatches(legsPerMatch: Int) {
+        rounds = MatchesService.shared.createMatches(participants: participants,
+                                                     legsPerMatch: legsPerMatch)
     }
 }

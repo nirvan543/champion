@@ -43,12 +43,16 @@ struct AddEditTournamentView: View {
             _tournamentFormat = State(initialValue: Self.defaultTournamentFormat)
         }
         
-        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? Array(MockData.participants.prefix(4)))
+        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? MockData.participants)
     }
     
     private static func tournamentFormat(for tournament: any Tournament) -> TournamentFormat {
         if tournament is RoundRobinTournament {
             return .roundRobin
+        }
+        
+        if tournament is GroupedTournament {
+            return .grouped
         }
         
         fatalError()
@@ -110,15 +114,19 @@ struct AddEditTournamentView: View {
             if let editingTournament {
                 CreateEditRoundRobinMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
             } else {
-                CreateEditRoundRobinMatchesView(tournamentInfo: TournamentInfo(tournamentName: tournamentName,
-                                                                     tournamentDate: tournamentDate,
-                                                                     fifaVersionName: fifaVersionName,
-                                                                     tournamentFormat: tournamentFormat,
-                                                                     participants: participants))
+                CreateEditRoundRobinMatchesView(tournamentInfo: tournamentInfo)
             }
         } label: {
             EmptyView()
         }
+    }
+    
+    private var tournamentInfo: TournamentInfo {
+        TournamentInfo(tournamentName: tournamentName,
+                       tournamentDate: tournamentDate,
+                       fifaVersionName: fifaVersionName,
+                       tournamentFormat: tournamentFormat,
+                       participants: participants)
     }
     
     private func roundRobinTournament(from tournament: Binding<any Tournament>) -> Binding<RoundRobinTournament> {
@@ -131,7 +139,7 @@ struct AddEditTournamentView: View {
     
     private var createGroupedMatchesLink: some View {
         NavigationLink(isActive: $navigateToCreateMatchesView) {
-            CreateEditGroupsView(participants: participants)
+            CreateEditGroupsView(tournamentInfo: tournamentInfo)
         } label: {
             EmptyView()
         }

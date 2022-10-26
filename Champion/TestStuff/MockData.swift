@@ -17,6 +17,14 @@ struct MockData {
                                                   rounds: rounds,
                                                   legsPerMatch: 1)
     
+    static let proWorldCup4 = GroupedTournament(name: "FIFA Pro World Cup IV",
+                                                date: DateUtils.date(year: 2022, month: .november, day: 12)!,
+                                                fifaVersionName: "FIFA 23",
+                                                participants: participants,
+                                                state: .created,
+                                                groups: groups,
+                                                legsPerMatch: 1)
+    
     static let tournaments = [
         atlantaCup3
     ]
@@ -172,5 +180,12 @@ struct MockData {
         round7,
         round8,
         round9
+    ]
+    
+    static let groups = [
+        TournamentGroup(participants: Array(MockData.participants.prefix(4)),
+                        rounds: Array(rounds.prefix(4))),
+        TournamentGroup(participants: Array(MockData.participants.suffix(4)),
+                        rounds: Array(rounds.suffix(4)))
     ]
 }
