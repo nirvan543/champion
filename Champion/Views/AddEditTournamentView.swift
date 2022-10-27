@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddEditTournamentView: View {
     private static let tournamentFormats: [TournamentFormat] = TournamentFormat.allCases
-    private static let defaultTournamentFormat: TournamentFormat = TournamentFormat.grouped//Self.tournamentFormats.first!
+    private static let defaultTournamentFormat: TournamentFormat = Self.tournamentFormats.first!
     private static let catalogService = ClubCatalogService.shared
     
     @Environment(\.presentationMode) private var presentationMode
@@ -26,14 +26,13 @@ struct AddEditTournamentView: View {
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
     @State private var formError: ChampionError? = nil
-    @State private var navigateToCreateMatchesView = false
     
     private var editingTournament: Binding<any Tournament>? = nil
     
     init(editingTournament: Binding<any Tournament>? = nil) {
         self.editingTournament = editingTournament
 
-        _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "Tournament Name")
+        _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
         _tournamentDate = State(initialValue: editingTournament?.wrappedValue.date ?? Date())
         _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
         
@@ -43,7 +42,7 @@ struct AddEditTournamentView: View {
             _tournamentFormat = State(initialValue: Self.defaultTournamentFormat)
         }
         
-        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? MockData.participants)
+        _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
     }
     
     private static func tournamentFormat(for tournament: any Tournament) -> TournamentFormat {
@@ -110,7 +109,7 @@ struct AddEditTournamentView: View {
     }
     
     private var createRoundRobinMatchesLink: some View {
-        NavigationLink(isActive: $navigateToCreateMatchesView) {
+        NavigationLink(isActive: $environmentValues.navigateToCreateMatchesView) {
             if let editingTournament {
                 CreateEditRoundRobinMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
             } else {
@@ -138,10 +137,22 @@ struct AddEditTournamentView: View {
     }
     
     private var createGroupedMatchesLink: some View {
-        NavigationLink(isActive: $navigateToCreateMatchesView) {
-            CreateEditGroupsView(tournamentInfo: tournamentInfo)
+        NavigationLink(isActive: $environmentValues.navigateToCreateMatchesView) {
+            if let editingTournament {
+                CreateEditGroupsView(editingTournament: groupedTournament(from: editingTournament))
+            } else {
+                CreateEditGroupsView(tournamentInfo: tournamentInfo)
+            }
         } label: {
             EmptyView()
+        }
+    }
+    
+    private func groupedTournament(from tournament: Binding<any Tournament>) -> Binding<GroupedTournament> {
+        return Binding {
+            tournament.wrappedValue as! GroupedTournament
+        } set: { newValue in
+            tournament.wrappedValue = newValue
         }
     }
     
@@ -274,7 +285,7 @@ struct AddEditTournamentView: View {
                 return
             }
             
-            navigateToCreateMatchesView = true
+            environmentValues.navigateToCreateMatchesView = true
         } label: {
             Text(createMatchesButtonText)
                 .font(.title2)

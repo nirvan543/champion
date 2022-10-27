@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CreateEditGroupsView: View {
-    @State private var groups = [TournamentGroup]()
+    @EnvironmentObject private var environmentValues: EnvironmentValues
+    
+    @State private var groups: [TournamentGroup]
     @State private var participants: [Participant]
     
     @State private var navigateToCreateMatchesView = false
@@ -16,10 +18,27 @@ struct CreateEditGroupsView: View {
     @State private var presentFormErrorAlert = false
     
     let tournamentInfo: TournamentInfo?
+    var editingTournament: Binding<GroupedTournament>?
     
     init(tournamentInfo: TournamentInfo) {
         self.tournamentInfo = tournamentInfo
+        editingTournament = nil
+        
+        _groups = State(initialValue: [])
         _participants = State(initialValue: tournamentInfo.participants)
+    }
+    
+    init(editingTournament: Binding<GroupedTournament>) {
+        self.editingTournament = editingTournament
+        tournamentInfo = nil
+        
+        if editingTournament.wrappedValue.groups.isEmpty {
+            _participants = State(initialValue: editingTournament.wrappedValue.participants)
+            _groups = State(initialValue: [])
+        } else {
+            _participants = State(initialValue: [])
+            _groups = State(initialValue: editingTournament.wrappedValue.groups)
+        }
     }
     
     var body: some View {
@@ -50,7 +69,7 @@ struct CreateEditGroupsView: View {
                         navigateToCreateMatchesView = true
                     }
                 } label: {
-                    Text("Create Matches")
+                    Text(editingTournament == nil ? "Create Matches" : "Edit Matches")
                         .padding(.vertical, 5)
                         .frame(maxWidth: .infinity)
                 }
@@ -65,6 +84,14 @@ struct CreateEditGroupsView: View {
                     EmptyView()
                 }
             }
+            
+            if let editingTournament {
+                NavigationLink(isActive: $navigateToCreateMatchesView) {
+                    CreateEditGroupedMatchesView(editingTournament: editingTournament, groups: groups)
+                } label: {
+                    EmptyView()
+                }
+            }
         }
         .navigationTitle("Create Groups")
         .navigationBarTitleDisplayMode(.inline)
@@ -75,6 +102,11 @@ struct CreateEditGroupsView: View {
                 Text(formError.errorMessage)
             } else {
                 Text("There are some form errors")
+            }
+        }
+        .onChange(of: groups) { newValue in
+            for i in 0 ..< groups.count {
+                groups[i].clearMatches()
             }
         }
     }
@@ -144,6 +176,8 @@ struct CreateEditGroupsView: View {
 }
 
 struct CreateEditGroupsView_Previews: PreviewProvider {
+    @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    
     private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
                                                        tournamentDate: Date(),
                                                        fifaVersionName: "FIFA 23",
@@ -154,5 +188,6 @@ struct CreateEditGroupsView_Previews: PreviewProvider {
         NavigationView {
             CreateEditGroupsView(tournamentInfo: tournamentInfo)
         }
+        .environmentObject(environmentValues)
     }
 }

@@ -76,4 +76,8 @@ struct TournamentGroup: Identifiable, Codable, Equatable, Hashable {
         rounds = MatchesService.shared.createMatches(participants: participants,
                                                      legsPerMatch: legsPerMatch)
     }
+    
+    mutating func clearMatches() {
+        rounds.removeAll()
+    }
 }

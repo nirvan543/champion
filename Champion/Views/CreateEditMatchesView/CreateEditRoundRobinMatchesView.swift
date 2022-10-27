@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct TournamentInfo {
-    let tournamentName: String
-    let tournamentDate: Date
-    let fifaVersionName: String
-    let tournamentFormat: TournamentFormat
-    let participants: [Participant]
-}
-
 struct CreateEditRoundRobinMatchesView: View {
     static private let defaultLegsPerMatch = 1
     
@@ -231,6 +223,7 @@ struct CreateEditRoundRobinMatchesView: View {
 
 struct CreateEditRoundRobinMatchesView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
+    
     private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
                                                        tournamentDate: Date(),
                                                        fifaVersionName: "FIFA 23",

@@ -20,24 +20,20 @@ class EnvironmentValues: ObservableObject {
         }
     }
     @Published var selectedTournamentId: String?
-    @Published var navigateToCreateTournamentView: Bool
+    @Published var navigateToCreateTournamentView = false
+    @Published var navigateToCreateMatchesView = false
     
     convenience init() {
-        self.init(tournaments: [],
-                  selectedTournamentId: nil,
-                  navigateToCreateTournamentView: false)
+        self.init(tournaments: [], selectedTournamentId: nil)
     }
     
     convenience init(tournaments: [any Tournament]) {
-        self.init(tournaments: tournaments,
-                  selectedTournamentId: nil,
-                  navigateToCreateTournamentView: false)
+        self.init(tournaments: tournaments, selectedTournamentId: nil)
     }
     
-    private init(tournaments: [any Tournament], selectedTournamentId: String?, navigateToCreateTournamentView: Bool) {
+    private init(tournaments: [any Tournament], selectedTournamentId: String?) {
         self.tournaments = tournaments
         self.selectedTournamentId = selectedTournamentId
-        self.navigateToCreateTournamentView = navigateToCreateTournamentView
     }
     
     var selectedTournament: (any Tournament)? {

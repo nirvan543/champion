@@ -22,11 +22,22 @@ struct CreateEditGroupedMatchesView: View {
     @State private var groupIndex = 0
     
     let tournamentInfo: TournamentInfo?
+    var editingTournament: Binding<GroupedTournament>?
     
     init(tournamentInfo: TournamentInfo, groups: [TournamentGroup]) {
         self.tournamentInfo = tournamentInfo
+        editingTournament = nil
+        
         _groups = State(initialValue: groups)
         _legsPerMatch = State(initialValue: Self.defaultLegsPerMatch)
+    }
+    
+    init(editingTournament: Binding<GroupedTournament>, groups: [TournamentGroup]) {
+        self.editingTournament = editingTournament
+        tournamentInfo = nil
+        
+        _groups = State(initialValue: groups)
+        _legsPerMatch = State(initialValue: editingTournament.wrappedValue.legsPerMatch)
     }
     
     var body: some View {
@@ -58,6 +69,11 @@ struct CreateEditGroupedMatchesView: View {
                 Button("Done") {
                     focusField = false
                 }
+            }
+        }
+        .onChange(of: legsPerMatch) { _ in
+            for i in 0 ..< groups.count {
+                groups[i].clearMatches()
             }
         }
     }
@@ -138,7 +154,11 @@ struct CreateEditGroupedMatchesView: View {
                 return
             }
             
-            saveNewTournament()
+            if let editingTournament {
+                saveEditedTournament(editingTournament: editingTournament)
+            } else {
+                saveNewTournament()
+            }
         } label: {
             Text("Save")
                 .font(.title2)
@@ -180,6 +200,13 @@ struct CreateEditGroupedMatchesView: View {
         
         environmentValues.addTournament(tournament: newTournament)
         environmentValues.navigateToCreateTournamentView = false
+    }
+    
+    private func saveEditedTournament(editingTournament: Binding<GroupedTournament>) {
+        editingTournament.wrappedValue.legsPerMatch = legsPerMatch
+        editingTournament.wrappedValue.groups = groups
+        
+        environmentValues.navigateToCreateMatchesView = false
     }
     
     private var buttonOverlay: some View {
