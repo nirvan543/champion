@@ -180,6 +180,7 @@ struct HeaderLabelView: View {
             .font(.title2)
             .fontWeight(.bold)
             .foregroundStyle(.secondary)
+            .foregroundColor(Design.themeColor)
     }
 }
 

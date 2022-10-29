@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Design {
     static let pageColor = Color(uiColor: .secondarySystemBackground)
-    static let themeColor = Color(uiColor: UIColor(red: 112/225.0, green: 112/225.0, blue: 112/225.0, alpha: 1.0))
+    static let themeColor = Color.accentColor
     
     static let defaultShape = Rectangle()
     static let defaultCornerRadius = 10
