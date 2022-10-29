@@ -8,11 +8,11 @@
 import Foundation
 
 protocol TournamentRepository {
-    func retreiveTournaments() -> [Tournament]
+    func retreiveTournaments() -> [RoundRobinTournament]
     
-    func addTournament(tournament: Tournament)
+    func addTournament(tournament: RoundRobinTournament)
     
-    func saveTournaments(tournaments: [Tournament])
+    func saveTournaments(tournaments: [RoundRobinTournament])
     
     func retrieveTournamentFormats() -> [TournamentFormat]
     

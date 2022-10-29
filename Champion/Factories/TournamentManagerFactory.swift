@@ -12,6 +12,8 @@ struct TournamentManagerFactory {
         switch format {
         case .roundRobin:
             return RoundRobinTournamentManager(tournamentFormatConfig: formatConfig)
+        case .grouped:
+            fatalError()
         }
     }
 }

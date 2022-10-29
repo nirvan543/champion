@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MatchesView: View {
+struct RoundRobinMatchesView: View {
     let rounds: [Round]
     
     var body: some View {
@@ -41,16 +41,16 @@ private struct RoundMatchesView: View {
     }
 }
 
-struct MatchesView_Previews: PreviewProvider {
+struct RoundRobinMatchesView_Previews: PreviewProvider {
     static let rounds = MockData.rounds
     
     static var previews: some View {
         Group {
             NavigationView {
-                MatchesView(rounds: rounds)
+                RoundRobinMatchesView(rounds: rounds)
             }
             NavigationView {
-                MatchesView(rounds: rounds)
+                RoundRobinMatchesView(rounds: rounds)
             }
             .preferredColorScheme(.dark)
         }

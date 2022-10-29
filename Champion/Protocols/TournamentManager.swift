@@ -8,7 +8,4 @@
 import Foundation
 
 protocol TournamentManager {
-    func generateMatches(participants: [Participant]) -> [Round]
-    
-    func matchStats(participants: [Participant], rounds: [Round]) -> [ParticipantStats]
 }

@@ -12,8 +12,8 @@ struct TournamentsListView: View {
     
     var body: some View {
         List {
-            ForEach($environmentValues.tournaments) { tournament in
-                NavigationLink(tag: tournament.id, selection: $environmentValues.selectedTournamentId) {
+            ForEach($environmentValues.tournaments, id: \.id) { tournament in
+                NavigationLink(tag: tournament.wrappedValue.id, selection: $environmentValues.selectedTournamentId) {
                     TournamentDetailView(tournament: tournament)
                 } label: {
                     VStack(alignment: .leading, spacing: 5) {
@@ -29,10 +29,14 @@ struct TournamentsListView: View {
         }
         .navigationTitle("Tournaments")
         .toolbar {
-            NavigationLink {
+            NavigationLink(isActive: $environmentValues.navigateToCreateTournamentView) {
                 AddEditTournamentView()
             } label: {
-                Image(systemName: "plus")
+                Button {
+                    environmentValues.navigateToCreateTournamentView = true
+                } label: {
+                    Image(systemName: "plus")
+                }
             }
         }
     }

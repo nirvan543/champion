@@ -36,6 +36,8 @@ struct AddParticipantView: View {
             Section {
                 TextField("Participant Name", text: $participantName)
                     .focused($inputIsActive)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.words)
             }
             
             Section {

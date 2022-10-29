@@ -9,15 +9,21 @@ import Foundation
 
 struct MockData {
     // MARK: Tournaments
-    static let atlantaCup3 = Tournament(id: IdUtils.newUuid,
-                                        name: "FIFA 22 Atlanta Cup III",
-                                        participants: participants,
-                                        rounds: rounds,
-                                        date: DateUtils.date(year: 2022, month: .july, day: 16)!,
-                                        state: .created,
-                                        format: .roundRobin,
-                                        fifaVersionName: "FIFA 22",
-                                        formatConfig: RoundRobinTournamentFormatConfig())
+    static let atlantaCup3 = RoundRobinTournament(name: "FIFA 22 Atlanta Cup III",
+                                                  date: DateUtils.date(year: 2022, month: .july, day: 16)!,
+                                                  fifaVersionName: "FIFA 22",
+                                                  participants: participants,
+                                                  state: .created,
+                                                  rounds: rounds,
+                                                  legsPerMatch: 1)
+    
+    static let proWorldCup4 = GroupedTournament(name: "FIFA Pro World Cup IV",
+                                                date: DateUtils.date(year: 2022, month: .november, day: 12)!,
+                                                fifaVersionName: "FIFA 23",
+                                                participants: participants,
+                                                state: .created,
+                                                groups: groups,
+                                                legsPerMatch: 1)
     
     static let tournaments = [
         atlantaCup3
@@ -174,5 +180,12 @@ struct MockData {
         round7,
         round8,
         round9
+    ]
+    
+    static let groups = [
+        TournamentGroup(participants: Array(MockData.participants.prefix(4)),
+                        rounds: Array(rounds.prefix(4))),
+        TournamentGroup(participants: Array(MockData.participants.suffix(4)),
+                        rounds: Array(rounds.suffix(4)))
     ]
 }

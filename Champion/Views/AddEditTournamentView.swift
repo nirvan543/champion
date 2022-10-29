@@ -8,50 +8,53 @@
 import SwiftUI
 
 struct AddEditTournamentView: View {
-    private static let defaultTournamentFormat: TournamentFormat = .roundRobin
-    private static let tournamentFormats: [TournamentFormat] = [ .roundRobin ]
+    private static let tournamentFormats: [TournamentFormat] = TournamentFormat.allCases
+    private static let defaultTournamentFormat: TournamentFormat = Self.tournamentFormats.first!
     private static let catalogService = ClubCatalogService.shared
     
     @Environment(\.presentationMode) private var presentationMode
-    
     @EnvironmentObject private var environmentValues: EnvironmentValues
     
-    private var editingTournament: Binding<Tournament>? = nil
+    @FocusState private var focusField: Bool
+    
     @State private var tournamentName: String
     @State private var tournamentDate: Date
     @State private var fifaVersionName: String
     @State private var tournamentFormat: TournamentFormat
-    @State private var tournamentFormatConfig: TournamentFormatConfig
-    @State private var participants: [Participant] {
-        didSet {
-            tournamentRounds.removeAll()
-        }
-    }
-    @State private var tournamentRounds: [Round]
+    @State private var participants: [Participant]
     
     @State private var presentAddParticipantView = false
     @State private var presentFormErrorAlert = false
     @State private var formError: ChampionError? = nil
     
-    @FocusState private var focusField: Bool
+    private var editingTournament: Binding<any Tournament>? = nil
     
-    init(editingTournament: Binding<Tournament>? = nil) {
+    init(editingTournament: Binding<any Tournament>? = nil) {
         self.editingTournament = editingTournament
 
         _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
         _tournamentDate = State(initialValue: editingTournament?.wrappedValue.date ?? Date())
         _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
-        _tournamentFormat = State(initialValue: editingTournament?.wrappedValue.format ?? Self.defaultTournamentFormat)
-        _tournamentFormatConfig = State(initialValue: editingTournament?.wrappedValue.formatConfig ?? Self.tournamentFormatManager(for: Self.defaultTournamentFormat))
+        
+        if let editingTournament {
+            _tournamentFormat = State(initialValue: Self.tournamentFormat(for: editingTournament.wrappedValue))
+        } else {
+            _tournamentFormat = State(initialValue: Self.defaultTournamentFormat)
+        }
+        
         _participants = State(initialValue: editingTournament?.wrappedValue.participants ?? [])
-        _tournamentRounds = State(initialValue: editingTournament?.wrappedValue.rounds ?? [])
     }
     
-    private static func tournamentFormatManager(for format: TournamentFormat) -> TournamentFormatConfig {
-        switch format {
-        case .roundRobin:
-            return RoundRobinTournamentFormatConfig()
+    private static func tournamentFormat(for tournament: any Tournament) -> TournamentFormat {
+        if tournament is RoundRobinTournament {
+            return .roundRobin
         }
+        
+        if tournament is GroupedTournament {
+            return .grouped
+        }
+        
+        fatalError()
     }
     
     var body: some View {
@@ -60,10 +63,9 @@ struct AddEditTournamentView: View {
             tournamentDateSection
             fifaVersionSection
             tournamentFormatSection
-            TournamentFormatFactory.addEditTournamentFormatView(for: tournamentFormat,
-                                                                formatConfig: $tournamentFormatConfig)
             participantsSection
             actionSection
+            createMatchesLink
         }
         .navigationTitle(editingTournament == nil ? "New Tournament" : "Edit Tournament")
         .navigationBarTitleDisplayMode(.inline)
@@ -88,6 +90,69 @@ struct AddEditTournamentView: View {
             } else {
                 Text("There are some form errors")
             }
+        }
+        .onChange(of: participants) { _ in
+            if let editingTournament {
+                editingTournament.wrappedValue.clearMatches()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var createMatchesLink: some View {
+        switch tournamentFormat {
+        case .roundRobin:
+            createRoundRobinMatchesLink
+        case .grouped:
+            createGroupedMatchesLink
+        }
+    }
+    
+    private var createRoundRobinMatchesLink: some View {
+        NavigationLink(isActive: $environmentValues.navigateToCreateMatchesView) {
+            if let editingTournament {
+                CreateEditRoundRobinMatchesView(editingTournament: roundRobinTournament(from: editingTournament))
+            } else {
+                CreateEditRoundRobinMatchesView(tournamentInfo: tournamentInfo)
+            }
+        } label: {
+            EmptyView()
+        }
+    }
+    
+    private var tournamentInfo: TournamentInfo {
+        TournamentInfo(tournamentName: tournamentName,
+                       tournamentDate: tournamentDate,
+                       fifaVersionName: fifaVersionName,
+                       tournamentFormat: tournamentFormat,
+                       participants: participants)
+    }
+    
+    private func roundRobinTournament(from tournament: Binding<any Tournament>) -> Binding<RoundRobinTournament> {
+        return Binding {
+            tournament.wrappedValue as! RoundRobinTournament
+        } set: { newValue in
+            tournament.wrappedValue = newValue
+        }
+    }
+    
+    private var createGroupedMatchesLink: some View {
+        NavigationLink(isActive: $environmentValues.navigateToCreateMatchesView) {
+            if let editingTournament {
+                CreateEditGroupsView(editingTournament: groupedTournament(from: editingTournament))
+            } else {
+                CreateEditGroupsView(tournamentInfo: tournamentInfo)
+            }
+        } label: {
+            EmptyView()
+        }
+    }
+    
+    private func groupedTournament(from tournament: Binding<any Tournament>) -> Binding<GroupedTournament> {
+        return Binding {
+            tournament.wrappedValue as! GroupedTournament
+        } set: { newValue in
+            tournament.wrappedValue = newValue
         }
     }
     
@@ -124,6 +189,7 @@ struct AddEditTournamentView: View {
                         Text(fifaGameVersion.name)
                     }
                 }
+                .disabled(editingTournament != nil)
                 .frame(maxWidth: .infinity)
             }
             .padding()
@@ -140,6 +206,7 @@ struct AddEditTournamentView: View {
                         Text(format.rawValue)
                     }
                 }
+                .disabled(editingTournament != nil)
                 .frame(maxWidth: .infinity)
             }
             .padding()
@@ -205,17 +272,22 @@ struct AddEditTournamentView: View {
     private var actionSection: some View {
         PageSection {
             createFixuresLink
-            saveTournamentButton
+            if let editingTournament = editingTournament {
+                saveTournamentButton(editingTournament: editingTournament)
+            }
         }
     }
     
     private var createFixuresLink: some View {
-        NavigationLink {
-            CreateEditMatchesView(participants: participants,
-                                  tournamentFormatManager: tournamentManager,
-                                  roundsBinding: $tournamentRounds)
+        Button {
+            guard formIsValid() else {
+                presentFormErrorAlert = true
+                return
+            }
+            
+            environmentValues.navigateToCreateMatchesView = true
         } label: {
-            Text(tournamentRounds.isEmpty ? "Create Matches" : "View Matches")
+            Text(createMatchesButtonText)
                 .font(.title2)
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
@@ -225,23 +297,22 @@ struct AddEditTournamentView: View {
         .overlay(buttonOverlay)
     }
     
-    private var tournamentManager: TournamentManager {
-        TournamentManagerFactory.tournamentManager(for: tournamentFormat, with: tournamentFormatConfig)
+    private var createMatchesButtonText: String {
+        if let editingTournament, editingTournament.wrappedValue.matchesAreCreated {
+            return "Edit Matches"
+        } else {
+            return "Create Matches"
+        }
     }
     
-    private var saveTournamentButton: some View {
+    private func saveTournamentButton(editingTournament: Binding<any Tournament>) -> some View {
         Button {
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return
             }
             
-            if let editingTournament = editingTournament {
-                saveEditedTournament(editingTournament: editingTournament)
-            } else {
-                saveNewTournament()
-            }
-            
+            saveEditedTournament(editingTournament: editingTournament)
             presentationMode.wrappedValue.dismiss()
         } label: {
             Text("Save")
@@ -254,6 +325,12 @@ struct AddEditTournamentView: View {
         .overlay(buttonOverlay)
     }
     
+    private func saveEditedTournament(editingTournament: Binding<any Tournament>) {
+        editingTournament.wrappedValue.name = tournamentName
+        editingTournament.wrappedValue.date = tournamentDate
+        editingTournament.wrappedValue.participants = participants
+    }
+    
     private var buttonOverlay: some View {
         Rectangle().strokeBorder(Design.themeColor, lineWidth: 5)
     }
@@ -264,52 +341,18 @@ struct AddEditTournamentView: View {
             return false
         }
         
-        if let configError = tournamentFormatConfig.validate() {
-            formError = configError
-            return false
-        }
-        
         if participants.count < 2 {
             formError = ChampionError(errorMessage: "Minimum of 2 participants required.")
             return false
         }
         
-        if tournamentRounds.isEmpty {
-            formError = ChampionError(errorMessage: "Matches must be created before creating the tournament.")
-            return false
-        }
-        
         return true
-    }
-    
-    private func saveEditedTournament(editingTournament: Binding<Tournament>) {
-        editingTournament.wrappedValue.name = tournamentName
-        editingTournament.wrappedValue.participants = participants
-        editingTournament.wrappedValue.rounds = tournamentRounds
-        editingTournament.wrappedValue.date = tournamentDate
-        editingTournament.wrappedValue.format = tournamentFormat
-        editingTournament.wrappedValue.fifaVersionName = fifaVersionName
-        editingTournament.wrappedValue.formatConfig = tournamentFormatConfig
-    }
-    
-    private func saveNewTournament() {
-        let newTournament = Tournament(id: IdUtils.newUuid,
-                                       name: tournamentName,
-                                       participants: participants,
-                                       rounds: tournamentRounds,
-                                       date: tournamentDate,
-                                       state: .created,
-                                       format: tournamentFormat,
-                                       fifaVersionName: fifaVersionName,
-                                       formatConfig: tournamentFormatConfig)
-        
-        environmentValues.addTournament(tournament: newTournament)
     }
 }
 
 struct AddEditTournamentView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
-    @State private static var editingTournament = MockData.atlantaCup3
+    @State private static var editingTournament: any Tournament = MockData.atlantaCup3
     
     static var previews: some View {
         NavigationView {
