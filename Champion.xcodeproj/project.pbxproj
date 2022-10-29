@@ -48,7 +48,6 @@
 		D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE202882903A0061BC74 /* MatchProgressView.swift */; };
 		D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE222882913B0061BC74 /* LegsCellView.swift */; };
 		D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE24288296870061BC74 /* MatchLegProgressView.swift */; };
-		D8B1C28528EBC72100FACCEF /* TournamentManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28428EBC72100FACCEF /* TournamentManagerFactory.swift */; };
 		D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */; };
 		D8B1C28D28F659C400FACCEF /* tournaments_v1.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B1C28C28F659C400FACCEF /* tournaments_v1.json */; };
 		D8B1C28F28F65E0A00FACCEF /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28E28F65E0A00FACCEF /* ModelTests.swift */; };
@@ -62,7 +61,6 @@
 		D8E6299D290A13C900D9F0DD /* TournamentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6299C290A13C900D9F0DD /* TournamentInfo.swift */; };
 		D8E6494528AB2EB4007DC119 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494428AB2EB4007DC119 /* PageView.swift */; };
 		D8E6494728AB2FC0007DC119 /* EditableConfigLineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */; };
-		D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */; };
 		D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */; };
 		D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */; };
 		D8E6495228B65812007DC119 /* StandingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495128B65812007DC119 /* StandingsView.swift */; };
@@ -137,7 +135,6 @@
 		D88CFE202882903A0061BC74 /* MatchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProgressView.swift; sourceTree = "<group>"; };
 		D88CFE222882913B0061BC74 /* LegsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegsCellView.swift; sourceTree = "<group>"; };
 		D88CFE24288296870061BC74 /* MatchLegProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchLegProgressView.swift; sourceTree = "<group>"; };
-		D8B1C28428EBC72100FACCEF /* TournamentManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentManagerFactory.swift; sourceTree = "<group>"; };
 		D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		D8B1C28C28F659C400FACCEF /* tournaments_v1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tournaments_v1.json; sourceTree = "<group>"; };
 		D8B1C28E28F65E0A00FACCEF /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
@@ -151,7 +148,6 @@
 		D8E6299C290A13C900D9F0DD /* TournamentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentInfo.swift; sourceTree = "<group>"; };
 		D8E6494428AB2EB4007DC119 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableConfigLineItemView.swift; sourceTree = "<group>"; };
-		D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentFormatFactory.swift; sourceTree = "<group>"; };
 		D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinFormatView.swift; sourceTree = "<group>"; };
 		D8E6494F28B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnlyRoundRobinFormatConfigView.swift; sourceTree = "<group>"; };
 		D8E6495128B65812007DC119 /* StandingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsView.swift; sourceTree = "<group>"; };
@@ -246,7 +242,6 @@
 				D837096328E0E3D700288509 /* Protocols */,
 				D837095828E0E32D00288509 /* Enums */,
 				D86187A42878DDC800553E5D /* Models */,
-				D8E6494828ADDB2A007DC119 /* Factories */,
 				D86187A32878DD4700553E5D /* Repositories */,
 				D86187AB2878ED4E00553E5D /* Services */,
 				D86187A22878DD4000553E5D /* Views */,
@@ -376,15 +371,6 @@
 				D8B1C28C28F659C400FACCEF /* tournaments_v1.json */,
 			);
 			path = json;
-			sourceTree = "<group>";
-		};
-		D8E6494828ADDB2A007DC119 /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				D8E6494B28ADDD98007DC119 /* TournamentFormatFactory.swift */,
-				D8B1C28428EBC72100FACCEF /* TournamentManagerFactory.swift */,
-			);
-			path = Factories;
 			sourceTree = "<group>";
 		};
 		D8E6494928ADDCF3007DC119 /* Formats */ = {
@@ -597,7 +583,6 @@
 				D837096028E0E3AD00288509 /* TournamentState.swift in Sources */,
 				D837096D28E0E46C00288509 /* RoundRobinTournamentManager.swift in Sources */,
 				D837095A28E0E35900288509 /* Goal.swift in Sources */,
-				D8B1C28528EBC72100FACCEF /* TournamentManagerFactory.swift in Sources */,
 				D8E629992909E94A00D9F0DD /* GroupedMatchesView.swift in Sources */,
 				D861877B2878DC4800553E5D /* ContentView.swift in Sources */,
 				D82E7D7C28826C5C006750A3 /* MockData.swift in Sources */,
@@ -627,7 +612,6 @@
 				D86187B12879B81C00553E5D /* ChampionError.swift in Sources */,
 				D837096228E0E3BC00288509 /* GameState.swift in Sources */,
 				D8E6495028B32898007DC119 /* ReadOnlyRoundRobinFormatConfigView.swift in Sources */,
-				D8E6494C28ADDD98007DC119 /* TournamentFormatFactory.swift in Sources */,
 				D8EFA1EE290787D800D283FF /* CreateEditGroupsView.swift in Sources */,
 				D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */,
 			);
