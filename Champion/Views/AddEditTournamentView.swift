@@ -213,14 +213,10 @@ struct AddEditTournamentView: View {
     
     private var participantsSection: some View {
         PageSection("Participants") {
-            VStack {
-                ForEach(participants) { participant in
-                    ParticipantRow(participant: participant) {
-                        participants.removeAll(where: { $0 == participant })
-                    }
-                }
-                
-                addParticipantButton
+            ParticipantsListView(participants: participants) { participant in
+                participants.removeAll(where: { $0 == participant })
+            } addParticipantAction: {
+                presentAddParticipantView.toggle()
             }
         }
     }
@@ -240,6 +236,7 @@ struct AddEditTournamentView: View {
     private var actionSection: some View {
         PageSection {
             createFixuresLink
+            
             if let editingTournament = editingTournament {
                 saveTournamentButton(editingTournament: editingTournament)
             }

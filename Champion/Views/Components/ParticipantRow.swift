@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ParticipantRow: View {
     let participant: Participant
-    let deleteAction: (() -> Void)?
+    let deleteAction: ((_: Participant) -> Void)?
     
-    init(participant: Participant, deleteAction: (() -> Void)? = nil) {
+    init(participant: Participant, deleteAction: ((_: Participant) -> Void)? = nil) {
         self.participant = participant
         self.deleteAction = deleteAction
     }
@@ -35,17 +35,21 @@ struct ParticipantRow: View {
         .background()
     }
     
-    private func deleteParticipantButton(participant: Participant, deleteAction: @escaping () -> Void) -> some View {
-        Button(action: deleteAction) {
+    private func deleteParticipantButton(participant: Participant,
+                                         deleteAction: @escaping (_: Participant) -> Void) -> some View {
+        Button {
+            deleteAction(participant)
+        } label: {
             Image(systemName: "xmark")
                 .foregroundColor(.red)
         }
+
     }
 }
 
 struct ParticipantRow_Previews: PreviewProvider {
     static var previews: some View {
-        ParticipantRow(participant: MockData.antriksh) {
+        ParticipantRow(participant: MockData.antriksh) { _ in
             
         }
         .padding(.horizontal)
