@@ -13,4 +13,7 @@ struct Design {
     
     static let defaultShape = Rectangle()
     static let defaultCornerRadius = 10
+    
+    static let buttonCornerRadius: CGFloat = 4.0
+    static let buttonPadding: CGFloat = 18.0
 }
