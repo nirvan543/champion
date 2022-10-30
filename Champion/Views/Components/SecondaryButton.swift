@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SecondaryButton: View {
-    private let title: LocalizedStringKey
+    private let title: String
     private let action: () -> Void
     
-    init(_ title: LocalizedStringKey, action: @escaping () -> Void) {
+    init(_ title: String, action: @escaping () -> Void) {
         self.title = title
         self.action = action
     }
@@ -37,11 +37,7 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
     
     private var buttonOverlay: some View {
-        shape.strokeBorder(Design.themeColor, lineWidth: 5)
-    }
-    
-    private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: Design.buttonCornerRadius)
+        Design.defaultShape2.strokeBorder(Design.themeColor, lineWidth: 5)
     }
 }
 

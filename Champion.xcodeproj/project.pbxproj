@@ -63,6 +63,9 @@
 		D8E629A1290E1A3600D9F0DD /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629A0290E1A3600D9F0DD /* SecondaryButton.swift */; };
 		D8E629A3290E1E6A00D9F0DD /* PrimaryLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629A2290E1E6A00D9F0DD /* PrimaryLink.swift */; };
 		D8E629A5290E24BA00D9F0DD /* SecondaryLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629A4290E24BA00D9F0DD /* SecondaryLink.swift */; };
+		D8E629A9290E28C100D9F0DD /* ParticipantRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629A8290E28C100D9F0DD /* ParticipantRow.swift */; };
+		D8E629AB290E2AEE00D9F0DD /* FormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629AA290E2AEE00D9F0DD /* FormContent.swift */; };
+		D8E629AD290E2E5200D9F0DD /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629AC290E2E5200D9F0DD /* CustomTextField.swift */; };
 		D8E6494528AB2EB4007DC119 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494428AB2EB4007DC119 /* PageView.swift */; };
 		D8E6494728AB2FC0007DC119 /* EditableConfigLineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */; };
 		D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */; };
@@ -154,6 +157,9 @@
 		D8E629A0290E1A3600D9F0DD /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D8E629A2290E1E6A00D9F0DD /* PrimaryLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryLink.swift; sourceTree = "<group>"; };
 		D8E629A4290E24BA00D9F0DD /* SecondaryLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryLink.swift; sourceTree = "<group>"; };
+		D8E629A8290E28C100D9F0DD /* ParticipantRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRow.swift; sourceTree = "<group>"; };
+		D8E629AA290E2AEE00D9F0DD /* FormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContent.swift; sourceTree = "<group>"; };
+		D8E629AC290E2E5200D9F0DD /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D8E6494428AB2EB4007DC119 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableConfigLineItemView.swift; sourceTree = "<group>"; };
 		D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinFormatView.swift; sourceTree = "<group>"; };
@@ -365,6 +371,9 @@
 				D8E629A0290E1A3600D9F0DD /* SecondaryButton.swift */,
 				D8E629A2290E1E6A00D9F0DD /* PrimaryLink.swift */,
 				D8E629A4290E24BA00D9F0DD /* SecondaryLink.swift */,
+				D8E629A8290E28C100D9F0DD /* ParticipantRow.swift */,
+				D8E629AA290E2AEE00D9F0DD /* FormContent.swift */,
+				D8E629AC290E2E5200D9F0DD /* CustomTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -571,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8EFA1E52901888100D283FF /* Tournament.swift in Sources */,
+				D8E629AB290E2AEE00D9F0DD /* FormContent.swift in Sources */,
 				D837095128E0E2A000288509 /* Participant.swift in Sources */,
 				D8B84B3D2882990B00B06BA3 /* ScoreCellView.swift in Sources */,
 				D86187C6287A4F9F00553E5D /* AddEditTournamentView.swift in Sources */,
@@ -604,12 +614,14 @@
 				D8EFA1F02908D32300D283FF /* CreateEditGroupedMatchesView.swift in Sources */,
 				D837095E28E0E39000288509 /* TournamentFormat.swift in Sources */,
 				D8E6495428C84DBE007DC119 /* TournamentResultsView.swift in Sources */,
+				D8E629AD290E2E5200D9F0DD /* CustomTextField.swift in Sources */,
 				D837096B28E0E45A00288509 /* TournamentResults.swift in Sources */,
 				D86187AF2879B59C00553E5D /* DateUtils.swift in Sources */,
 				D86187A82878E98900553E5D /* MockTournamentRepository.swift in Sources */,
 				D837096728E0E42700288509 /* TournamentManager.swift in Sources */,
 				D8E6495228B65812007DC119 /* StandingsView.swift in Sources */,
 				D8E6299B2909EB3E00D9F0DD /* GroupedTournamentProgressView.swift in Sources */,
+				D8E629A9290E28C100D9F0DD /* ParticipantRow.swift in Sources */,
 				D837096928E0E44500288509 /* RoundRobinTournamentFormatConfig.swift in Sources */,
 				D86187BF2879DB7000553E5D /* Design.swift in Sources */,
 				D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */,

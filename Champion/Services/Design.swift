@@ -12,6 +12,7 @@ struct Design {
     static let themeColor = Color.accentColor
     
     static let defaultShape = Rectangle()
+    static let defaultShape2 = RoundedRectangle(cornerRadius: Self.buttonCornerRadius)
     static let defaultCornerRadius = 10
     
     static let buttonCornerRadius: CGFloat = 4.0
