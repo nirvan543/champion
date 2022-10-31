@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TournamentsListView: View {
     @EnvironmentObject private var environmentValues: EnvironmentValues
+    @State private var tournamentIndexToDelete: IndexSet? = nil
+    @State private var showDeleteConfirmation = false
     
     var body: some View {
         List {
@@ -26,6 +28,10 @@ struct TournamentsListView: View {
                     .padding(.vertical, 12)
                 }
             }
+            .onDelete { offsets in
+                tournamentIndexToDelete = offsets
+                showDeleteConfirmation = true
+            }
         }
         .navigationTitle("Tournaments")
         .toolbar {
@@ -39,6 +45,27 @@ struct TournamentsListView: View {
                 }
             }
         }
+        .alert(deleteAlertTitle, isPresented: $showDeleteConfirmation) {
+            Button("Delete", role: .destructive) {
+                guard let tournamentIndexToDelete else {
+                    fatalError("Expected tournamentIndexToDelete to be non-nil")
+                }
+                
+                environmentValues.tournaments.remove(atOffsets: tournamentIndexToDelete)
+                self.tournamentIndexToDelete = nil
+            }
+            Button("Cancel", role: .cancel) {
+                tournamentIndexToDelete = nil
+            }
+        }
+    }
+               
+    private var deleteAlertTitle: String {
+        guard let index = tournamentIndexToDelete?.first else {
+            return ""
+        }
+
+        return String("Delete \"\(environmentValues.tournaments[index].name)\"?")
     }
 }
 
