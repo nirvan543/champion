@@ -43,8 +43,10 @@ struct CreateEditRoundRobinMatchesView: View {
     var body: some View {
         PageView {
             configSection
-            roundsViews
-            actionSection
+            RoundsView(rounds: rounds)
+            PageSection {
+                actionSection
+            }
         }
         .navigationTitle("Create Matches")
         .navigationBarTitleDisplayMode(.inline)
@@ -79,54 +81,26 @@ struct CreateEditRoundRobinMatchesView: View {
     
     private var configSection: some View {
         PageSection("League Stage Config") {
-            VStack(alignment: .leading, spacing: 8) {
+            FormContent {
                 EditableConfigLineItemView(labelText: "Legs per Match", value: $legsPerMatch)
                     .focused($focusField)
             }
         }
     }
     
-    private var roundsViews: some View {
-        ForEach(Array(rounds.enumerated()), id: \.element) { index, round in
-            PageSection("Round \(index + 1)") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        MatchCellView(participant1: match.participant1,
-                                      participant2: match.participant2,
-                                      participant1Score: match.participant1Score,
-                                      participant2Score: match.participant2Score,
-                                      matchState: match.matchState,
-                                      winner: match.winner,
-                                      endedInATie: match.endedInATie)
-                    }
-                }
-            }
-        }
-    }
-    
     private var actionSection: some View {
-        PageSection {
-            VStack {
-                autoGenerateButton
-                cancelButton
-                saveButton
-            }
+        VStack {
+            autoGenerateButton
+            cancelButton
+            saveButton
         }
     }
     
     private var autoGenerateButton: some View {
-        Button {
+        SecondaryButton("Auto-Generate") {
             rounds = MatchesService.shared.createMatches(participants: participants,
                                                          legsPerMatch: legsPerMatch)
-        } label: {
-            Text("Auto-Generate")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(overlay)
     }
     
     private var participants: [Participant] {
@@ -142,21 +116,13 @@ struct CreateEditRoundRobinMatchesView: View {
     }
     
     private var cancelButton: some View {
-        Button {
+        SecondaryButton("Cancel") {
             presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Cancel")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(overlay)
     }
     
     private var saveButton: some View {
-        Button {
+        PrimaryButton("Save") {
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return
@@ -167,15 +133,7 @@ struct CreateEditRoundRobinMatchesView: View {
             } else {
                 saveNewTournament()
             }
-        } label: {
-            Text("Save")
-                .font(.title2)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background(Design.themeColor)
-        .overlay(overlay)
     }
     
     private func formIsValid() -> Bool {
@@ -214,10 +172,6 @@ struct CreateEditRoundRobinMatchesView: View {
         
         environmentValues.addTournament(tournament: newTournament)
         environmentValues.navigateToCreateTournamentView = false
-    }
-    
-    private var overlay: some View {
-        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
     }
 }
 

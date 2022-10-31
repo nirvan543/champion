@@ -167,10 +167,6 @@ struct CreateEditGroupedMatchesView: View {
         environmentValues.navigateToCreateMatchesView = false
     }
     
-    private var buttonOverlay: some View {
-        Rectangle().strokeBorder(Design.themeColor, lineWidth: 5)
-    }
-    
     private var matchesAreCreated: Bool {
         groups.allSatisfy({ !$0.rounds.isEmpty })
     }
