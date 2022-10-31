@@ -70,7 +70,6 @@
 		D8E629B1290F42DC00D9F0DD /* RoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E629B0290F42DC00D9F0DD /* RoundsView.swift */; };
 		D8E6494528AB2EB4007DC119 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494428AB2EB4007DC119 /* PageView.swift */; };
 		D8E6494728AB2FC0007DC119 /* EditableConfigLineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */; };
-		D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */; };
 		D8E6495228B65812007DC119 /* StandingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495128B65812007DC119 /* StandingsView.swift */; };
 		D8E6495428C84DBE007DC119 /* TournamentResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6495328C84DBE007DC119 /* TournamentResultsView.swift */; };
 		D8E6495728CD998D007DC119 /* fifa_versions.json in Resources */ = {isa = PBXBuildFile; fileRef = D8E6495628CD998D007DC119 /* fifa_versions.json */; };
@@ -165,7 +164,6 @@
 		D8E629B0290F42DC00D9F0DD /* RoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundsView.swift; sourceTree = "<group>"; };
 		D8E6494428AB2EB4007DC119 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D8E6494628AB2FC0007DC119 /* EditableConfigLineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableConfigLineItemView.swift; sourceTree = "<group>"; };
-		D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRoundRobinFormatView.swift; sourceTree = "<group>"; };
 		D8E6495128B65812007DC119 /* StandingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsView.swift; sourceTree = "<group>"; };
 		D8E6495328C84DBE007DC119 /* TournamentResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentResultsView.swift; sourceTree = "<group>"; };
 		D8E6495628CD998D007DC119 /* fifa_versions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fifa_versions.json; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				D86187C2287A221B00553E5D /* Components */,
-				D8E6494928ADDCF3007DC119 /* Formats */,
 				D8EFA1E82907134B00D283FF /* MatchesView */,
 				D8EFA1E92907138800D283FF /* CreateEditMatchesView */,
 				D8EFA1EA290713AF00D283FF /* TournamentProgressView */,
@@ -396,22 +393,6 @@
 				D8B1C28C28F659C400FACCEF /* tournaments_v1.json */,
 			);
 			path = json;
-			sourceTree = "<group>";
-		};
-		D8E6494928ADDCF3007DC119 /* Formats */ = {
-			isa = PBXGroup;
-			children = (
-				D8E6494A28ADDD01007DC119 /* RoundRobin */,
-			);
-			path = Formats;
-			sourceTree = "<group>";
-		};
-		D8E6494A28ADDD01007DC119 /* RoundRobin */ = {
-			isa = PBXGroup;
-			children = (
-				D8E6494D28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift */,
-			);
-			path = RoundRobin;
 			sourceTree = "<group>";
 		};
 		D8E6495528CD9952007DC119 /* Resources */ = {
@@ -628,7 +609,6 @@
 				D8E629A9290E28C100D9F0DD /* ParticipantRow.swift in Sources */,
 				D837096928E0E44500288509 /* RoundRobinTournamentFormatConfig.swift in Sources */,
 				D86187BF2879DB7000553E5D /* Design.swift in Sources */,
-				D8E6494E28ADDE72007DC119 /* AddEditRoundRobinFormatView.swift in Sources */,
 				D86187BD2879CC5800553E5D /* TournamentDetailView.swift in Sources */,
 				D8BD21B5287E52C40018F7D2 /* CreateEditRoundRobinMatchesView.swift in Sources */,
 				D86187792878DC4800553E5D /* ChampionApp.swift in Sources */,
