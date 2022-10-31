@@ -25,7 +25,7 @@ struct GroupedTournamentProgressView: View {
                     StandingsView(geo: geo, stats: tournament.standingStats(for: selectedGroupIndex))
                 }
                 
-                matchesSection
+                RoundsView(roundsBinding: $tournament.groups[selectedGroupIndex].rounds)
             }
         }
         .navigationTitle(tournament.name)
@@ -46,41 +46,6 @@ struct GroupedTournamentProgressView: View {
             }
             Spacer()
         }
-    }
-
-    private var matchesSection: some View {
-        ForEach($tournament.groups[selectedGroupIndex].rounds) { round in
-            PageSection("Round \(number(for: round.wrappedValue))") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        NavigationLink {
-                            MatchProgressView(match: match)
-                        } label: {
-                            MatchCellView(participant1: match.wrappedValue.participant1,
-                                          participant2: match.wrappedValue.participant2,
-                                          participant1Score: match.wrappedValue.participant1Score,
-                                          participant2Score: match.wrappedValue.participant2Score,
-                                          matchState: match.wrappedValue.matchState,
-                                          winner: match.wrappedValue.winner,
-                                          endedInATie: match.wrappedValue.endedInATie)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-        }
-    }
-    
-    func number(for round: Round) -> Int {
-        if let index = selectedGroup.rounds.firstIndex(where: { $0 == round }) {
-            return index + 1
-        } else {
-            fatalError("Expected to find the index for the round \(round) within the Round Robin stage.")
-        }
-    }
-    
-    private var selectedGroup: TournamentGroup {
-        tournament.groups[selectedGroupIndex]
     }
 }
 
