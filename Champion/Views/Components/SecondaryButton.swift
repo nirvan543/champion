@@ -33,6 +33,7 @@ struct SecondaryButtonStyle: ButtonStyle {
                 .padding(.vertical, Design.buttonPadding)
             Spacer()
         }
+        .background()
         .overlay(buttonOverlay)
     }
     
