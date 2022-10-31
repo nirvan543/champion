@@ -50,48 +50,15 @@ struct CreateEditGroupsView: View {
                     }
                 }
             }
-            ForEach(Array(groups.enumerated()), id: \.element) { index, group in
-                PageSection("Group \(index + 1)") {
-                    ForEach(group.participants) { participant in
-                        groupParticipantRow(participant: participant, groupIndex: index)
-                    }
-                }
-            }
             
+            groupsSection
             addGroupButton
             
             PageSection {
-                Button {
-                    if groups.contains(where: { $0.participants.isEmpty }) {
-                        formError = ChampionError(errorMessage: "There are groups with no participants")
-                        presentFormErrorAlert = true
-                    } else {
-                        navigateToCreateMatchesView = true
-                    }
-                } label: {
-                    Text(editingTournament == nil ? "Create Matches" : "Edit Matches")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(!participants.isEmpty)
+                createMatchesButton
             }
             
-            if let tournamentInfo {
-                NavigationLink(isActive: $navigateToCreateMatchesView) {
-                    CreateEditGroupedMatchesView(tournamentInfo: tournamentInfo, groups: groups)
-                } label: {
-                    EmptyView()
-                }
-            }
-            
-            if let editingTournament {
-                NavigationLink(isActive: $navigateToCreateMatchesView) {
-                    CreateEditGroupedMatchesView(editingTournament: editingTournament, groups: groups)
-                } label: {
-                    EmptyView()
-                }
-            }
+            links
         }
         .navigationTitle("Create Groups")
         .navigationBarTitleDisplayMode(.inline)
@@ -119,7 +86,9 @@ struct CreateEditGroupsView: View {
                 Text(participant.clubSelection.clubName)
                     .foregroundColor(.secondary)
             }
+            
             Spacer()
+            
             if !groups.isEmpty {
                 Menu("Group") {
                     ForEach(Array(groups.enumerated()), id: \.element.id) { index, group in
@@ -135,6 +104,16 @@ struct CreateEditGroupsView: View {
         .background()
     }
     
+    private var groupsSection: some View {
+        ForEach(Array(groups.enumerated()), id: \.element) { index, group in
+            PageSection("Group \(index + 1)") {
+                ForEach(group.participants) { participant in
+                    groupParticipantRow(participant: participant, groupIndex: index)
+                }
+            }
+        }
+    }
+    
     private func groupParticipantRow(participant: Participant, groupIndex: Int?) -> some View {
         HStack {
             VStack(alignment: .leading) {
@@ -143,7 +122,9 @@ struct CreateEditGroupsView: View {
                 Text(participant.clubSelection.clubName)
                     .foregroundColor(.secondary)
             }
+            
             Spacer()
+            
             if let groupIndex = groupIndex {
                 deleteParticipantButton(participant: participant, from: groupIndex)
             }
@@ -171,6 +152,38 @@ struct CreateEditGroupsView: View {
                 Text("+ Add Group")
             }
             Spacer()
+        }
+    }
+    
+    private var createMatchesButton: some View {
+        PrimaryButton(editingTournament == nil ? "Create Matches" : "Edit Matches") {
+            if groups.contains(where: { $0.participants.isEmpty }) {
+                formError = ChampionError(errorMessage: "There are groups with no participants")
+                presentFormErrorAlert = true
+            } else {
+                navigateToCreateMatchesView = true
+            }
+        }
+        .disabled(!participants.isEmpty)
+    }
+    
+    private var links: some View {
+        VStack {
+            if let tournamentInfo {
+                NavigationLink(isActive: $navigateToCreateMatchesView) {
+                    CreateEditGroupedMatchesView(tournamentInfo: tournamentInfo, groups: groups)
+                } label: {
+                    EmptyView()
+                }
+            }
+            
+            if let editingTournament {
+                NavigationLink(isActive: $navigateToCreateMatchesView) {
+                    CreateEditGroupedMatchesView(editingTournament: editingTournament, groups: groups)
+                } label: {
+                    EmptyView()
+                }
+            }
         }
     }
 }

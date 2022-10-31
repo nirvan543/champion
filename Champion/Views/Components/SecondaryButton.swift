@@ -43,8 +43,14 @@ struct SecondaryButtonStyle: ButtonStyle {
 
 struct SecondaryButton_Previews: PreviewProvider {
     static var previews: some View {
-        SecondaryButton("Secondary Button") {
-            //
+        Group {
+            SecondaryButton("Secondary Button") {
+                //
+            }
+            SecondaryButton("Secondary Button") {
+                //
+            }
+            .disabled(true)
         }
         .padding(.horizontal)
     }

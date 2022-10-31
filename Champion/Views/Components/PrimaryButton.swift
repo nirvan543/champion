@@ -23,6 +23,7 @@ struct PrimaryButton: View {
 }
 
 struct PrimaryButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) var isEnabled
     
     func makeBody(configuration: Configuration) -> some View {
         HStack {
@@ -42,15 +43,26 @@ struct PrimaryButtonStyle: ButtonStyle {
             .clipShape(Design.defaultShape2)
     }
     
+    @ViewBuilder
     private var buttonOverlay: some View {
-        Design.defaultShape2.strokeBorder(Design.themeColor, lineWidth: 5)
+        if isEnabled {
+            Design.defaultShape2.strokeBorder(Design.themeColor, lineWidth: 5)
+        } else {
+            EmptyView()
+        }
     }
 }
 
 struct PrimaryButton_Previews: PreviewProvider {
     static var previews: some View {
-        PrimaryButton("Button Title") {
-            //
+        Group {
+            PrimaryButton("Button Title") {
+                //
+            }
+            PrimaryButton("Button Title") {
+                //
+            }
+            .disabled(true)
         }
         .padding(.horizontal)
     }
