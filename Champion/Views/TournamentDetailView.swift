@@ -35,14 +35,10 @@ struct TournamentDetailView: View {
     
     private var tournamentTypeSection: some View {
         PageSection("Tournament Format") {
-            HStack {
+            FormContent {
                 Text(tournament.format.rawValue)
                     .font(.title2)
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
             }
-            .background()
-            .overlay(sectionOverlay)
         }
     }
     
@@ -52,39 +48,17 @@ struct TournamentDetailView: View {
     
     private var tournamentDateSection: some View {
         PageSection("Tournament Date") {
-            HStack {
+            FormContent {
                 Text(DateUtils.displayString(for: tournament.date))
                     .font(.title2)
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
             }
-            .background()
-            .overlay(sectionOverlay)
         }
     }
     
     private var participantsSection: some View {
         PageSection("Participants") {
-            VStack(alignment: .leading) {
-                ForEach(tournament.participants) { participant in
-                    participantRow(participant: participant)
-                }
-            }
+            ParticipantsListView(participants: tournament.participants)
         }
-    }
-    
-    private func participantRow(participant: Participant) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(participant.playerName)
-                    .font(.title3)
-                Text(participant.clubSelection.clubName)
-                    .foregroundColor(.secondary)
-            }
-            Spacer()
-        }
-        .padding()
-        .background()
     }
     
     private var finalActionSection: some View {
@@ -97,7 +71,7 @@ struct TournamentDetailView: View {
     }
     
     private var viewMatchesButton: some View {
-        NavigationLink {
+        SecondaryLink {
             switch tournament.format {
             case .roundRobin:
                 RoundRobinMatchesView(rounds: (tournament as! RoundRobinTournament).rounds)
@@ -106,32 +80,15 @@ struct TournamentDetailView: View {
             }
         } label: {
             Text("View Matches")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(buttonOverlay)
-    }
-    
-    private var buttonOverlay: some View {
-        Design.defaultShape.strokeBorder(Design.themeColor, lineWidth: 5)
     }
     
     private var startTournamentButton: some View {
-        NavigationLink {
+        PrimaryLink {
             tournamentProgressView
         } label: {
             Text(primaryActionText)
-                .font(.title2)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .buttonStyle(.plain)
-        .background(Design.themeColor)
-        .overlay(buttonOverlay)
     }
     
     @ViewBuilder
@@ -172,39 +129,6 @@ struct TournamentDetailView: View {
     }
 }
 
-struct HeaderLabelView: View {
-    let text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.title2)
-            .fontWeight(.bold)
-            .foregroundStyle(.secondary)
-    }
-}
-
-struct ReadOnlyConfigLineItemView: View {
-    let labelText: String
-    let value: String
-    
-    private let shape = Capsule()
-    
-    var body: some View {
-        HStack {
-            Text(labelText)
-                .font(.title3)
-            Spacer()
-            Text(value)
-                .font(.title3)
-                .padding(.horizontal)
-                .padding(.vertical, 2)
-                .background()
-                .clipShape(shape)
-                .overlay(shape.strokeBorder(.quaternary, lineWidth: 1))
-        }
-    }
-}
-
 struct TournamentDetailView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
     @State private static var tournament: any Tournament = MockData.atlantaCup3
@@ -214,10 +138,6 @@ struct TournamentDetailView_Previews: PreviewProvider {
             NavigationView {
                 TournamentDetailView(tournament: $tournament)
             }
-            NavigationView {
-                TournamentDetailView(tournament: $tournament)
-            }
-            .preferredColorScheme(.dark)
         }
         .environmentObject(environmentValues)
     }

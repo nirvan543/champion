@@ -15,23 +15,14 @@ struct RoundRobinTournamentProgressView: View {
     var body: some View {
         GeometryReader { geo in
             PageView {
-                PageSection("Standings") {
-                    StandingsView(geo: geo, stats: tournament.standingStats)
-                    
-                    if tournament.state == .completed {
-                        viewTournamentResultsButton
-                    }
-                }
-                matchesSection
+                standingsSection(geo: geo)
+                RoundsView(roundsBinding: $tournament.rounds)
+                
                 if showCompleteTournamentButton {
                     completeTournamentButton
                 }
-                NavigationLink(isActive: $navigateToTournamentResultsView) {
-                    TournamentResultsView(results: TournamentResults(stats: tournament.standingStats),
-                                          revistingResults: false)
-                } label: {
-                    EmptyView()
-                }
+                
+                links
             }
         }
         .navigationTitle(tournament.name)
@@ -42,71 +33,46 @@ struct RoundRobinTournamentProgressView: View {
         }
     }
     
-    private var showCompleteTournamentButton: Bool {
-        tournament.state != .completed && tournament.roundsAreComplete
+    private func standingsSection(geo: GeometryProxy) -> some View {
+        PageSection("Standings") {
+            StandingsView(geo: geo, stats: tournament.standingStats)
+            
+            if tournament.state == .completed {
+                viewTournamentResultsButton
+            }
+        }
     }
     
     private var viewTournamentResultsButton: some View {
-        NavigationLink {
+        SecondaryLink {
             TournamentResultsView(results: TournamentResults(stats: tournament.standingStats),
                                   revistingResults: true)
         } label: {
             Text("View Results")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
+    }
+    
+    private var showCompleteTournamentButton: Bool {
+        tournament.state != .completed && tournament.roundsAreComplete
     }
     
     private var completeTournamentButton: some View {
         PageSection {
-            Button {
+            PrimaryButton("Finish Tournament") {
                 tournament.state = .completed
                 navigateToTournamentResultsView = true
+            }
+        }
+    }
+    
+    private var links: some View {
+        VStack {
+            NavigationLink(isActive: $navigateToTournamentResultsView) {
+                TournamentResultsView(results: TournamentResults(stats: tournament.standingStats),
+                                      revistingResults: false)
             } label: {
-                Text("Finish Tournament")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
+                EmptyView()
             }
-            .buttonStyle(.plain)
-            .background(Design.themeColor)
-            .overlay(Rectangle().strokeBorder(Design.themeColor, lineWidth: 5))
-        }
-    }
-    
-    private var matchesSection: some View {
-        ForEach($tournament.rounds) { round in
-            PageSection("Round \(number(for: round.wrappedValue))") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        NavigationLink {
-                            MatchProgressView(match: match)
-                        } label: {
-                            MatchCellView(participant1: match.wrappedValue.participant1,
-                                          participant2: match.wrappedValue.participant2,
-                                          participant1Score: match.wrappedValue.participant1Score,
-                                          participant2Score: match.wrappedValue.participant2Score,
-                                          matchState: match.wrappedValue.matchState,
-                                          winner: match.wrappedValue.winner,
-                                          endedInATie: match.wrappedValue.endedInATie)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-        }
-    }
-    
-    func number(for round: Round) -> Int {
-        if let index = tournament.rounds.firstIndex(where: { $0 == round }) {
-            return index + 1
-        } else {
-            fatalError("Expected to find the index for the round \(round) within the Round Robin stage.")
         }
     }
 }

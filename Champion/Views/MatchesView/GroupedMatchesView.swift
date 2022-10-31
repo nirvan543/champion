@@ -15,7 +15,7 @@ struct GroupedMatchesView: View {
     var body: some View {
         PageView {
             groupPicker
-            roundsSection
+            RoundsView(rounds: groups[groupIndex].rounds)
         }
         .navigationTitle("Matches")
         .navigationBarTitleDisplayMode(.inline)
@@ -30,24 +30,6 @@ struct GroupedMatchesView: View {
                 }
             }
             Spacer()
-        }
-    }
-    
-    private var roundsSection: some View {
-        ForEach(Array(groups[groupIndex].rounds.enumerated()), id: \.element) { index, round in
-            PageSection("Round \(index + 1)") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        MatchCellView(participant1: match.participant1,
-                                      participant2: match.participant2,
-                                      participant1Score: match.participant1Score,
-                                      participant2Score: match.participant2Score,
-                                      matchState: match.matchState,
-                                      winner: match.winner,
-                                      endedInATie: match.endedInATie)
-                    }
-                }
-            }
         }
     }
 }

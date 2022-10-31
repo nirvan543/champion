@@ -98,6 +98,10 @@ struct AddEditTournamentView: View {
         }
     }
     
+    private var isEditingTournament: Bool {
+        editingTournament != nil
+    }
+    
     @ViewBuilder
     private var createMatchesLink: some View {
         switch tournamentFormat {
@@ -162,56 +166,44 @@ struct AddEditTournamentView: View {
     
     private var tournamentNameSection: some View {
         PageSection("Tournament Name") {
-            TextField("Tournament Name", text: $tournamentName)
-                .textFieldStyle(.roundedBorder)
+            CustomTextField("Tournament Name", text: $tournamentName)
+                .textInputAutocapitalization(.words)
                 .focused($focusField)
         }
     }
     
     private var tournamentDateSection: some View {
         PageSection("Tournament Date") {
-            HStack {
+            FormContent {
                 DatePicker("Tournament Date", selection: $tournamentDate)
                     .labelsHidden()
-                    .frame(maxWidth: .infinity)
             }
-            .padding()
-            .background()
-            .overlay(sectionOverlay)
         }
     }
     
     private var fifaVersionSection: some View {
         PageSection("FIFA Version") {
-            HStack {
+            FormContent {
                 Picker("FIFA Version", selection: $fifaVersionName) {
                     ForEach(Self.catalogService.fifaVersions) { fifaGameVersion in
                         Text(fifaGameVersion.name)
                     }
                 }
                 .disabled(editingTournament != nil)
-                .frame(maxWidth: .infinity)
             }
-            .padding()
-            .background()
-            .overlay(sectionOverlay)
         }
     }
     
     private var tournamentFormatSection: some View {
         PageSection("Tournament Format") {
-            HStack {
+            FormContent {
                 Picker("Tournament Format", selection: $tournamentFormat) {
                     ForEach(Self.tournamentFormats, id: \.self) { format in
                         Text(format.rawValue)
                     }
                 }
                 .disabled(editingTournament != nil)
-                .frame(maxWidth: .infinity)
             }
-            .padding()
-            .background()
-            .overlay(sectionOverlay)
         }
     }
     
@@ -221,37 +213,11 @@ struct AddEditTournamentView: View {
     
     private var participantsSection: some View {
         PageSection("Participants") {
-            VStack(alignment: .leading) {
-                ForEach(participants) { participant in
-                    participantRow(participant: participant)
-                }
-                
-                addParticipantButton
+            ParticipantsListView(participants: participants) { participant in
+                participants.removeAll(where: { $0 == participant })
+            } addParticipantAction: {
+                presentAddParticipantView.toggle()
             }
-        }
-    }
-    
-    private func participantRow(participant: Participant) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(participant.playerName)
-                    .font(.title3)
-                Text(participant.clubSelection.clubName)
-                    .foregroundColor(.secondary)
-            }
-            Spacer()
-            deleteParticipantButton(participant: participant)
-        }
-        .padding()
-        .background()
-    }
-    
-    private func deleteParticipantButton(participant: Participant) -> some View {
-        Button {
-            participants.removeAll(where: { $0 == participant })
-        } label: {
-            Image(systemName: "xmark")
-                .foregroundColor(.red)
         }
     }
     
@@ -259,42 +225,40 @@ struct AddEditTournamentView: View {
         Button {
             presentAddParticipantView.toggle()
         } label: {
-            Text("Add Participant")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
+            Text("+ Add Participant")
+                .font(.headline)
+                .foregroundColor(Design.themeColor)
                 .padding(.vertical, 18)
+                .frame(maxWidth: .infinity)
         }
-        .background()
-        .overlay(buttonOverlay)
     }
     
     private var actionSection: some View {
         PageSection {
             createFixuresLink
+            
             if let editingTournament = editingTournament {
                 saveTournamentButton(editingTournament: editingTournament)
             }
         }
     }
     
+    @ViewBuilder
     private var createFixuresLink: some View {
-        Button {
-            guard formIsValid() else {
-                presentFormErrorAlert = true
-                return
-            }
-            
-            environmentValues.navigateToCreateMatchesView = true
-        } label: {
-            Text(createMatchesButtonText)
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
+        if isEditingTournament {
+            SecondaryButton(createMatchesButtonText, action: createFixturesAction)
+        } else {
+            PrimaryButton(createMatchesButtonText, action: createFixturesAction)
         }
-        .background()
-        .overlay(buttonOverlay)
+    }
+    
+    private func createFixturesAction() {
+        guard formIsValid() else {
+            presentFormErrorAlert = true
+            return
+        }
+        
+        environmentValues.navigateToCreateMatchesView = true
     }
     
     private var createMatchesButtonText: String {
@@ -306,7 +270,7 @@ struct AddEditTournamentView: View {
     }
     
     private func saveTournamentButton(editingTournament: Binding<any Tournament>) -> some View {
-        Button {
+        PrimaryButton("Save") {
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return
@@ -314,15 +278,7 @@ struct AddEditTournamentView: View {
             
             saveEditedTournament(editingTournament: editingTournament)
             presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Save")
-                .font(.title2)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background(Design.themeColor)
-        .overlay(buttonOverlay)
     }
     
     private func saveEditedTournament(editingTournament: Binding<any Tournament>) {
@@ -355,9 +311,14 @@ struct AddEditTournamentView_Previews: PreviewProvider {
     @State private static var editingTournament: any Tournament = MockData.atlantaCup3
     
     static var previews: some View {
-        NavigationView {
-            AddEditTournamentView(editingTournament: $editingTournament)
-                .environmentObject(environmentValues)
+        Group {
+            NavigationView {
+                AddEditTournamentView(editingTournament: $editingTournament)
+            }
+            NavigationView {
+                AddEditTournamentView(editingTournament: nil)
+            }
         }
+        .environmentObject(environmentValues)
     }
 }

@@ -44,7 +44,7 @@ struct CreateEditGroupedMatchesView: View {
         PageView {
             configSection
             groupPicker
-            roundsSection
+            RoundsView(rounds: groups[groupIndex].rounds)
             
             PageSection {
                 autoGenerateButton
@@ -80,7 +80,7 @@ struct CreateEditGroupedMatchesView: View {
     
     private var configSection: some View {
         PageSection("Tournament Config") {
-            VStack(alignment: .leading, spacing: 8) {
+            FormContent {
                 EditableConfigLineItemView(labelText: "Legs per Match", value: $legsPerMatch)
                     .focused($focusField)
             }
@@ -99,56 +99,22 @@ struct CreateEditGroupedMatchesView: View {
         }
     }
     
-    private var roundsSection: some View {
-        ForEach(Array(groups[groupIndex].rounds.enumerated()), id: \.element) { index, round in
-            PageSection("Round \(index + 1)") {
-                VStack {
-                    ForEach(round.matches) { match in
-                        MatchCellView(participant1: match.participant1,
-                                      participant2: match.participant2,
-                                      participant1Score: match.participant1Score,
-                                      participant2Score: match.participant2Score,
-                                      matchState: match.matchState,
-                                      winner: match.winner,
-                                      endedInATie: match.endedInATie)
-                    }
-                }
-            }
-        }
-    }
-    
     private var autoGenerateButton: some View {
-        Button {
+        SecondaryButton("Auto-Generate") {
             for i in 0 ..< groups.count {
                 groups[i].generateMatches(legsPerMatch: legsPerMatch)
             }
-        } label: {
-            Text("Auto-Generate")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(buttonOverlay)
     }
     
     private var cancelButton: some View {
-        Button {
+        SecondaryButton("Cancel") {
             presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Cancel")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
-        .background()
-        .overlay(buttonOverlay)
     }
     
     private var saveButton: some View {
-        Button {
+        PrimaryButton("Save") {
             guard formIsValid() else {
                 presentFormErrorAlert = true
                 return
@@ -159,16 +125,8 @@ struct CreateEditGroupedMatchesView: View {
             } else {
                 saveNewTournament()
             }
-        } label: {
-            Text("Save")
-                .font(.title2)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
         }
         .disabled(!matchesAreCreated)
-        .background(Design.themeColor)
-        .overlay(buttonOverlay)
     }
     
     private func formIsValid() -> Bool {
@@ -207,10 +165,6 @@ struct CreateEditGroupedMatchesView: View {
         editingTournament.wrappedValue.groups = groups
         
         environmentValues.navigateToCreateMatchesView = false
-    }
-    
-    private var buttonOverlay: some View {
-        Rectangle().strokeBorder(Design.themeColor, lineWidth: 5)
     }
     
     private var matchesAreCreated: Bool {

@@ -28,6 +28,18 @@ struct PageSection<Content: View>: View {
     }
 }
 
+private struct HeaderLabelView: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.title2)
+            .fontWeight(.bold)
+            .foregroundStyle(.secondary)
+            .foregroundColor(Design.themeColor)
+    }
+}
+
 struct PageSection_Previews: PreviewProvider {
     static var previews: some View {
         PageSection("Some header") {
