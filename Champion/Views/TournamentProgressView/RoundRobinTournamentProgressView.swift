@@ -35,20 +35,17 @@ struct RoundRobinTournamentProgressView: View {
     
     private func standingsSection(geo: GeometryProxy) -> some View {
         PageSection("Standings") {
-            StandingsView(geo: geo, stats: tournament.standingStats)
+            StandingsView(geo: geo, stats: tournament.tournamentStats)
             
-            if tournament.state == .completed {
-                viewTournamentResultsButton
-            }
+            viewTournamentResultsButton
         }
     }
     
     private var viewTournamentResultsButton: some View {
         SecondaryLink {
-            TournamentResultsView(results: TournamentResults(stats: tournament.standingStats),
-                                  revistingResults: true)
+            TournamentSummaryView(tournament: tournament)
         } label: {
-            Text("View Results")
+            Text("View Tournament Summary")
         }
     }
     
@@ -68,7 +65,7 @@ struct RoundRobinTournamentProgressView: View {
     private var links: some View {
         VStack {
             NavigationLink(isActive: $navigateToTournamentResultsView) {
-                TournamentResultsView(results: TournamentResults(stats: tournament.standingStats),
+                TournamentResultsView(results: TournamentResults(stats: tournament.tournamentStats),
                                       revistingResults: false)
             } label: {
                 EmptyView()

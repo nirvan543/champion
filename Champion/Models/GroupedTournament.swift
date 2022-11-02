@@ -36,7 +36,13 @@ struct GroupedTournament: Tournament {
         !groups.isEmpty && groups.allSatisfy({ !$0.rounds.isEmpty })
     }
     
-    var allStandingStats: [ParticipantStats] {
+    var roundsAreComplete: Bool {
+        groups.allSatisfy { group in
+            group.rounds.allSatisfy({ $0.isComplete })
+        }
+    }
+    
+    var tournamentStats: [ParticipantStats] {
         var standings = [ParticipantStats]()
         
         for index in 0 ..< groups.count {
@@ -60,15 +66,11 @@ struct GroupedTournament: Tournament {
                 match.legs.flatMap({ $0.goals })
             }
             
-            let goalsFor = goals.filter({ $0.scorer == participant }).count
-            let goalsAgainst = goals.filter({ $0.against == participant }).count
-            
             let participantStats = ParticipantStats(participant: participant,
                                                     matchesWon: matchesWon,
                                                     matchesTied: matchesTied,
                                                     matchesLost: matchesLost,
-                                                    goalsFor: goalsFor,
-                                                    goalsAgainst: goalsAgainst)
+                                                    goals: goals)
             groupStats.append(participantStats)
         }
         

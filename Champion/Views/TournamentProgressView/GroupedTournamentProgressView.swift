@@ -16,7 +16,9 @@ struct GroupedTournamentProgressView: View {
         GeometryReader { geo in
             PageView {
                 PageSection("Tournament Standings") {
-                    StandingsView(geo: geo, stats: tournament.allStandingStats)
+                    StandingsView(geo: geo, stats: tournament.tournamentStats)
+                    
+                    viewTournamentSummaryButton
                 }
                 
                 groupPicker
@@ -26,6 +28,10 @@ struct GroupedTournamentProgressView: View {
                 }
                 
                 RoundsView(roundsBinding: $tournament.groups[selectedGroupIndex].rounds)
+                
+                if showCompleteTournamentButton {
+                    completeTournamentButton
+                }
             }
         }
         .navigationTitle(tournament.name)
@@ -33,6 +39,14 @@ struct GroupedTournamentProgressView: View {
             if tournament.state == .created {
                 tournament.state = .inProgress
             }
+        }
+    }
+    
+    private var viewTournamentSummaryButton: some View {
+        SecondaryLink {
+            TournamentSummaryView(tournament: tournament)
+        } label: {
+            Text("View Tournament Summary")
         }
     }
     
@@ -45,6 +59,19 @@ struct GroupedTournamentProgressView: View {
                 }
             }
             Spacer()
+        }
+    }
+    
+    private var showCompleteTournamentButton: Bool {
+        tournament.state != .completed
+    }
+    
+    private var completeTournamentButton: some View {
+        PageSection {
+            PrimaryButton("Finish Tournament") {
+                tournament.state = .completed
+            }
+            .disabled(!tournament.roundsAreComplete)
         }
     }
 }

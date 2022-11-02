@@ -43,7 +43,7 @@ struct RoundRobinTournament: Tournament {
         rounds.allSatisfy({ $0.isComplete })
     }
     
-    var standingStats: [ParticipantStats] {
+    var tournamentStats: [ParticipantStats] {
         var matchStats = [ParticipantStats]()
         
         participants.forEach { participant in
@@ -56,15 +56,11 @@ struct RoundRobinTournament: Tournament {
                 match.legs.flatMap({ $0.goals })
             }
             
-            let goalsFor = goals.filter({ $0.scorer == participant }).count
-            let goalsAgainst = goals.filter({ $0.against == participant }).count
-            
             let participantStats = ParticipantStats(participant: participant,
                                                     matchesWon: matchesWon,
                                                     matchesTied: matchesTied,
                                                     matchesLost: matchesLost,
-                                                    goalsFor: goalsFor,
-                                                    goalsAgainst: goalsAgainst)
+                                                    goals: goals)
             matchStats.append(participantStats)
         }
         

@@ -102,20 +102,29 @@ struct TournamentResultsView_Previews: PreviewProvider {
                          matchesWon: 5,
                          matchesTied: 2,
                          matchesLost: 1,
-                         goalsFor: 15,
-                         goalsAgainst: 10),
+                         goals: [
+                            Goal(id: IdUtils.newUuid, scorer: MockData.mahendra, against: MockData.neeraj, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.neeraj, against: MockData.mahendra, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.mahendra, against: MockData.antriksh, minute: 45)
+                         ]),
         ParticipantStats(participant: MockData.saurav,
                          matchesWon: 4,
                          matchesTied: 3,
                          matchesLost: 1,
-                         goalsFor: 17,
-                         goalsAgainst: 11),
+                         goals: [
+                            Goal(id: IdUtils.newUuid, scorer: MockData.saurav, against: MockData.neeraj, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.neeraj, against: MockData.saurav, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.saurav, against: MockData.antriksh, minute: 45)
+                         ]),
         ParticipantStats(participant: MockData.antriksh,
                          matchesWon: 6,
                          matchesTied: 0,
                          matchesLost: 2,
-                         goalsFor: 20,
-                         goalsAgainst: 9)
+                         goals: [
+                            Goal(id: IdUtils.newUuid, scorer: MockData.antriksh, against: MockData.neeraj, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.neeraj, against: MockData.antriksh, minute: 45),
+                            Goal(id: IdUtils.newUuid, scorer: MockData.antriksh, against: MockData.saurav, minute: 45)
+                         ])
     ])
     
     static var previews: some View {

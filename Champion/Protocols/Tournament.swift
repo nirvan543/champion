@@ -17,5 +17,6 @@ protocol Tournament: Identifiable, Hashable, Equatable, Codable {
     var format: TournamentFormat { get }
     
     var matchesAreCreated: Bool { get }
+    var tournamentStats: [ParticipantStats] { get }
     mutating func clearMatches() -> Void
 }

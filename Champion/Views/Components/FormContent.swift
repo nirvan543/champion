@@ -9,8 +9,10 @@ import SwiftUI
 
 struct FormContent<Content: View>: View {
     let content: Content
+    let backgroundColor: Color
     
-    init(@ViewBuilder content: () -> Content) {
+    init(backgroundColor: Color = Color.background, @ViewBuilder content: () -> Content) {
+        self.backgroundColor = backgroundColor
         self.content = content()
     }
     
@@ -20,7 +22,7 @@ struct FormContent<Content: View>: View {
                 .frame(maxWidth: .infinity)
         }
         .padding()
-        .background()
+        .background(backgroundColor)
         .overlay(overlay)
     }
     
@@ -31,8 +33,19 @@ struct FormContent<Content: View>: View {
 
 struct FormContent_Previews: PreviewProvider {
     static var previews: some View {
-        FormContent {
-            Text("Hello")
+        Group {
+            VStack {
+                FormContent {
+                    Text("Hello")
+                }
+                FormContent(backgroundColor: Color.gold) {
+                    Text("Hello")
+                }
+                FormContent {
+                    Text("Hello")
+                }
+                .environment(\.colorScheme, .dark)
+            }
         }
         .padding(.horizontal)
     }
