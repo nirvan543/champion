@@ -18,7 +18,7 @@ struct RoundRobinTournamentProgressView: View {
                 standingsSection(geo: geo)
                 RoundsView(roundsBinding: $tournament.rounds)
                 
-                if showCompleteTournamentButton {
+                if tournament.state != .completed {
                     completeTournamentButton
                 }
                 
@@ -37,20 +37,30 @@ struct RoundRobinTournamentProgressView: View {
         PageSection("Standings") {
             StandingsView(geo: geo, stats: tournament.tournamentStats)
             
-            viewTournamentResultsButton
+            VStack {
+                if tournament.state == .completed {
+                    viewTournamentResultsButton
+                }
+                viewTournamentSummaryButton
+            }
         }
     }
     
     private var viewTournamentResultsButton: some View {
         SecondaryLink {
+            TournamentResultsView(results: TournamentResults(stats: tournament.tournamentStats),
+                                  revistingResults: true)
+        } label: {
+            Text("View Tournament Results")
+        }
+    }
+    
+    private var viewTournamentSummaryButton: some View {
+        SecondaryLink {
             TournamentSummaryView(tournament: tournament)
         } label: {
             Text("View Tournament Summary")
         }
-    }
-    
-    private var showCompleteTournamentButton: Bool {
-        tournament.state != .completed && tournament.roundsAreComplete
     }
     
     private var completeTournamentButton: some View {
@@ -59,6 +69,7 @@ struct RoundRobinTournamentProgressView: View {
                 tournament.state = .completed
                 navigateToTournamentResultsView = true
             }
+            .disabled(!tournament.roundsAreComplete)
         }
     }
     
