@@ -11,7 +11,6 @@ struct Participant: Identifiable, Hashable, Equatable, Codable {
     let id: String
     let playerName: String
     let clubSelection: ClubSelection
-    let imageName: String
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

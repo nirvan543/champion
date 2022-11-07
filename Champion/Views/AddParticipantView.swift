@@ -108,8 +108,7 @@ struct AddParticipantView: View {
             
             participants.wrappedValue.append(Participant(id: IdUtils.newUuid,
                                                          playerName: participantName,
-                                                         clubSelection: clubSelection,
-                                                         imageName: "fifa_logo"))
+                                                         clubSelection: clubSelection))
             
             presentationMode.wrappedValue.dismiss()
         } label: {
