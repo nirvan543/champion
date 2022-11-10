@@ -14,7 +14,7 @@ struct GoalCellView: View {
     
     var body: some View {
         HStack {
-            Text("\(goal.minute)'")
+            Text("\(goalText)")
                 .font(.title3)
             Spacer()
             Text("\(goal.scorer.playerName)")
@@ -23,6 +23,14 @@ struct GoalCellView: View {
         .padding()
         .background()
         .overlay(matchCellShape.strokeBorder(.quaternary, lineWidth: 1))
+    }
+    
+    private var goalText: String {
+        if let minute = goal.minute {
+            return "\(minute)'"
+        } else {
+            return "-"
+        }
     }
 }
 

@@ -29,6 +29,7 @@ struct TournamentSummaryView: View {
                     bestDefenderView
                 }
                 
+                /*
                 PageSection("Top First Half Scorer") {
                     firstHalfScorer
                 }
@@ -44,6 +45,7 @@ struct TournamentSummaryView: View {
                 PageSection("Best Second Half Defender") {
                     secondHalfDefender
                 }
+                */
             }
         }
     }
@@ -87,6 +89,7 @@ struct TournamentSummaryView: View {
         }
     }
     
+    /*
     private var firstHalfScorer: some View {
         let stats = tournament.tournamentStats.sorted { stat1, stat2 in
             stat1.goalsForFirstHalf > stat2.goalsForFirstHalf
@@ -146,6 +149,7 @@ struct TournamentSummaryView: View {
             }
         }
     }
+    */
     
     private func listContent(stat: ParticipantStats, value: Int) -> some View {
         HStack(spacing: 25) {

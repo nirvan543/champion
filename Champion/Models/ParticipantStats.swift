@@ -24,16 +24,21 @@ struct ParticipantStats: Equatable, Hashable {
         goals.filter({ $0.scorer == participant }).count
     }
     
+    var goalsAgainst: Int {
+        goals.filter({ $0.against == participant }).count
+    }
+    
+    var goalsDifference: Int {
+        goalsFor - goalsAgainst
+    }
+    
+    /*
     var goalsForFirstHalf: Int {
         goals.filter({ $0.scorer == participant && $0.minute <= halfMarker }).count
     }
     
     var goalsForSecondHalf: Int {
         goals.filter({ $0.scorer == participant && $0.minute > halfMarker }).count
-    }
-    
-    var goalsAgainst: Int {
-        goals.filter({ $0.against == participant }).count
     }
     
     var goalsAgainstFirstHalf: Int {
@@ -43,10 +48,7 @@ struct ParticipantStats: Equatable, Hashable {
     var goalsAgainstSecondHalf: Int {
         goals.filter({ $0.against == participant && $0.minute > halfMarker }).count
     }
-    
-    var goalsDifference: Int {
-        goalsFor - goalsAgainst
-    }
+    */
     
     var points: Int {
         (matchesWon * 3) + (matchesTied * 1) + (matchesLost * 0)

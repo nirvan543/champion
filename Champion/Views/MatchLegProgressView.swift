@@ -159,8 +159,10 @@ struct MatchLegProgressView: View {
     }
     
     private func saveGoal() {
-        guard let minute = Int(minute), minute >= 0, minute <= 90 else {
-            return
+        var minute: Int? = nil
+        
+        if let parsedMinute = Int(self.minute), parsedMinute >= 0, parsedMinute <= 90 {
+            minute = parsedMinute
         }
         
         let goal = Goal(id: IdUtils.newUuid,
@@ -170,7 +172,15 @@ struct MatchLegProgressView: View {
         
         matchLeg.goals.append(goal)
         matchLeg.goals.sort { goal1, goal2 in
-            goal1.minute < goal2.minute
+            guard let goal1Minute = goal1.minute, let goal2Minute = goal2.minute else {
+                if goal1.minute != nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            
+            return goal1Minute < goal2Minute
         }
         
         self.minute = ""

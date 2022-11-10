@@ -11,5 +11,5 @@ struct Goal: Identifiable, Hashable, Equatable, Codable {
     let id: String
     let scorer: Participant
     let against: Participant
-    let minute: Int
+    let minute: Int?
 }
