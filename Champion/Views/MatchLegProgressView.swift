@@ -49,7 +49,10 @@ struct MatchLegProgressView: View {
             }
             
             goalsSection
-            actionSection
+            
+            if matchLeg.legState == .notStarted {
+                actionSection
+            }
         }
         .navigationTitle("Leg \(legNumber)")
         .navigationBarTitleDisplayMode(.inline)
@@ -60,6 +63,12 @@ struct MatchLegProgressView: View {
                         matchLeg.reactivateLeg()
                     } label: {
                         Text("Edit")
+                    }
+                } else if matchLeg.legState == .inProgress {
+                    Button {
+                        matchLeg.completeLeg()
+                    } label: {
+                        Image(systemName: "checkmark")
                     }
                 }
             }
@@ -187,30 +196,16 @@ struct MatchLegProgressView: View {
         focusField = nil
     }
     
-    @ViewBuilder
     private var actionSection: some View {
         PageSection {
-            if matchLeg.legState == .notStarted {
-                Button {
-                    matchLeg.startLeg()
-                } label: {
-                    Text("Start Leg")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-            } else if matchLeg.legState == .inProgress {
-                Button {
-                    matchLeg.completeLeg()
-                } label: {
-                    Text("Complete Leg")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-            } else {
-                EmptyView()
+            Button {
+                matchLeg.startLeg()
+            } label: {
+                Text("Start Leg")
+                    .padding(.vertical, 5)
+                    .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
         }
     }
 }
