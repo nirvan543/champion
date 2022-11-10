@@ -17,7 +17,7 @@ struct Round: Identifiable, Hashable, Equatable, Codable {
     }
     
     var isComplete: Bool {
-        matches.allSatisfy({ $0.matchState == .completed })
+        matches.allSatisfy({ $0.matchState == .completed || $0.matchState == .unplayable })
     }
     
     func hash(into hasher: inout Hasher) {
