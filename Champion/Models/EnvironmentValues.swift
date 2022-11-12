@@ -102,7 +102,7 @@ class EnvironmentValues: ObservableObject {
         
         var tournaments: [any Tournament] {
             var combinedTournaments: [any Tournament] = roundRobinTournaments + groupedTournaments
-            combinedTournaments.sort { $0.date < $1.date }
+            combinedTournaments.sort { $0.date > $1.date }
             
             return combinedTournaments
         }
