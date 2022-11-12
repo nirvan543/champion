@@ -48,8 +48,16 @@ struct MatchLegProgressView: View {
                 ScoreCellView(participant1Score: matchLeg.homeScore, participant2Score: matchLeg.awayScore)
             }
             
-            goalsSection
-            actionSection
+            PageSection {
+                if matchLeg.legState == .inProgress {
+                    goalsInputSection
+                }
+            }
+            .padding(.top, 14)
+            
+            if matchLeg.legState == .notStarted {
+                actionSection
+            }
         }
         .navigationTitle("Leg \(legNumber)")
         .navigationBarTitleDisplayMode(.inline)
@@ -60,6 +68,12 @@ struct MatchLegProgressView: View {
                         matchLeg.reactivateLeg()
                     } label: {
                         Text("Edit")
+                    }
+                } else if matchLeg.legState == .inProgress {
+                    Button {
+                        matchLeg.completeLeg()
+                    } label: {
+                        Image(systemName: "checkmark")
                     }
                 }
             }
@@ -127,80 +141,93 @@ struct MatchLegProgressView: View {
     }
     
     private var goalsInputSection: some View {
-        VStack(spacing: 10) {
-            HStack {
-                TextField("Minute", text: $minute)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($focusField, equals: .minute)
-                
-                Picker("Scorer", selection: $scorer) {
-                    Text(matchLeg.homeParticipant.playerName)
-                        .tag(matchLeg.homeParticipant)
-                    Text(matchLeg.awayParticipant.playerName)
-                        .tag(matchLeg.awayParticipant)
-                }
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity)
-                .background()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.quaternary, lineWidth: 1))
-                
-                Button {
-                    saveGoal()
-                } label: {
-                    Text("Add")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-            }
+        VStack(spacing: 14) {
+            playerCell(participant: matchLeg.homeParticipant)
+            playerCell(participant: matchLeg.awayParticipant)
         }
     }
     
-    private func saveGoal() {
-        guard let minute = Int(minute), minute >= 0, minute <= 90 else {
-            return
+    private func playerCell(participant: Participant) -> some View {
+        HStack {
+            Button {
+                if let index = matchLeg.goals.firstIndex(where: { $0.scorer == participant }) {
+                    matchLeg.goals.remove(at: index)
+                }
+            } label: {
+                Image(systemName: "minus.circle")
+                    .font(.title3)
+            }
+            .disabled(!containsGoal(for: participant))
+            .padding(.leading, 14)
+            
+            Spacer()
+            Text(participant.playerName)
+                .font(.title3)
+            Spacer()
+            
+            Button {
+                let newGoal = Goal(id: IdUtils.newUuid,
+                                   scorer: participant,
+                                   against: getAgainstParticipant(for: participant),
+                                   minute: nil)
+                
+                save(goal: newGoal)
+            } label: {
+                Image(systemName: "plus.circle")
+                    .font(.title3)
+            }
+            .padding(.trailing, 14)
         }
-        
-        let goal = Goal(id: IdUtils.newUuid,
-                        scorer: scorer,
-                        against: scorer == matchLeg.homeParticipant ? matchLeg.awayParticipant : matchLeg.homeParticipant,
-                        minute: minute)
-        
+        .padding(.vertical, 14)
+        .frame(maxWidth: .infinity)
+        .background()
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.quaternary, lineWidth: 1))
+    }
+    
+    private func containsGoal(for participant: Participant) -> Bool {
+        matchLeg.goals.contains { goal in
+            goal.scorer == participant
+        }
+    }
+    
+    private func getAgainstParticipant(for scorer: Participant) -> Participant {
+        if matchLeg.homeParticipant == scorer {
+            return matchLeg.awayParticipant
+        } else {
+            return matchLeg.homeParticipant
+        }
+    }
+    
+    private func save(goal: Goal) {
         matchLeg.goals.append(goal)
+        
         matchLeg.goals.sort { goal1, goal2 in
-            goal1.minute < goal2.minute
+            guard let goal1Minute = goal1.minute, let goal2Minute = goal2.minute else {
+                if goal1.minute != nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            
+            return goal1Minute < goal2Minute
         }
         
         self.minute = ""
         focusField = nil
     }
     
-    @ViewBuilder
     private var actionSection: some View {
         PageSection {
-            if matchLeg.legState == .notStarted {
-                Button {
-                    matchLeg.startLeg()
-                } label: {
-                    Text("Start Leg")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-            } else if matchLeg.legState == .inProgress {
-                Button {
-                    matchLeg.completeLeg()
-                } label: {
-                    Text("Complete Leg")
-                        .padding(.vertical, 5)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-            } else {
-                EmptyView()
+            Button {
+                matchLeg.startLeg()
+            } label: {
+                Text("Start Leg")
+                    .padding(.vertical, 5)
+                    .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
         }
     }
 }

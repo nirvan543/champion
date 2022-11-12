@@ -129,23 +129,23 @@ struct MockData {
         Round(matches: [
             Match(participant1: matteo, participant2: saurav, legsPerMatch: 1),
             Match(participant1: keerti, participant2: harshit, legsPerMatch: 1),
-            Match(participant1: solo, participant2: aditya, legsPerMatch: 1),
+            Match(participant1: mckenzie, participant2: aditya, legsPerMatch: 1),
             Match(participant1: antriksh, participant2: nil, legsPerMatch: 1)
         ]),
         Round(matches: [
             Match(participant1: antriksh, participant2: keerti, legsPerMatch: 1),
             Match(participant1: aditya, participant2: matteo, legsPerMatch: 1),
-            Match(participant1: harshit, participant2: solo, legsPerMatch: 1),
+            Match(participant1: harshit, participant2: mckenzie, legsPerMatch: 1),
             Match(participant1: saurav, participant2: nil, legsPerMatch: 1)
         ]),
         Round(matches: [
             Match(participant1: saurav, participant2: aditya, legsPerMatch: 1),
-            Match(participant1: solo, participant2: antriksh, legsPerMatch: 1),
+            Match(participant1: mckenzie, participant2: antriksh, legsPerMatch: 1),
             Match(participant1: matteo, participant2: harshit, legsPerMatch: 1),
             Match(participant1: keerti, participant2: nil, legsPerMatch: 1)
         ]),
         Round(matches: [
-            Match(participant1: solo, participant2: keerti, legsPerMatch: 1),
+            Match(participant1: mckenzie, participant2: keerti, legsPerMatch: 1),
             Match(participant1: saurav, participant2: harshit, legsPerMatch: 1),
             Match(participant1: matteo, participant2: antriksh, legsPerMatch: 1),
             Match(participant1: aditya, participant2: nil, legsPerMatch: 1)
@@ -154,17 +154,17 @@ struct MockData {
             Match(participant1: harshit, participant2: aditya, legsPerMatch: 1),
             Match(participant1: keerti, participant2: matteo, legsPerMatch: 1),
             Match(participant1: antriksh, participant2: saurav, legsPerMatch: 1),
-            Match(participant1: solo, participant2: nil, legsPerMatch: 1)
+            Match(participant1: mckenzie, participant2: nil, legsPerMatch: 1)
         ]),
         Round(matches: [
-            Match(participant1: matteo, participant2: solo, legsPerMatch: 1),
+            Match(participant1: matteo, participant2: mckenzie, legsPerMatch: 1),
             Match(participant1: aditya, participant2: antriksh, legsPerMatch: 1),
             Match(participant1: saurav, participant2: keerti, legsPerMatch: 1),
             Match(participant1: harshit, participant2: nil, legsPerMatch: 1)
         ]),
         Round(matches: [
             Match(participant1: antriksh, participant2: harshit, legsPerMatch: 1),
-            Match(participant1: solo, participant2: saurav, legsPerMatch: 1),
+            Match(participant1: mckenzie, participant2: saurav, legsPerMatch: 1),
             Match(participant1: keerti, participant2: aditya, legsPerMatch: 1),
             Match(participant1: matteo, participant2: nil, legsPerMatch: 1)
         ])
@@ -238,7 +238,7 @@ struct MockData {
         matteo,
         aditya,
         harshit,
-        solo,
+        mckenzie,
         antriksh
     ]
     static let groupBParticipants = [
@@ -276,11 +276,11 @@ struct MockData {
                                      clubSelection: ClubSelection(clubName: "Manchester City",
                                                                   leagueName: "PREMIER LEAGUE",
                                                                   clubAssociation: "ENGLAND"))
-    static let solo = Participant(id: IdUtils.newUuid,
-                                  playerName: "Solo",
-                                  clubSelection: ClubSelection(clubName: "Atlético de Madrid",
-                                                               leagueName: "LALIGA SANTANDER",
-                                                               clubAssociation: "SPAIN"))
+    static let mckenzie = Participant(id: IdUtils.newUuid,
+                                      playerName: "McKenzie",
+                                      clubSelection: ClubSelection(clubName: "Liverpool",
+                                                                   leagueName: "PREMIER LEAGUE",
+                                                                   clubAssociation: "ENGLAND"))
     static let antriksh = Participant(id: IdUtils.newUuid,
                                       playerName: "Nirvan",
                                       clubSelection: ClubSelection(clubName: "Paris SG",

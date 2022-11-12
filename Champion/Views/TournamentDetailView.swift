@@ -14,10 +14,10 @@ struct TournamentDetailView: View {
     
     var body: some View {
         PageView {
+            finalActionSection
             tournamentTypeSection
             tournamentDateSection
             participantsSection
-            finalActionSection
         }
         .navigationTitle(tournament.name)
         .toolbar {
