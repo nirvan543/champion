@@ -50,7 +50,7 @@ class EnvironmentValues: ObservableObject {
     
     func addTournament(tournament: any Tournament) {
         tournaments.append(tournament)
-        tournaments.sort(by: { $0.date < $1.date })
+        tournaments.sort(by: { $0.date > $1.date })
     }
     
     static func loadTournaments() throws -> [any Tournament] {

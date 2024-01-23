@@ -14,13 +14,16 @@ struct MockData {
     ]
     
     // MARK: Tournaments
-    static let atlantaCup3 = RoundRobinTournament(name: "FIFA 22 Atlanta Cup III",
-                                                  date: DateUtils.date(year: 2022, month: .july, day: 16)!,
-                                                  fifaVersionName: "FIFA 22",
-                                                  participants: participants,
-                                                  state: .created,
-                                                  rounds: rounds,
-                                                  legsPerMatch: 1)
+    static let atlantaCup3 = RoundRobinTournament(
+        name: "FIFA 22 Atlanta Cup III",
+        date: DateUtils.date(year: 2022, month: .july, day: 16)!,
+        fifaVersionName: "FIFA 22",
+        participants: participants,
+        state: .created,
+        rounds: rounds,
+        legsPerMatch: 1,
+        matchesPerOpponent: 1
+    )
     
     static let proWorldCup4 = GroupedTournament(name: "FIFA Pro World Cup IV",
                                                 date: DateUtils.date(year: 2022, month: .november, day: 12)!,

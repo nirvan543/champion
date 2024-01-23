@@ -115,8 +115,11 @@ struct TournamentGroup: Identifiable, Codable, Equatable, Hashable {
     }
     
     mutating func generateMatches(legsPerMatch: Int) {
-        rounds = MatchesService.shared.createMatches(participants: participants,
-                                                     legsPerMatch: legsPerMatch)
+        rounds = MatchesService.shared.createMatches(
+            participants: participants,
+            legsPerMatch: legsPerMatch,
+            matchesPerOpponent: 1 // TODO: Make this dynamic
+        )
     }
     
     mutating func clearMatches() {

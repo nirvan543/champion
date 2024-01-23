@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreateEditRoundRobinMatchesView: View {
     static private let defaultLegsPerMatch = 1
+    static private let defaultMatchesPerOpponent = 1
     
     @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject private var environmentValues: EnvironmentValues
@@ -16,6 +17,7 @@ struct CreateEditRoundRobinMatchesView: View {
     @FocusState private var focusField: Bool
     
     @State private var legsPerMatch: Int
+    @State private var matchesPerOpponent: Int
     @State private var rounds: [Round]
     
     @State private var formError: ChampionError? = nil
@@ -29,6 +31,7 @@ struct CreateEditRoundRobinMatchesView: View {
         editingTournament = nil
         
         _legsPerMatch = State(initialValue: Self.defaultLegsPerMatch)
+        _matchesPerOpponent = State(initialValue: Self.defaultMatchesPerOpponent)
         _rounds = State(initialValue: [])
     }
     
@@ -37,6 +40,7 @@ struct CreateEditRoundRobinMatchesView: View {
         tournamentInfo = nil
         
         _legsPerMatch = State(initialValue: editingTournament.wrappedValue.legsPerMatch)
+        _matchesPerOpponent = State(initialValue: editingTournament.wrappedValue.matchesPerOpponent)
         _rounds = State(initialValue: editingTournament.wrappedValue.rounds)
     }
     
@@ -77,10 +81,17 @@ struct CreateEditRoundRobinMatchesView: View {
         .onChange(of: legsPerMatch) { _ in
             rounds.removeAll()
         }
+        .onChange(of: matchesPerOpponent) { _ in
+            rounds.removeAll()
+        }
     }
     
     private var configSection: some View {
         PageSection("League Stage Config") {
+            FormContent {
+                EditableConfigLineItemView(labelText: "Matches per Opponent", value: $matchesPerOpponent)
+                    .focused($focusField)
+            }
             FormContent {
                 EditableConfigLineItemView(labelText: "Legs per Match", value: $legsPerMatch)
                     .focused($focusField)
@@ -98,8 +109,11 @@ struct CreateEditRoundRobinMatchesView: View {
     
     private var autoGenerateButton: some View {
         SecondaryButton("Auto-Generate") {
-            rounds = MatchesService.shared.createMatches(participants: participants,
-                                                         legsPerMatch: legsPerMatch)
+            rounds = MatchesService.shared.createMatches(
+                participants: participants,
+                legsPerMatch: legsPerMatch,
+                matchesPerOpponent: matchesPerOpponent
+            )
         }
     }
     
@@ -152,6 +166,7 @@ struct CreateEditRoundRobinMatchesView: View {
     
     private func saveEditedTournament(editingTournament: Binding<RoundRobinTournament>) {
         editingTournament.wrappedValue.legsPerMatch = legsPerMatch
+        editingTournament.wrappedValue.matchesPerOpponent = matchesPerOpponent
         editingTournament.wrappedValue.rounds = rounds
         
         presentationMode.wrappedValue.dismiss()
@@ -162,13 +177,16 @@ struct CreateEditRoundRobinMatchesView: View {
             fatalError("tournamentInfo should not be nil here")
         }
         
-        let newTournament = RoundRobinTournament(name: tournamentInfo.tournamentName,
-                                                 date: tournamentInfo.tournamentDate,
-                                                 fifaVersionName: tournamentInfo.fifaVersionName,
-                                                 participants: tournamentInfo.participants,
-                                                 state: .created,
-                                                 rounds: rounds,
-                                                 legsPerMatch: legsPerMatch)
+        let newTournament = RoundRobinTournament(
+            name: tournamentInfo.tournamentName,
+            date: tournamentInfo.tournamentDate,
+            fifaVersionName: tournamentInfo.fifaVersionName,
+            participants: tournamentInfo.participants,
+            state: .created,
+            rounds: rounds,
+            legsPerMatch: legsPerMatch,
+            matchesPerOpponent: matchesPerOpponent
+        )
         
         environmentValues.addTournament(tournament: newTournament)
         environmentValues.navigateToCreateTournamentView = false

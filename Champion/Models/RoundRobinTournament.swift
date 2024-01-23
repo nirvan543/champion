@@ -16,6 +16,7 @@ struct RoundRobinTournament: Tournament {
     var state: TournamentState
     var rounds: [Round]
     var legsPerMatch: Int
+    var matchesPerOpponent: Int
     
     init(name: String,
          date: Date,
@@ -23,7 +24,8 @@ struct RoundRobinTournament: Tournament {
          participants: [Participant],
          state: TournamentState,
          rounds: [Round],
-         legsPerMatch: Int) {
+         legsPerMatch: Int,
+         matchesPerOpponent: Int) {
         
         self.id = IdUtils.newUuid
         self.name = name
@@ -33,6 +35,20 @@ struct RoundRobinTournament: Tournament {
         self.state = state
         self.rounds = rounds
         self.legsPerMatch = legsPerMatch
+        self.matchesPerOpponent = matchesPerOpponent
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
+        self.participants = try container.decode([Participant].self, forKey: .participants)
+        self.state = try container.decode(TournamentState.self, forKey: .state)
+        self.rounds = try container.decode([Round].self, forKey: .rounds)
+        self.legsPerMatch = try container.decode(Int.self, forKey: .legsPerMatch)
+        self.matchesPerOpponent = try container.decodeIfPresent(Int.self, forKey: .matchesPerOpponent) ?? 1
     }
     
     var format: TournamentFormat {
