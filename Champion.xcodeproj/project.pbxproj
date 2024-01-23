@@ -49,6 +49,7 @@
 		D88CFE212882903A0061BC74 /* MatchProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE202882903A0061BC74 /* MatchProgressView.swift */; };
 		D88CFE232882913B0061BC74 /* LegsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE222882913B0061BC74 /* LegsCellView.swift */; };
 		D88CFE25288296870061BC74 /* MatchLegProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88CFE24288296870061BC74 /* MatchLegProgressView.swift */; };
+		D8AE21722985B9D200D58E32 /* v1_demo_data.json in Resources */ = {isa = PBXBuildFile; fileRef = D8AE21712985B9D200D58E32 /* v1_demo_data.json */; };
 		D8B1C28828ED2CBD00FACCEF /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */; };
 		D8B1C28D28F659C400FACCEF /* tournaments_v1.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B1C28C28F659C400FACCEF /* tournaments_v1.json */; };
 		D8B1C28F28F65E0A00FACCEF /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C28E28F65E0A00FACCEF /* ModelTests.swift */; };
@@ -144,6 +145,7 @@
 		D88CFE202882903A0061BC74 /* MatchProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProgressView.swift; sourceTree = "<group>"; };
 		D88CFE222882913B0061BC74 /* LegsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegsCellView.swift; sourceTree = "<group>"; };
 		D88CFE24288296870061BC74 /* MatchLegProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchLegProgressView.swift; sourceTree = "<group>"; };
+		D8AE21712985B9D200D58E32 /* v1_demo_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = v1_demo_data.json; sourceTree = "<group>"; };
 		D8B1C28728ED2CBD00FACCEF /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		D8B1C28C28F659C400FACCEF /* tournaments_v1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tournaments_v1.json; sourceTree = "<group>"; };
 		D8B1C28E28F65E0A00FACCEF /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		D86187772878DC4800553E5D /* Champion */ = {
 			isa = PBXGroup;
 			children = (
+				D8AE21702985B9B800D58E32 /* Data */,
 				D8B1C28628ED2C6900FACCEF /* Extensions */,
 				D8E6495528CD9952007DC119 /* Resources */,
 				D82E7D7A28826C37006750A3 /* TestStuff */,
@@ -380,6 +383,14 @@
 				D8E629B0290F42DC00D9F0DD /* RoundsView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D8AE21702985B9B800D58E32 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D8AE21712985B9D200D58E32 /* v1_demo_data.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D8B1C28628ED2C6900FACCEF /* Extensions */ = {
@@ -539,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D86187802878DC4900553E5D /* Preview Assets.xcassets in Resources */,
+				D8AE21722985B9D200D58E32 /* v1_demo_data.json in Resources */,
 				D8E6495728CD998D007DC119 /* fifa_versions.json in Resources */,
 				D861877D2878DC4900553E5D /* Assets.xcassets in Resources */,
 			);
@@ -806,6 +818,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pancholii.Champion.Dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -837,6 +852,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pancholii.Champion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
