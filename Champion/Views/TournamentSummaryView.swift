@@ -156,7 +156,7 @@ struct TournamentSummaryView: View {
             VStack(alignment: .leading) {
                 Text(stat.participant.playerName)
                     .font(.title3)
-                Text(stat.participant.clubSelection.clubName)
+                Text(stat.participant.teamName)
                     .foregroundColor(.secondary)
             }
             Spacer()

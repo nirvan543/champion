@@ -21,7 +21,7 @@ struct ParticipantRow: View {
             VStack(alignment: .leading) {
                 Text(participant.playerName)
                     .font(.title3)
-                Text(participant.clubSelection.clubName)
+                Text(participant.teamName)
                     .foregroundColor(.secondary)
             }
             

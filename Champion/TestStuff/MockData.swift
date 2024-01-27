@@ -254,84 +254,98 @@ struct MockData {
         neeraj
     ]
     
-    static let keerti = Participant(id: IdUtils.newUuid,
-                                    playerName: "Keerthi",
-                                    clubSelection: ClubSelection(clubName: "Paris SG",
-                                                                 leagueName: "LIGUE 1 UBER EATS",
-                                                                 clubAssociation: "FRANCE"))
-    static let saurav = Participant(id: IdUtils.newUuid,
-                                    playerName: "Saurav",
-                                    clubSelection: ClubSelection(clubName: "FC Barcelona",
-                                                                 leagueName: "LALIGA SANTANDER",
-                                                                 clubAssociation: "SPAIN"))
-    static let matteo = Participant(id: IdUtils.newUuid,
-                                    playerName: "Matteo",
-                                    clubSelection: ClubSelection(clubName: "Juventus",
-                                                                 leagueName: "SERIE A TIM",
-                                                                 clubAssociation: "ITALY"))
-    static let aditya = Participant(id: IdUtils.newUuid,
-                                    playerName: "Aditya",
-                                    clubSelection: ClubSelection(clubName: "Liverpool",
-                                                                 leagueName: "PREMIER LEAGUE",
-                                                                 clubAssociation: "ENGLAND"))
-    static let harshit = Participant(id: IdUtils.newUuid,
-                                     playerName: "Harshit",
-                                     clubSelection: ClubSelection(clubName: "Manchester City",
-                                                                  leagueName: "PREMIER LEAGUE",
-                                                                  clubAssociation: "ENGLAND"))
-    static let mckenzie = Participant(id: IdUtils.newUuid,
-                                      playerName: "McKenzie",
-                                      clubSelection: ClubSelection(clubName: "Liverpool",
-                                                                   leagueName: "PREMIER LEAGUE",
-                                                                   clubAssociation: "ENGLAND"))
-    static let antriksh = Participant(id: IdUtils.newUuid,
-                                      playerName: "Nirvan",
-                                      clubSelection: ClubSelection(clubName: "Paris SG",
-                                                                   leagueName: "LIGUE 1 UBER EATS",
-                                                                   clubAssociation: "FRANCE"))
-    static let pranshu = Participant(id: IdUtils.newUuid,
-                                     playerName: "Pranshu",
-                                     clubSelection: ClubSelection(clubName: "Paris SG",
-                                                                  leagueName: "LIGUE 1 UBER EATS",
-                                                                  clubAssociation: "FRANCE"))
-    static let mahendra = Participant(id: IdUtils.newUuid,
-                                      playerName: "Mahendra",
-                                      clubSelection: ClubSelection(clubName: "Real Madrid",
-                                                                   leagueName: "LALIGA SANTANDER",
-                                                                   clubAssociation: "SPAIN"))
-    static let mookie = Participant(id: IdUtils.newUuid,
-                                    playerName: "Mookie",
-                                    clubSelection: ClubSelection(clubName: "Manchester City",
-                                                                 leagueName: "PREMIER LEAGUE",
-                                                                 clubAssociation: "ENGLAND"))
-    static let dylan = Participant(id: IdUtils.newUuid,
-                                   playerName: "Dylan",
-                                   clubSelection: ClubSelection(clubName: "Chelsea",
-                                                                leagueName: "PREMIER LEAGUE",
-                                                                clubAssociation: "ENGLAND"))
-    static let rohan = Participant(id: IdUtils.newUuid,
-                                   playerName: "Rohan",
-                                   clubSelection: ClubSelection(clubName: "Real Madrid",
-                                                                leagueName: "LALIGA SANTANDER",
-                                                                clubAssociation: "SPAIN"))
-    static let tarun = Participant(id: IdUtils.newUuid,
-                                   playerName: "Tarun",
-                                   clubSelection: ClubSelection(clubName: "Paris SG",
-                                                                leagueName: "LIGUE 1 UBER EATS",
-                                                                clubAssociation: "FRANCE"))
-    static let neeraj = Participant(id: IdUtils.newUuid,
-                                    playerName: "Neeraj",
-                                    clubSelection: ClubSelection(clubName: "Manchester City",
-                                                                 leagueName: "PREMIER LEAGUE",
-                                                                 clubAssociation: "ENGLAND"))
-    static let siddhant = Participant(id: IdUtils.newUuid,
-                                      playerName: "Siddhant",
-                                      clubSelection: ClubSelection(clubName: "FC Bayern Munchen",
-                                                                   leagueName: "Bundesliga",
-                                                                   clubAssociation: "Germany"))
-    static let ovi = Participant(id: IdUtils.newUuid,
-                                 playerName: "Ovi",
-                                 clubSelection: ClubSelection(clubName: "FC Barcelona",
-                                                              leagueName: "LaLiga",
-                                                              clubAssociation: "Spain"))
+    static let keerti = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Keerthi",
+        teamName: "Paris SG"
+    )
+    
+    static let saurav = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Saurav",
+        teamName: "FC Barcelona"
+    )
+    
+    static let matteo = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Matteo",
+        teamName: "Juventus"
+    )
+    
+    static let aditya = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Aditya",
+        teamName: "Liverpool"
+    )
+    
+    static let harshit = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Harshit",
+        teamName: "Manchester City"
+    )
+    
+    static let mckenzie = Participant(
+        id: IdUtils.newUuid,
+        playerName: "McKenzie",
+        teamName: "Liverpool"
+    )
+    
+    static let antriksh = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Nirvan",
+        teamName: "Paris SG"
+    )
+    
+    static let pranshu = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Pranshu",
+        teamName: "Paris SG"
+    )
+    
+    static let mahendra = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Mahendra",
+        teamName: "Real Madrid"
+    )
+    
+    static let mookie = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Mookie",
+        teamName: "Manchester City"
+    )
+    
+    static let dylan = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Dylan",
+        teamName: "Chelsea"
+    )
+    
+    static let rohan = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Rohan",
+        teamName: "Real Madrid"
+    )
+    static let tarun = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Tarun",
+        teamName: "Paris SG"
+    )
+    
+    static let neeraj = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Neeraj",
+        teamName: "Manchester City"
+    )
+    
+    static let siddhant = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Siddhant",
+        teamName: "FC Bayern Munchen"
+    )
+    
+    static let ovi = Participant(
+        id: IdUtils.newUuid,
+        playerName: "Ovi",
+        teamName: "FC Barcelona"
+    )
 }
