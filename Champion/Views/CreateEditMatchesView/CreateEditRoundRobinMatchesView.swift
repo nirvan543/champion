@@ -180,7 +180,6 @@ struct CreateEditRoundRobinMatchesView: View {
         let newTournament = RoundRobinTournament(
             name: tournamentInfo.tournamentName,
             date: tournamentInfo.tournamentDate,
-            fifaVersionName: tournamentInfo.fifaVersionName,
             participants: tournamentInfo.participants,
             state: .created,
             rounds: rounds,
@@ -196,11 +195,12 @@ struct CreateEditRoundRobinMatchesView: View {
 struct CreateEditRoundRobinMatchesView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
     
-    private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
-                                                       tournamentDate: Date(),
-                                                       fifaVersionName: "FIFA 23",
-                                                       tournamentFormat: .roundRobin,
-                                                       participants: MockData.participants)
+    private static let tournamentInfo = TournamentInfo(
+        tournamentName: "FIFA Pro World Cup IV",
+        tournamentDate: Date(),
+        tournamentFormat: .roundRobin,
+        participants: MockData.participants
+    )
     
     static var previews: some View {
         Group {

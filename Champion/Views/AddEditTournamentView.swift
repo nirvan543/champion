@@ -10,7 +10,6 @@ import SwiftUI
 struct AddEditTournamentView: View {
     private static let tournamentFormats: [TournamentFormat] = TournamentFormat.allCases
     private static let defaultTournamentFormat: TournamentFormat = Self.tournamentFormats.first!
-    private static let catalogService = ClubCatalogService.shared
     
     @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject private var environmentValues: EnvironmentValues
@@ -19,7 +18,6 @@ struct AddEditTournamentView: View {
     
     @State private var tournamentName: String
     @State private var tournamentDate: Date
-    @State private var fifaVersionName: String
     @State private var tournamentFormat: TournamentFormat
     @State private var participants: [Participant]
     
@@ -34,7 +32,6 @@ struct AddEditTournamentView: View {
 
         _tournamentName = State(initialValue: editingTournament?.wrappedValue.name ?? "")
         _tournamentDate = State(initialValue: editingTournament?.wrappedValue.date ?? Date())
-        _fifaVersionName = State(initialValue: Self.catalogService.defaultFifaVersion.name)
         
         if let editingTournament {
             _tournamentFormat = State(initialValue: Self.tournamentFormat(for: editingTournament.wrappedValue))
@@ -61,7 +58,6 @@ struct AddEditTournamentView: View {
         PageView {
             tournamentNameSection
             tournamentDateSection
-            fifaVersionSection
             tournamentFormatSection
             participantsSection
             actionSection
@@ -79,7 +75,7 @@ struct AddEditTournamentView: View {
         }
         .sheet(isPresented: $presentAddParticipantView) {
             NavigationView {
-                AddParticipantView(participants: $participants, fifaVersion: fifaVersion)
+                AddParticipantView(participants: $participants)
             }
         }
         .alert("There are some errors", isPresented: $presentFormErrorAlert) {
@@ -125,11 +121,12 @@ struct AddEditTournamentView: View {
     }
     
     private var tournamentInfo: TournamentInfo {
-        TournamentInfo(tournamentName: tournamentName,
-                       tournamentDate: tournamentDate,
-                       fifaVersionName: fifaVersionName,
-                       tournamentFormat: tournamentFormat,
-                       participants: participants)
+        TournamentInfo(
+            tournamentName: tournamentName,
+            tournamentDate: tournamentDate,
+            tournamentFormat: tournamentFormat,
+            participants: participants
+        )
     }
     
     private func roundRobinTournament(from tournament: Binding<any Tournament>) -> Binding<RoundRobinTournament> {
@@ -160,10 +157,6 @@ struct AddEditTournamentView: View {
         }
     }
     
-    private var fifaVersion: FifaVersion {
-        return Self.catalogService.fifaVersion(for: fifaVersionName)
-    }
-    
     private var tournamentNameSection: some View {
         PageSection("Tournament Name") {
             CustomTextField("Tournament Name", text: $tournamentName)
@@ -177,19 +170,6 @@ struct AddEditTournamentView: View {
             FormContent {
                 DatePicker("Tournament Date", selection: $tournamentDate)
                     .labelsHidden()
-            }
-        }
-    }
-    
-    private var fifaVersionSection: some View {
-        PageSection("FIFA Version") {
-            FormContent {
-                Picker("FIFA Version", selection: $fifaVersionName) {
-                    ForEach(Self.catalogService.fifaVersions) { fifaGameVersion in
-                        Text(fifaGameVersion.name)
-                    }
-                }
-                .disabled(editingTournament != nil)
             }
         }
     }

@@ -148,13 +148,14 @@ struct CreateEditGroupedMatchesView: View {
             fatalError("tournamentInfo should not be nil here")
         }
         
-        let newTournament = GroupedTournament(name: tournamentInfo.tournamentName,
-                                              date: tournamentInfo.tournamentDate,
-                                              fifaVersionName: tournamentInfo.fifaVersionName,
-                                              participants: tournamentInfo.participants,
-                                              state: .created,
-                                              groups: groups,
-                                              legsPerMatch: legsPerMatch)
+        let newTournament = GroupedTournament(
+            name: tournamentInfo.tournamentName,
+            date: tournamentInfo.tournamentDate,
+            participants: tournamentInfo.participants,
+            state: .created,
+            groups: groups,
+            legsPerMatch: legsPerMatch
+        )
         
         environmentValues.addTournament(tournament: newTournament)
         environmentValues.navigateToCreateTournamentView = false
@@ -175,11 +176,13 @@ struct CreateEditGroupedMatchesView: View {
 struct CreateEditGroupedMatchesView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
     
-    private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
-                                                       tournamentDate: Date(),
-                                                       fifaVersionName: "FIFA 23",
-                                                       tournamentFormat: .grouped,
-                                                       participants: MockData.participants)
+    private static let tournamentInfo = TournamentInfo(
+        tournamentName: "FIFA Pro World Cup IV",
+        tournamentDate: Date(),
+        tournamentFormat: .grouped,
+        participants: MockData.participants
+    )
+    
     static var previews: some View {
         NavigationView {
             CreateEditGroupedMatchesView(tournamentInfo: tournamentInfo, groups: MockData.groups)

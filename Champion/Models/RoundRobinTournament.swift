@@ -11,7 +11,6 @@ struct RoundRobinTournament: Tournament {
     let id: String
     var name: String
     var date: Date
-    var fifaVersionName: String
     var participants: [Participant]
     var state: TournamentState
     var rounds: [Round]
@@ -20,7 +19,6 @@ struct RoundRobinTournament: Tournament {
     
     init(name: String,
          date: Date,
-         fifaVersionName: String,
          participants: [Participant],
          state: TournamentState,
          rounds: [Round],
@@ -30,7 +28,6 @@ struct RoundRobinTournament: Tournament {
         self.id = IdUtils.newUuid
         self.name = name
         self.date = date
-        self.fifaVersionName = fifaVersionName
         self.participants = participants
         self.state = state
         self.rounds = rounds
@@ -43,7 +40,6 @@ struct RoundRobinTournament: Tournament {
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.date = try container.decode(Date.self, forKey: .date)
-        self.fifaVersionName = try container.decode(String.self, forKey: .fifaVersionName)
         self.participants = try container.decode([Participant].self, forKey: .participants)
         self.state = try container.decode(TournamentState.self, forKey: .state)
         self.rounds = try container.decode([Round].self, forKey: .rounds)

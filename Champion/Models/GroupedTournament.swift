@@ -11,17 +11,15 @@ struct GroupedTournament: Tournament {
     let id: String
     var name: String
     var date: Date
-    var fifaVersionName: String
     var participants: [Participant]
     var state: TournamentState
     var groups: [TournamentGroup]
     var legsPerMatch: Int
     
-    init(name: String, date: Date, fifaVersionName: String, participants: [Participant], state: TournamentState, groups: [TournamentGroup], legsPerMatch: Int) {
+    init(name: String, date: Date, participants: [Participant], state: TournamentState, groups: [TournamentGroup], legsPerMatch: Int) {
         self.id = IdUtils.newUuid
         self.name = name
         self.date = date
-        self.fifaVersionName = fifaVersionName
         self.participants = participants
         self.state = state
         self.groups = groups

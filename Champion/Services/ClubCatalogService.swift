@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: Delete this someday
 class ClubCatalogService {
     static let shared = ClubCatalogService()
     

@@ -10,7 +10,6 @@ import Foundation
 struct TournamentInfo {
     let tournamentName: String
     let tournamentDate: Date
-    let fifaVersionName: String
     let tournamentFormat: TournamentFormat
     let participants: [Participant]
 }

@@ -19,13 +19,9 @@ struct AddParticipantView: View {
     @State private var formError: ChampionError? = nil
     
     var participants: Binding<[Participant]>
-    let fifaVersion: FifaVersion
     
-    private let catalogService = ClubCatalogService.shared
-    
-    init(participants: Binding<[Participant]>, fifaVersion: FifaVersion) {
+    init(participants: Binding<[Participant]>) {
         self.participants = participants
-        self.fifaVersion = fifaVersion
     }
     
     var body: some View {
@@ -112,9 +108,8 @@ struct AddParticipantView: View {
 
 struct AddParticipantView_Previews: PreviewProvider {
     @State private static var participants = MockData.participants
-    @State private static var fifaVersion = ClubCatalogService.shared.defaultFifaVersion
     
     static var previews: some View {
-        AddParticipantView(participants: $participants, fifaVersion: fifaVersion)
+        AddParticipantView(participants: $participants)
     }
 }

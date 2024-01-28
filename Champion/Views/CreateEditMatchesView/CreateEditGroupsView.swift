@@ -191,11 +191,12 @@ struct CreateEditGroupsView: View {
 struct CreateEditGroupsView_Previews: PreviewProvider {
     @StateObject private static var environmentValues = EnvironmentValues(tournaments: MockTournamentRepository.shared.retreiveTournaments())
     
-    private static let tournamentInfo = TournamentInfo(tournamentName: "FIFA Pro World Cup IV",
-                                                       tournamentDate: Date(),
-                                                       fifaVersionName: "FIFA 23",
-                                                       tournamentFormat: .grouped,
-                                                       participants: MockData.participants)
+    private static let tournamentInfo = TournamentInfo(
+        tournamentName: "FIFA Pro World Cup IV",
+        tournamentDate: Date(),
+        tournamentFormat: .grouped,
+        participants: MockData.participants
+    )
     
     static var previews: some View {
         NavigationView {
